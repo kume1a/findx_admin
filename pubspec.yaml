@@ -1,0 +1,35 @@
+name: findx_admin
+description: admin dashboard for app findx
+
+publish_to: none
+
+version: 0.0.1+1
+
+environment:
+  sdk: '>=3.2.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # state
+  flutter_bloc: ^8.1.3
+  flutter_hooks: ^0.18.6
+
+  # UI
+  google_fonts: ^6.1.0
+  flutter_svg: ^2.0.9
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^2.0.1
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+    - assets/logo/
