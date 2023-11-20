@@ -3,10 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 import 'app/app.dart';
+import 'app/app_environment.dart';
 import 'app/di/register_dependencies.dart';
 
-void main() {
-  registerDependencies(kDebugMode ? Environment.dev : Environment.prod);
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await AppEnvironment.load();
+  await registerDependencies(kDebugMode ? Environment.dev : Environment.prod);
 
   runApp(const App());
 }

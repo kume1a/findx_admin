@@ -10,13 +10,15 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:dio/dio.dart' as _i5;
 import 'package:findx_admin/app/di/modules/abstract_components_module.dart'
-    as _i17;
-import 'package:findx_admin/app/di/modules/api_client/api_client_gql_client_module.dart'
-    as _i15;
-import 'package:findx_admin/app/di/modules/api_client/api_client_store_module.dart'
     as _i18;
-import 'package:findx_admin/app/di/modules/navigation_di_module.dart' as _i19;
-import 'package:findx_admin/app/di/modules/storage_module.dart' as _i16;
+import 'package:findx_admin/app/di/modules/api_client/api_client_authentication_module.dart'
+    as _i20;
+import 'package:findx_admin/app/di/modules/api_client/api_client_gql_client_module.dart'
+    as _i16;
+import 'package:findx_admin/app/di/modules/api_client/api_client_store_module.dart'
+    as _i19;
+import 'package:findx_admin/app/di/modules/navigation_di_module.dart' as _i21;
+import 'package:findx_admin/app/di/modules/storage_module.dart' as _i17;
 import 'package:findx_admin/app/navigation/go_router_factory.dart' as _i13;
 import 'package:findx_admin/features/authentication/api/after_sign_out.dart'
     as _i3;
@@ -26,10 +28,12 @@ import 'package:findx_admin/features/authentication/api/auth_status_provider.dar
     as _i11;
 import 'package:findx_admin/features/authentication/api/auth_status_provider_impl.dart'
     as _i12;
+import 'package:findx_admin/features/authentication/state/sign_in_form_state.dart'
+    as _i14;
 import 'package:findx_dart_client/app_client.dart' as _i9;
 import 'package:flutter_secure_storage/flutter_secure_storage.dart' as _i6;
 import 'package:get_it/get_it.dart' as _i1;
-import 'package:go_router/go_router.dart' as _i14;
+import 'package:go_router/go_router.dart' as _i15;
 import 'package:graphql/client.dart' as _i10;
 import 'package:injectable/injectable.dart' as _i2;
 import 'package:shared_preferences/shared_preferences.dart' as _i7;
@@ -50,6 +54,7 @@ extension GetItInjectableX on _i1.GetIt {
     final storageModule = _$StorageModule();
     final abstractComponentsModule = _$AbstractComponentsModule();
     final apiClientStoreModule = _$ApiClientStoreModule();
+    final apiClientAuthenticationModule = _$ApiClientAuthenticationModule();
     final navigationDiModule = _$NavigationDiModule();
     gh.lazySingleton<_i3.AfterSignOut>(() => _i4.AfterSignOutImpl());
     gh.lazySingleton<_i5.Dio>(
@@ -77,20 +82,28 @@ extension GetItInjectableX on _i1.GetIt {
         .gqlApiClient(gh<_i5.Dio>(instanceName: 'api_dio')));
     gh.lazySingleton<_i11.AuthStatusProvider>(
         () => _i12.AuthStatusProviderImpl(gh<_i9.AuthTokenStore>()));
+    gh.lazySingleton<_i9.AuthenticationFacade>(() =>
+        apiClientAuthenticationModule
+            .authenticationFacade(gh<_i10.GraphQLClient>()));
     gh.lazySingleton<_i13.GoRouterFactory>(
         () => _i13.GoRouterFactory(gh<_i11.AuthStatusProvider>()));
-    gh.lazySingleton<_i14.GoRouter>(
+    gh.factory<_i14.SignInFormCubit>(
+        () => _i14.SignInFormCubit(gh<_i9.AuthenticationFacade>()));
+    gh.lazySingleton<_i15.GoRouter>(
         () => navigationDiModule.goRouter(gh<_i13.GoRouterFactory>()));
     return this;
   }
 }
 
-class _$ApiClientGqlClientModule extends _i15.ApiClientGqlClientModule {}
+class _$ApiClientGqlClientModule extends _i16.ApiClientGqlClientModule {}
 
-class _$StorageModule extends _i16.StorageModule {}
+class _$StorageModule extends _i17.StorageModule {}
 
-class _$AbstractComponentsModule extends _i17.AbstractComponentsModule {}
+class _$AbstractComponentsModule extends _i18.AbstractComponentsModule {}
 
-class _$ApiClientStoreModule extends _i18.ApiClientStoreModule {}
+class _$ApiClientStoreModule extends _i19.ApiClientStoreModule {}
 
-class _$NavigationDiModule extends _i19.NavigationDiModule {}
+class _$ApiClientAuthenticationModule
+    extends _i20.ApiClientAuthenticationModule {}
+
+class _$NavigationDiModule extends _i21.NavigationDiModule {}

@@ -37,6 +37,11 @@ dependencies:
     git:
       url: git@github.com:FindX-0/findx_dart_client.git
 
+  common_models:
+    git:
+      url: https://github.com/kume1a/flutter_common.git
+      path: packages/common_models
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -46,6 +51,7 @@ dev_dependencies:
   build_runner: ^2.4.6
   build_verify: ^3.1.0
   injectable_generator: ^2.1.6
+  freezed: ^2.4.5
 
 flutter:
   uses-material-design: true
@@ -54,3 +60,6 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/logo/
+    - .env.local
+    - .env.development
+    - .env.production

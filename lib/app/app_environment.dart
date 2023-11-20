@@ -25,6 +25,7 @@ class AppEnvironment {
   AppEnvironment._();
 
   static Future<void> load() async {
+    log('getting env');
     const environment = kDebugMode ? 'development' : 'production';
 
     const envFileName = '.env.$environment';
