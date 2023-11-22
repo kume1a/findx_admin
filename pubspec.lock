@@ -149,10 +149,10 @@ packages:
     dependency: transitive
     description:
       name: code_builder
-      sha256: "1be9be30396d7e4c0db42c35ea6ccd7cc6a1e19916b5dc64d6ac216b5544d677"
+      sha256: b2151ce26a06171005b379ecff6e08d34c470180ffe16b8e14b6d52be292b55f
       url: "https://pub.dev"
     source: hosted
-    version: "4.7.0"
+    version: "4.8.0"
   collection:
     dependency: "direct main"
     description:
@@ -207,18 +207,18 @@ packages:
     dependency: transitive
     description:
       name: dart_style
-      sha256: abd7625e16f51f554ea244d090292945ec4d4be7bfbaf2ec8cccea568919d334
+      sha256: "40ae61a5d43feea6d24bd22c0537a6629db858963b99b4bc1c3db80676f32368"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.3"
+    version: "2.3.4"
   dio:
     dependency: "direct main"
     description:
       name: dio
-      sha256: "417e2a6f9d83ab396ec38ff4ea5da6c254da71e4db765ad737a42af6930140b7"
+      sha256: "01870acd87986f768e0c09cc4d7a19a59d814af7b34cbeb0b437d2c33bdfea4c"
       url: "https://pub.dev"
     source: hosted
-    version: "5.3.3"
+    version: "5.3.4"
   fake_async:
     dependency: transitive
     description:
@@ -248,7 +248,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "31643a6447703d5e2106782f97fe04bbce3199c9"
+      resolved-ref: "28e5aa3c864ea27652c2f90062fac70ea7297a21"
       url: "git@github.com:FindX-0/findx_dart_client.git"
     source: git
     version: "0.0.1"
@@ -363,6 +363,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  fluttertoast:
+    dependency: "direct main"
+    description:
+      name: fluttertoast
+      sha256: dfdde255317af381bfc1c486ed968d5a43a2ded9c931e87cbecd88767d6a71c1
+      url: "https://pub.dev"
+    source: hosted
+    version: "8.2.4"
   freezed:
     dependency: "direct dev"
     description:
@@ -440,7 +448,7 @@ packages:
     description:
       path: "packages/gql_client"
       ref: HEAD
-      resolved-ref: "31643a6447703d5e2106782f97fe04bbce3199c9"
+      resolved-ref: "28e5aa3c864ea27652c2f90062fac70ea7297a21"
       url: "git@github.com:FindX-0/findx_dart_client.git"
     source: git
     version: "0.0.1"
@@ -505,7 +513,7 @@ packages:
     description:
       path: "packages/gql_types"
       ref: HEAD
-      resolved-ref: "31643a6447703d5e2106782f97fe04bbce3199c9"
+      resolved-ref: "28e5aa3c864ea27652c2f90062fac70ea7297a21"
       url: "git@github.com:FindX-0/findx_dart_client.git"
     source: git
     version: "1.0.0"

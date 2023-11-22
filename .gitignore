@@ -42,4 +42,10 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+lib/**/*.g.dart
+lib/**/*.config.dart
+lib/**/*.freezed.dart
+
 .env.local
+
+lib/app/intl/**.dart

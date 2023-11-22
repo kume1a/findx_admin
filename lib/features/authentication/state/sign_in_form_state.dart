@@ -5,6 +5,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../app/navigation/page_navigator.dart';
+import '../util/notify_admin_sign_in_failure.dart';
+
 part 'sign_in_form_state.freezed.dart';
 
 @freezed
@@ -32,9 +35,13 @@ extension SignInFormCubitX on BuildContext {
 class SignInFormCubit extends Cubit<SignInFormState> {
   SignInFormCubit(
     this._authenticationFacade,
+    this._authTokenStore,
+    this._pageNavigator,
   ) : super(SignInFormState.initial());
 
   final AuthenticationFacade _authenticationFacade;
+  final AuthTokenStore _authTokenStore;
+  final PageNavigator _pageNavigator;
 
   void onEmailChanged(String value) {
     emit(state.copyWith(email: Email(value)));
@@ -54,6 +61,16 @@ class SignInFormCubit extends Cubit<SignInFormState> {
     final res = await _authenticationFacade.adminSignIn(
       email: state.email.getOrThrow,
       password: state.password.getOrThrow,
+    );
+
+    res.fold(
+      notifyAdminSignInFailure,
+      (r) async {
+        await _authTokenStore.writeAccessToken(r.accessToken);
+        await _authTokenStore.writeRefreshToken(r.refreshToken);
+
+        _pageNavigator.toMain();
+      },
     );
   }
 }

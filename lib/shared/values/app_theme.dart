@@ -9,7 +9,7 @@ final _defaultButtonShape = RoundedRectangleBorder(borderRadius: BorderRadius.ci
 const _defaultButtonPadding = EdgeInsets.symmetric(vertical: 12, horizontal: 16);
 
 abstract final class AppTheme {
-  static final darkTheme = ThemeData.dark().copyWith(
+  static final darkTheme = ThemeData.dark(useMaterial3: true).copyWith(
     colorScheme: ColorScheme.fromSeed(
       brightness: Brightness.dark,
       seedColor: Palette.primary,
@@ -19,6 +19,7 @@ abstract final class AppTheme {
     scaffoldBackgroundColor: Palette.bg,
     textTheme: GoogleFonts.poppinsTextTheme().apply(
       bodyColor: Palette.elPrimary,
+      displayColor: Palette.elPrimary,
     ),
     canvasColor: Palette.secondary,
     inputDecorationTheme: InputDecorationTheme(

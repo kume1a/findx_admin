@@ -19,6 +19,7 @@ class SignInForm extends StatelessWidget {
       ),
       constraints: const BoxConstraints(maxWidth: 400),
       padding: const EdgeInsets.all(20),
+      margin: const EdgeInsets.all(20),
       child: BlocBuilder<SignInFormCubit, SignInFormState>(
         buildWhen: (prev, curr) => prev.validateForm != curr.validateForm,
         builder: (_, state) {
@@ -29,9 +30,9 @@ class SignInForm extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 const SizedBox(height: 32),
-                const Text(
+                Text(
                   'Sign in',
-                  style: TextStyle(fontSize: 24),
+                  style: theme.textTheme.headlineMedium,
                   textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 64),
