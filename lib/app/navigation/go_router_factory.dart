@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../features/authentication/api/auth_status_provider.dart';
 import '../../shared/abstract/factory.dart';
+import 'routes.dart';
 import 'typed_routes.dart';
 
 @lazySingleton
@@ -17,7 +18,7 @@ class GoRouterFactory implements Factory<GoRouter> {
   @override
   GoRouter newInstance() {
     return GoRouter(
-      initialLocation: '/',
+      initialLocation: Routes.main,
       routes: $appRoutes,
       redirect: (BuildContext context, GoRouterState state) async {
         final isAuthenticated = await _authStatusProvider.get();
