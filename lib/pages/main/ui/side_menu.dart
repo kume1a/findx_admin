@@ -14,6 +14,10 @@ final List<SideMenuItem> sideMenuItems = [
   SideMenuNavDestination(assetName: Assets.iconSettings, name: 'Settings'),
   SideMenuSeparator(title: 'User'),
   SideMenuNavDestination(assetName: Assets.iconProfile, name: 'Users'),
+  SideMenuSeparator(title: 'Math'),
+  SideMenuNavDestination(assetName: Assets.iconDashboard, name: 'MathField'),
+  SideMenuNavDestination(assetName: Assets.iconDashboard, name: 'MathSubField'),
+  SideMenuNavDestination(assetName: Assets.iconDashboard, name: 'MathProblem'),
 ];
 
 class SideMenu extends StatelessWidget {

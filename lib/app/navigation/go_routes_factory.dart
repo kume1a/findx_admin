@@ -4,6 +4,9 @@ import 'package:injectable/injectable.dart';
 
 import '../../pages/dashboard_page.dart';
 import '../../pages/main/main_page.dart';
+import '../../pages/math_field_list_page.dart';
+import '../../pages/math_problem_list_page.dart';
+import '../../pages/math_sub_field_list_page.dart';
 import '../../pages/settings_page.dart';
 import '../../pages/sign_in_page.dart';
 import '../../pages/users_page.dart';
@@ -30,7 +33,6 @@ class GoRoutesFactory implements Factory<List<RouteBase>> {
       parentNavigatorKey: NavigatorKeyHolder.rootKey,
       branches: [
         StatefulShellBranch(
-          navigatorKey: NavigatorKeyHolder.dashboardKey,
           routes: [
             GoRoute(
               path: Routes.dashboard,
@@ -39,7 +41,6 @@ class GoRoutesFactory implements Factory<List<RouteBase>> {
           ],
         ),
         StatefulShellBranch(
-          navigatorKey: NavigatorKeyHolder.settingsKey,
           routes: [
             GoRoute(
               path: Routes.settings,
@@ -48,11 +49,34 @@ class GoRoutesFactory implements Factory<List<RouteBase>> {
           ],
         ),
         StatefulShellBranch(
-          navigatorKey: NavigatorKeyHolder.usersKey,
           routes: [
             GoRoute(
               path: Routes.users,
               builder: (_, __) => const UsersPage(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: Routes.mathFieldList,
+              builder: (_, __) => const MathFieldListPage(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: Routes.mathSubFieldList,
+              builder: (_, __) => const MathSubFieldListPage(),
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: Routes.mathProblemList,
+              builder: (_, __) => const MathProblemListPage(),
             ),
           ],
         ),
