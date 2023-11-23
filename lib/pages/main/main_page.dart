@@ -1,35 +1,45 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../shared/ui/responsive.dart';
-import '../dashboard/dashboard_page.dart';
 import 'ui/side_menu.dart';
 
 class MainPage extends StatelessWidget {
-  const MainPage({super.key});
+  const MainPage({
+    super.key,
+    required this.child,
+  });
+
+  final StatefulNavigationShell child;
 
   @override
   Widget build(BuildContext context) {
+    final sideMenu = SideMenu(
+      onNavChange: onNavChange,
+      currentIndex: child.currentIndex,
+    );
+
     return Scaffold(
-      drawer: const SideMenu(),
+      drawer: sideMenu,
       body: SafeArea(
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // We want this side menu only for large screen
-            if (Responsive.isDesktop(context))
-              const Expanded(
-                // default flex = 1
-                // and it takes 1/6 part of the screen
-                child: SideMenu(),
-              ),
-            const Expanded(
-              // It takes 5/6 part of the screen
+            if (Responsive.isDesktop(context)) Expanded(child: sideMenu),
+            Expanded(
               flex: 5,
-              child: DashboardPage(),
+              child: child,
             ),
           ],
         ),
       ),
+    );
+  }
+
+  void onNavChange(int index) {
+    child.goBranch(
+      index,
+      initialLocation: index == child.currentIndex,
     );
   }
 }

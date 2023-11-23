@@ -1,12 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../../../shared/ui/color.dart';
+import '../../../shared/values/app_theme_extension.dart';
 import '../../../shared/values/assets.dart';
+
+typedef OnSideMenuNavChange = void Function(int index);
+
+class NavDestination {
+  NavDestination({
+    required this.assetName,
+    required this.name,
+  });
+
+  final String assetName;
+  final String name;
+}
+
+final List<NavDestination> navItems = [
+  NavDestination(assetName: Assets.iconDashboard, name: 'Dashboard'),
+  NavDestination(assetName: Assets.iconSettings, name: 'Settings'),
+];
 
 class SideMenu extends StatelessWidget {
   const SideMenu({
     Key? key,
+    required this.onNavChange,
+    required this.currentIndex,
   }) : super(key: key);
+
+  final OnSideMenuNavChange onNavChange;
+  final int currentIndex;
 
   @override
   Widget build(BuildContext context) {
@@ -17,26 +41,13 @@ class SideMenu extends StatelessWidget {
             padding: const EdgeInsets.all(24),
             child: Image.asset(Assets.imageLogoTransparentBgWhite),
           ),
-          DrawerListTile(
-            title: 'Dashboard',
-            svgSrc: Assets.iconDashboard,
-            press: () {},
-          ),
-          DrawerListTile(
-            title: 'Documents',
-            svgSrc: Assets.iconDoc,
-            press: () {},
-          ),
-          DrawerListTile(
-            title: 'Notification',
-            svgSrc: Assets.iconNotification,
-            press: () {},
-          ),
-          DrawerListTile(
-            title: 'Settings',
-            svgSrc: Assets.iconSettings,
-            press: () {},
-          ),
+          for (final (index, navItem) in navItems.indexed)
+            DrawerListTile(
+              title: navItem.name,
+              assetName: navItem.assetName,
+              onClick: () => onNavChange(index),
+              isSelected: index == currentIndex,
+            ),
         ],
       ),
     );
@@ -47,21 +58,27 @@ class DrawerListTile extends StatelessWidget {
   const DrawerListTile({
     Key? key,
     required this.title,
-    required this.svgSrc,
-    required this.press,
+    required this.assetName,
+    required this.onClick,
+    required this.isSelected,
   }) : super(key: key);
 
-  final String title, svgSrc;
-  final VoidCallback press;
+  final String title, assetName;
+  final VoidCallback onClick;
+  final bool isSelected;
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return ListTile(
-      onTap: press,
+      onTap: onClick,
       horizontalTitleGap: 0.0,
+      selectedColor: Colors.white10,
+      selected: isSelected,
       leading: SvgPicture.asset(
-        svgSrc,
-        colorFilter: const ColorFilter.mode(Colors.white54, BlendMode.srcIn),
+        assetName,
+        colorFilter: svgColor(theme.appThemeExtension?.elSecondary),
         height: 16,
       ),
       title: Text(

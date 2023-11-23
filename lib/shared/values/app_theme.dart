@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'app_theme_extension.dart';
 import 'palette.dart';
 
 final _defaultInputBorderRadius = BorderRadius.circular(32);
@@ -55,5 +56,10 @@ abstract final class AppTheme {
         visualDensity: VisualDensity.compact,
       ),
     ),
+    extensions: [
+      AppThemeExtension(
+        elSecondary: Palette.elSecondary,
+      ),
+    ],
   );
 }
