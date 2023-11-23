@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -45,7 +47,10 @@ class SideMenu extends StatelessWidget {
             DrawerListTile(
               title: navItem.name,
               assetName: navItem.assetName,
-              onClick: () => onNavChange(index),
+              onClick: () {
+                onNavChange(index);
+                Scaffold.of(context).closeDrawer();
+              },
               isSelected: index == currentIndex,
             ),
         ],
@@ -74,7 +79,7 @@ class DrawerListTile extends StatelessWidget {
     return ListTile(
       onTap: onClick,
       horizontalTitleGap: 0.0,
-      selectedColor: Colors.white10,
+      selectedTileColor: Colors.white.withOpacity(.05),
       selected: isSelected,
       leading: SvgPicture.asset(
         assetName,

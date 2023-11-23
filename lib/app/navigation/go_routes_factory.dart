@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../pages/dashboard/dashboard_page.dart';
+import '../../pages/dashboard_page.dart';
 import '../../pages/main/main_page.dart';
 import '../../pages/settings_page.dart';
 import '../../pages/sign_in_page.dart';

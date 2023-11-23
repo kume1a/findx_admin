@@ -1,34 +1,53 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
 
-import '../../../shared/ui/color.dart';
-import '../../../shared/ui/responsive.dart';
-import '../../../shared/values/assets.dart';
-import '../../../shared/values/palette.dart';
+import '../../shared/ui/color.dart';
+import '../../shared/ui/responsive.dart';
+import '../../shared/values/assets.dart';
+import '../../shared/values/palette.dart';
 
-class Header extends StatelessWidget {
-  const Header({
-    Key? key,
-  }) : super(key: key);
+class SideMenuPage extends StatelessWidget {
+  const SideMenuPage({
+    super.key,
+    required this.child,
+    this.title,
+  });
+
+  final String? title;
+  final Widget child;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        if (!Responsive.isDesktop(context))
-          IconButton(
-            icon: const Icon(Icons.menu),
-            onPressed: () => Scaffold.of(context).openDrawer(),
+    final theme = Theme.of(context);
+
+    final isMobile = Responsive.isMobile(context);
+    final isDesktop = Responsive.isDesktop(context);
+
+    return Padding(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        children: [
+          Row(
+            children: [
+              if (!isDesktop)
+                IconButton(
+                  icon: const Icon(Icons.menu),
+                  onPressed: () => Scaffold.of(context).openDrawer(),
+                ),
+              if (title != null && !isMobile)
+                Text(
+                  title!,
+                  style: theme.textTheme.titleLarge,
+                ),
+              if (!isMobile) Spacer(flex: isDesktop ? 2 : 1),
+              // const Expanded(child: SearchField()),
+              // const ProfileCard()
+            ],
           ),
-        if (!Responsive.isMobile(context))
-          Text(
-            'Dashboard',
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-        if (!Responsive.isMobile(context)) Spacer(flex: Responsive.isDesktop(context) ? 2 : 1),
-        const Expanded(child: SearchField()),
-        const ProfileCard()
-      ],
+          Expanded(child: child),
+        ],
+      ),
     );
   }
 }
