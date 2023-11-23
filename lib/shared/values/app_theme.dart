@@ -59,6 +59,7 @@ abstract final class AppTheme {
     extensions: [
       AppThemeExtension(
         elSecondary: Palette.elSecondary,
+        elPrimary: Palette.elPrimary,
       ),
     ],
   );

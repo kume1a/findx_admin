@@ -4,4 +4,5 @@ abstract final class Routes {
 
   static const String dashboard = '/dashboard';
   static const String settings = '/settings';
+  static const String users = '/users';
 }

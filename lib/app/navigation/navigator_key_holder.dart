@@ -5,4 +5,5 @@ abstract final class NavigatorKeyHolder {
 
   static final dashboardKey = GlobalKey<NavigatorState>();
   static final settingsKey = GlobalKey<NavigatorState>();
+  static final usersKey = GlobalKey<NavigatorState>();
 }

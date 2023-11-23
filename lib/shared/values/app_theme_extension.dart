@@ -7,16 +7,20 @@ extension ThemeDataX on ThemeData {
 class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
   AppThemeExtension({
     required this.elSecondary,
+    required this.elPrimary,
   });
 
   final Color elSecondary;
+  final Color elPrimary;
 
   @override
   ThemeExtension<AppThemeExtension> copyWith({
     Color? elSecondary,
+    Color? elPrimary,
   }) {
     return AppThemeExtension(
       elSecondary: elSecondary ?? this.elSecondary,
+      elPrimary: elPrimary ?? this.elPrimary,
     );
   }
 
@@ -28,6 +32,7 @@ class AppThemeExtension extends ThemeExtension<AppThemeExtension> {
 
     return AppThemeExtension(
       elSecondary: Color.lerp(elSecondary, other.elSecondary, t) ?? elSecondary,
+      elPrimary: Color.lerp(elPrimary, other.elPrimary, t) ?? elPrimary,
     );
   }
 }
