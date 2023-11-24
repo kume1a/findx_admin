@@ -15,9 +15,9 @@ final List<SideMenuItem> sideMenuItems = [
   SideMenuSeparator(title: 'User'),
   SideMenuNavDestination(assetName: Assets.iconProfile, name: 'Users'),
   SideMenuSeparator(title: 'Math'),
-  SideMenuNavDestination(assetName: Assets.iconDashboard, name: 'MathField'),
-  SideMenuNavDestination(assetName: Assets.iconDashboard, name: 'MathSubField'),
-  SideMenuNavDestination(assetName: Assets.iconDashboard, name: 'MathProblem'),
+  SideMenuNavDestination(assetName: Assets.iconCategory, name: 'MathField'),
+  SideMenuNavDestination(assetName: Assets.iconSubCategory, name: 'MathSubField'),
+  SideMenuNavDestination(assetName: Assets.iconMathFunction, name: 'MathProblem'),
 ];
 
 class SideMenu extends StatelessWidget {

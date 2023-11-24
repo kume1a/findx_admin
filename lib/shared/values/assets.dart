@@ -16,4 +16,7 @@ class Assets {
   static const String iconNotification = '$_icons/doc.svg';
   static const String iconSettings = '$_icons/settings.svg';
   static const String iconSearch = '$_icons/search.svg';
+  static const String iconCategory = '$_icons/category.svg';
+  static const String iconSubCategory = '$_icons/sub_category.svg';
+  static const String iconMathFunction = '$_icons/math_function.svg';
 }
