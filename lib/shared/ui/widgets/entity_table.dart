@@ -17,6 +17,7 @@ class EntityTable<T> extends StatelessWidget {
     super.key,
     required this.columns,
     required this.cellsBuilder,
+    required this.onLoadMorePressed,
     this.onView,
     this.onUpdate,
     this.onDelete,
@@ -27,6 +28,8 @@ class EntityTable<T> extends StatelessWidget {
   final List<DataColumn> columns;
   final EntityCellsBuilder<T> cellsBuilder;
 
+  final VoidCallback onLoadMorePressed;
+
   final OnEntityAction? onView;
   final OnEntityAction? onUpdate;
   final OnEntityAction? onDelete;
@@ -35,9 +38,10 @@ class EntityTable<T> extends StatelessWidget {
   Widget build(BuildContext context) {
     return dataState.maybeWhen(
       success: (data) => _Success<T>(
-        data.items,
+        data,
         columns: columns,
         cellsBuilder: cellsBuilder,
+        onLoadMorePressed: onLoadMorePressed,
         onView: onView,
         onUpdate: onUpdate,
         onDelete: onDelete,
@@ -53,15 +57,18 @@ class _Success<T> extends StatelessWidget {
     this.data, {
     required this.columns,
     required this.cellsBuilder,
+    required this.onLoadMorePressed,
     this.onView,
     this.onUpdate,
     this.onDelete,
   });
 
-  final List<T> data;
+  final DataPage<T> data;
 
   final List<DataColumn> columns;
   final EntityCellsBuilder<T> cellsBuilder;
+
+  final VoidCallback onLoadMorePressed;
 
   final OnEntityAction? onView;
   final OnEntityAction? onUpdate;
@@ -69,23 +76,38 @@ class _Success<T> extends StatelessWidget {
 
   bool get _isAnyActionAvailable => onView != null || onUpdate != null || onDelete != null;
 
+  bool get _canLoadMore => data.items.length < data.count;
+
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
     return SingleChildScrollView(
-      child: DataTable(
-        dividerThickness: 0,
-        headingTextStyle: TextStyle(
-          color: theme.appThemeExtension?.elSecondary,
-        ),
-        dataRowMaxHeight: 80,
-        horizontalMargin: 0,
-        columns: [
-          ...columns,
-          if (_isAnyActionAvailable) const DataColumn(label: SizedBox.shrink()),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 12),
+            child: Text(
+              'Total: ${data.count}',
+              style: TextStyle(color: theme.appThemeExtension?.elSecondary),
+            ),
+          ),
+          DataTable(
+            dividerThickness: 0,
+            headingTextStyle: TextStyle(
+              color: theme.appThemeExtension?.elSecondary,
+            ),
+            dataRowMaxHeight: 80,
+            horizontalMargin: 0,
+            columns: [
+              ...columns,
+              if (_isAnyActionAvailable) const DataColumn(label: SizedBox.shrink()),
+            ],
+            rows: data.items.map((e) => _dataRow(e, context, theme)).toList(),
+          ),
+          if (_canLoadMore) _LoadMoreButton(onPressed: onLoadMorePressed)
         ],
-        rows: data.map((e) => _dataRow(e, context, theme)).toList(),
       ),
     );
   }
@@ -122,6 +144,31 @@ class _Success<T> extends StatelessWidget {
             ),
           ),
       ],
+    );
+  }
+}
+
+class _LoadMoreButton extends StatelessWidget {
+  const _LoadMoreButton({
+    super.key,
+    required this.onPressed,
+  });
+
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 32),
+        child: TextButton(
+          style: TextButton.styleFrom(
+            padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+          ),
+          onPressed: onPressed,
+          child: const Text('Load more'),
+        ),
+      ),
     );
   }
 }

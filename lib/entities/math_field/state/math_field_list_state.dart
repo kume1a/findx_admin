@@ -1,10 +1,16 @@
 import 'package:common_models/common_models.dart';
 import 'package:findx_dart_client/app_client.dart';
+import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../shared/state/data_pager_with_last_id_cubit.dart';
 
 typedef MathFieldListState = DataState<FetchFailure, DataPage<MathFieldPageItem>>;
+
+extension MathFieldListCubitX on BuildContext {
+  MathFieldListCubit get mathFieldListCubit => read<MathFieldListCubit>();
+}
 
 @injectable
 final class MathFieldListCubit extends DataPagerWithLastIdCubit<FetchFailure, MathFieldPageItem> {

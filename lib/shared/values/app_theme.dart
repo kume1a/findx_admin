@@ -61,6 +61,11 @@ abstract final class AppTheme {
         visualDensity: VisualDensity.compact,
       ),
     ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+      style: ElevatedButton.styleFrom(
+        elevation: 0,
+      ),
+    ),
     extensions: [
       AppThemeExtension(
         elSecondary: Palette.elSecondary,
