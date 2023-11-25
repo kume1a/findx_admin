@@ -44,6 +44,10 @@ class AppEnvironment {
   }
 
   static String get apiUrl => dotenv.get('API_URL');
+
+  static String get debugEmail => dotenv.get('DEBUG_EMAIL');
+
+  static String get debugPassword => dotenv.get('DEBUG_PASSWORD');
 }
 
 class _DotEnvLoader {

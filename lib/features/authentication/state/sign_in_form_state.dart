@@ -1,10 +1,12 @@
 import 'package:common_models/common_models.dart';
 import 'package:findx_dart_client/app_client.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../app/app_environment.dart';
 import '../../../app/navigation/page_navigator.dart';
 import '../util/notify_admin_sign_in_failure.dart';
 
@@ -37,7 +39,16 @@ class SignInFormCubit extends Cubit<SignInFormState> {
     this._authenticationFacade,
     this._authTokenStore,
     this._pageNavigator,
-  ) : super(SignInFormState.initial());
+  ) : super(SignInFormState.initial()) {
+    if (kDebugMode) {
+      emit(state.copyWith(
+        email: Email(AppEnvironment.debugEmail),
+        password: Password(AppEnvironment.debugPassword),
+      ));
+
+      onSubmit();
+    }
+  }
 
   final AuthenticationFacade _authenticationFacade;
   final AuthTokenStore _authTokenStore;
