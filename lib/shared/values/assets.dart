@@ -19,4 +19,7 @@ class Assets {
   static const String iconCategory = '$_icons/category.svg';
   static const String iconSubCategory = '$_icons/sub_category.svg';
   static const String iconMathFunction = '$_icons/math_function.svg';
+  static const String iconEye = '$_icons/eye.svg';
+  static const String iconPencil = '$_icons/pencil.svg';
+  static const String iconTrashCan = '$_icons/trash_can.svg';
 }

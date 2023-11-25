@@ -11,18 +11,23 @@ const _defaultButtonPadding = EdgeInsets.symmetric(vertical: 12, horizontal: 16)
 
 abstract final class AppTheme {
   static final darkTheme = ThemeData.dark(useMaterial3: true).copyWith(
+    scaffoldBackgroundColor: Palette.bg,
+    canvasColor: Palette.secondary,
     colorScheme: ColorScheme.fromSeed(
       brightness: Brightness.dark,
       seedColor: Palette.primary,
       primaryContainer: Palette.primaryContainer,
       secondaryContainer: Palette.secondaryContainer,
     ),
-    scaffoldBackgroundColor: Palette.bg,
     textTheme: GoogleFonts.poppinsTextTheme().apply(
       bodyColor: Palette.elPrimary,
       displayColor: Palette.elPrimary,
     ),
-    canvasColor: Palette.secondary,
+    dialogTheme: DialogTheme(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(24),
+      ),
+    ),
     inputDecorationTheme: InputDecorationTheme(
       filled: true,
       fillColor: Palette.primaryContainer,

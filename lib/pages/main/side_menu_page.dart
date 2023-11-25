@@ -25,8 +25,9 @@ class SideMenuPage extends StatelessWidget {
     final isDesktop = Responsive.isDesktop(context);
 
     return Padding(
-      padding: const EdgeInsets.all(16),
+      padding: const EdgeInsets.all(32),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Row(
             children: [
@@ -45,6 +46,7 @@ class SideMenuPage extends StatelessWidget {
               // const ProfileCard()
             ],
           ),
+          const SizedBox(height: 24),
           Expanded(child: child),
         ],
       ),

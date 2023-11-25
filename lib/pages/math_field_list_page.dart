@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../app/di/register_dependencies.dart';
+import '../entities/math_field/state/math_field_list_state.dart';
+import '../entities/math_field/ui/math_field_list.dart';
 import 'main/side_menu_page.dart';
 
 class MathFieldListPage extends StatelessWidget {
@@ -7,9 +11,21 @@ class MathFieldListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SideMenuPage(
+    return BlocProvider(
+      create: (_) => getIt<MathFieldListCubit>(),
+      child: const _Content(),
+    );
+  }
+}
+
+class _Content extends StatelessWidget {
+  const _Content();
+
+  @override
+  Widget build(BuildContext context) {
+    return const SideMenuPage(
       title: 'MathField',
-      child: Container(),
+      child: MathFieldList(),
     );
   }
 }
