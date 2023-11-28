@@ -150,7 +150,6 @@ class _Success<T> extends StatelessWidget {
 
 class _LoadMoreButton extends StatelessWidget {
   const _LoadMoreButton({
-    super.key,
     required this.onPressed,
   });
 
@@ -231,7 +230,7 @@ class _DeleteButton extends HookWidget {
 }
 
 class _ConfirmDeleteDialog extends StatelessWidget {
-  const _ConfirmDeleteDialog({super.key});
+  const _ConfirmDeleteDialog();
 
   @override
   Widget build(BuildContext context) {

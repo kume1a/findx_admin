@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../app/di/register_dependencies.dart';
 import '../entities/math_field/state/math_field_list_state.dart';
-import '../entities/math_field/ui/math_field_list.dart';
+import '../entities/math_field/ui/math_field_table.dart';
 import 'main/side_menu_page.dart';
 
 class MathFieldListPage extends StatelessWidget {
@@ -25,7 +25,7 @@ class _Content extends StatelessWidget {
   Widget build(BuildContext context) {
     return const SideMenuPage(
       title: 'MathField',
-      child: MathFieldList(),
+      child: MathFieldTable(),
     );
   }
 }
