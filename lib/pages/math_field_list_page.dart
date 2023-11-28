@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 
 import '../app/di/register_dependencies.dart';
@@ -20,15 +21,24 @@ class MathFieldListPage extends StatelessWidget {
   }
 }
 
-class _Content extends StatelessWidget {
+class _Content extends HookWidget {
   const _Content();
 
   @override
   Widget build(BuildContext context) {
+    final isMounted = useIsMounted();
+
     return SideMenuPage(
       title: 'MathField',
       headerEnd: TextButton(
-        onPressed: () => context.go(AppRouteBuilder.mutateMathField()),
+        onPressed: () async {
+          await context.push(AppRouteBuilder.mutateMathField());
+
+          if (isMounted()) {
+            // ignore: use_build_context_synchronously
+            context.mathFieldListCubit.onRefresh();
+          }
+        },
         child: const Text('Create new'),
       ),
       child: const MathFieldTable(),

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
 import 'app/app.dart';
@@ -11,6 +12,8 @@ Future<void> main() async {
 
   await AppEnvironment.load();
   await registerDependencies(kDebugMode ? Environment.dev : Environment.prod);
+
+  GoRouter.optionURLReflectsImperativeAPIs = true;
 
   runApp(const App());
 }

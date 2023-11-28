@@ -22,3 +22,13 @@ extension PasswordFailureI18nX on PasswordFailure {
     );
   }
 }
+
+extension NameFailureI18nX on NameFailure {
+  String? translate() {
+    return when(
+      empty: () => 'Field is required',
+      tooShort: () => 'Name length is too short',
+      tooLong: () => 'Name length is too long',
+    );
+  }
+}

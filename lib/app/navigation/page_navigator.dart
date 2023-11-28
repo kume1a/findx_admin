@@ -11,6 +11,10 @@ final class PageNavigator {
 
   final GoRouter _router;
 
+  void pop<T>([T? result]) {
+    _router.pop(result);
+  }
+
   void toMain() {
     _router.go(Routes.main);
   }
