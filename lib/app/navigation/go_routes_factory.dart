@@ -7,6 +7,9 @@ import '../../pages/main/main_page.dart';
 import '../../pages/math_field_list_page.dart';
 import '../../pages/math_problem_list_page.dart';
 import '../../pages/math_sub_field_list_page.dart';
+import '../../pages/mutate_math_field_page.dart';
+import '../../pages/mutate_math_problem_page.dart';
+import '../../pages/mutate_math_sub_field_page.dart';
 import '../../pages/settings_page.dart';
 import '../../pages/sign_in_page.dart';
 import '../../pages/users_page.dart';
@@ -61,6 +64,12 @@ class GoRoutesFactory implements Factory<List<RouteBase>> {
             GoRoute(
               path: Routes.mathFieldList,
               builder: (_, __) => const MathFieldListPage(),
+              routes: [
+                GoRoute(
+                  path: Routes.mutateMathField,
+                  builder: (_, __) => const MutateMathFieldPage(),
+                ),
+              ],
             ),
           ],
         ),
@@ -69,6 +78,12 @@ class GoRoutesFactory implements Factory<List<RouteBase>> {
             GoRoute(
               path: Routes.mathSubFieldList,
               builder: (_, __) => const MathSubFieldListPage(),
+              routes: [
+                GoRoute(
+                  path: Routes.mutateMathSubField,
+                  builder: (_, __) => const MutateMathSubFieldPage(),
+                ),
+              ],
             ),
           ],
         ),
@@ -77,6 +92,12 @@ class GoRoutesFactory implements Factory<List<RouteBase>> {
             GoRoute(
               path: Routes.mathProblemList,
               builder: (_, __) => const MathProblemListPage(),
+              routes: [
+                GoRoute(
+                  path: Routes.mutateMathProblem,
+                  builder: (_, __) => const MutateMathProblemPage(),
+                ),
+              ],
             ),
           ],
         ),

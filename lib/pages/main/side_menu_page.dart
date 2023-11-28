@@ -6,12 +6,14 @@ class SideMenuPage extends StatelessWidget {
   const SideMenuPage({
     super.key,
     required this.child,
+    this.showBackButton = false,
     this.title,
     this.headerEnd,
   });
 
-  final String? title;
   final Widget child;
+  final bool showBackButton;
+  final String? title;
   final Widget? headerEnd;
 
   @override
@@ -28,17 +30,23 @@ class SideMenuPage extends StatelessWidget {
         children: [
           Row(
             children: [
+              if (showBackButton)
+                const Padding(
+                  padding: EdgeInsets.only(right: 12),
+                  child: BackButton(),
+                ),
               if (!isDesktop)
                 IconButton(
                   icon: const Icon(Icons.menu),
                   onPressed: () => Scaffold.of(context).openDrawer(),
                 ),
               if (title != null && !isMobile)
-                Text(
-                  title!,
-                  style: theme.textTheme.titleLarge,
+                Expanded(
+                  child: Text(
+                    title!,
+                    style: theme.textTheme.titleLarge,
+                  ),
                 ),
-              if (!isMobile) Spacer(flex: isDesktop ? 2 : 1),
               if (headerEnd != null) headerEnd!,
             ],
           ),

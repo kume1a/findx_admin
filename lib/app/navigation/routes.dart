@@ -6,6 +6,9 @@ abstract final class Routes {
   static const String settings = '/settings';
   static const String users = '/users';
   static const String mathFieldList = '/mathFieldList';
+  static const String mutateMathField = 'mutateMathField';
   static const String mathSubFieldList = '/mathSubFieldList';
+  static const String mutateMathSubField = 'mutateMathSubField';
   static const String mathProblemList = '/mathProblemList';
+  static const String mutateMathProblem = 'mutateMathProblem';
 }

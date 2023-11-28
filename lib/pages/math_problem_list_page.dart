@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../app/di/register_dependencies.dart';
+import '../app/navigation/app_route_builder.dart';
 import '../entities/math_problem/state/math_problem_list_state.dart';
 import '../entities/math_problem/ui/math_problem_table.dart';
 import 'main/side_menu_page.dart';
@@ -23,9 +25,13 @@ class _Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SideMenuPage(
+    return SideMenuPage(
       title: 'MathProblem',
-      child: MathProblemTable(),
+      headerEnd: TextButton(
+        onPressed: () => context.go(AppRouteBuilder.mutateMathProblem()),
+        child: const Text('Create new'),
+      ),
+      child: const MathProblemTable(),
     );
   }
 }
