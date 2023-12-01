@@ -19,9 +19,7 @@ class MutateMathFieldForm extends StatelessWidget {
               TextFormField(
                 controller: context.mutateMathFieldFormCubit.nameFieldController,
                 keyboardType: TextInputType.name,
-                decoration: const InputDecoration(
-                  hintText: 'Name',
-                ),
+                decoration: const InputDecoration(hintText: 'Name'),
                 onChanged: context.mutateMathFieldFormCubit.onNameChanged,
                 validator: (_) => context.mutateMathFieldFormCubit.state.name.failureToString(
                   (f) => f.translate(),

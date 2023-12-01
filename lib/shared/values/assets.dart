@@ -22,4 +22,5 @@ class Assets {
   static const String iconEye = '$_icons/eye.svg';
   static const String iconPencil = '$_icons/pencil.svg';
   static const String iconTrashCan = '$_icons/trash_can.svg';
+  static const String iconChevronDown = '$_icons/chevron_down.svg';
 }

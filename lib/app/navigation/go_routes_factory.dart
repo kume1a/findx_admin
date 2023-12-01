@@ -87,7 +87,13 @@ class GoRoutesFactory implements Factory<List<RouteBase>> {
               routes: [
                 GoRoute(
                   path: Routes.mutateMathSubField,
-                  builder: (_, __) => const MutateMathSubFieldPage(),
+                  builder: (_, state) {
+                    final mathSubFieldId = state.uri.queryParameters['mathSubFieldId'];
+
+                    return MutateMathSubFieldPage(
+                      mathSubFieldId: mathSubFieldId,
+                    );
+                  },
                 ),
               ],
             ),

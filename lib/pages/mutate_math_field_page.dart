@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../app/di/register_dependencies.dart';
 import '../entities/math_field/state/mutate_math_field_form_state.dart';
 import '../entities/math_field/ui/mutate_math_field_form.dart';
-import '../shared/ui/responsive_builder.dart';
+import '../shared/ui/widgets/responsive_form.dart';
 import 'main/side_menu_page.dart';
 
 class MutateMathFieldPage extends StatelessWidget {
@@ -29,19 +29,10 @@ class _Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SideMenuPage(
+    return const SideMenuPage(
       showBackButton: true,
       title: 'Mutate math field',
-      child: ResponsiveBuilder(
-        mobile: (_, __) => const MutateMathFieldForm(),
-        desktop: (_, constraints) => Align(
-          alignment: Alignment.topLeft,
-          child: SizedBox(
-            width: constraints.maxWidth * .5,
-            child: const MutateMathFieldForm(),
-          ),
-        ),
-      ),
+      child: ResponsiveForm(child: MutateMathFieldForm()),
     );
   }
 }

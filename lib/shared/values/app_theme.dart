@@ -66,6 +66,16 @@ abstract final class AppTheme {
         elevation: 0,
       ),
     ),
+    dropdownMenuTheme: DropdownMenuThemeData(
+      menuStyle: MenuStyle(
+        shape: MaterialStateProperty.all(
+          RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+        elevation: MaterialStateProperty.all(0),
+      ),
+    ),
     extensions: [
       AppThemeExtension(
         elSecondary: Palette.elSecondary,
