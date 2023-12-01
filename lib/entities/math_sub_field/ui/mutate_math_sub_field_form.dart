@@ -57,7 +57,10 @@ class _MathFieldIdField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MutateMathSubFieldFormCubit, MutateMathSubFieldFormState>(
-      buildWhen: (prev, curr) => prev.mathFields != curr.mathFields || prev.validateForm != curr.validateForm,
+      buildWhen: (prev, curr) =>
+          prev.mathFields != curr.mathFields ||
+          prev.mathFieldId != curr.mathFieldId ||
+          prev.validateForm != curr.validateForm,
       builder: (_, state) {
         return DropdownField(
           hintText: 'Math field id',

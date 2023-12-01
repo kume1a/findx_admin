@@ -107,7 +107,13 @@ class GoRoutesFactory implements Factory<List<RouteBase>> {
               routes: [
                 GoRoute(
                   path: Routes.mutateMathProblem,
-                  builder: (_, __) => const MutateMathProblemPage(),
+                  builder: (_, state) {
+                    final mathProblemId = state.uri.queryParameters['mathProblemId'];
+
+                    return MutateMathProblemPage(
+                      mathProblemId: mathProblemId,
+                    );
+                  },
                 ),
               ],
             ),

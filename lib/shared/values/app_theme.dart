@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'app_theme_extension.dart';
 import 'palette.dart';
 
-final _defaultInputBorderRadius = BorderRadius.circular(32);
+final _defaultInputBorderRadius = BorderRadius.circular(16);
 
 final _defaultButtonShape = RoundedRectangleBorder(borderRadius: BorderRadius.circular(16));
 const _defaultButtonPadding = EdgeInsets.symmetric(vertical: 12, horizontal: 16);

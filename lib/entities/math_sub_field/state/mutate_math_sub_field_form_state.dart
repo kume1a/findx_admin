@@ -89,7 +89,7 @@ class MutateMathSubFieldFormCubit extends Cubit<MutateMathSubFieldFormState> {
     emit(state.copyWith(name: Name(value)));
   }
 
-  void onMathFieldChanged(Fragment$MathField? value) {
+  void onMathFieldChanged(MathFieldPageItem? value) {
     if (value == null) {
       return;
     }

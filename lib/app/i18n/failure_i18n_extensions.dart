@@ -32,3 +32,12 @@ extension NameFailureI18nX on NameFailure {
     );
   }
 }
+
+extension ValueFailureI18nX on ValueFailure {
+  String? translate() {
+    return when(
+      empty: () => 'Field is required',
+      invalid: () => 'Value is invalid',
+    );
+  }
+}
