@@ -100,22 +100,6 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
     });
   }
 
-  Future<void> _fetchMathFields() async {
-    final res = await _mathFieldRemoteRepository.filter(
-      limit: 200,
-    );
-
-    emit(state.copyWith(mathFields: SimpleDataState.fromEither(res)));
-  }
-
-  Future<void> _fetchMathSubFields() async {
-    final res = await _mathSubFieldRemoteRepository.filter(
-      limit: 200,
-    );
-
-    emit(state.copyWith(mathSubFields: SimpleDataState.fromEither(res)));
-  }
-
   void onDifficultyChanged(String value) {
     emit(state.copyWith(difficulty: PositiveInt(value)));
   }
@@ -134,6 +118,8 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
     }
 
     emit(state.copyWith(mathFieldId: value.id));
+
+    _fetchMathSubFields(value);
   }
 
   void onMathSubFieldChanged(MathSubFieldPageItem? value) {
@@ -191,5 +177,22 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
         },
       );
     }
+  }
+
+  Future<void> _fetchMathFields() async {
+    final res = await _mathFieldRemoteRepository.filter(
+      limit: 200,
+    );
+
+    emit(state.copyWith(mathFields: SimpleDataState.fromEither(res)));
+  }
+
+  Future<void> _fetchMathSubFields(MathFieldPageItem mathField) async {
+    final res = await _mathSubFieldRemoteRepository.filter(
+      limit: 200,
+      mathFieldId: mathField.id,
+    );
+
+    emit(state.copyWith(mathSubFields: SimpleDataState.fromEither(res)));
   }
 }

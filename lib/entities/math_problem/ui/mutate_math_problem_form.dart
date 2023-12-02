@@ -128,7 +128,8 @@ class _MathSubFieldIdField extends StatelessWidget {
       buildWhen: (prev, curr) =>
           prev.mathSubFields != curr.mathSubFields ||
           prev.mathSubFieldId != curr.mathSubFieldId ||
-          prev.validateForm != curr.validateForm,
+          prev.validateForm != curr.validateForm ||
+          prev.mathFieldId != curr.mathFieldId,
       builder: (_, state) {
         return DropdownField(
           hintText: 'Math sub field id',
@@ -136,7 +137,8 @@ class _MathSubFieldIdField extends StatelessWidget {
           data: state.mathSubFields,
           currentValue: state.mathSubFieldId,
           itemBuilder: (e) => DropdownMenuItem(value: e, child: Text(e.name)),
-          onChanged: context.mutateMathProblemFormCubit.onMathSubFieldChanged,
+          onChanged:
+              state.mathFieldId != null ? context.mutateMathProblemFormCubit.onMathSubFieldChanged : null,
         );
       },
     );

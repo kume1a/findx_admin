@@ -232,7 +232,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: a15a36d6f2e7bb838b829b3d7ab227436d55c150
+      resolved-ref: "01b539cd157fb3e33dd18d83a4a443028d66097f"
       url: "git@github.com:FindX-0/findx_dart_client.git"
     source: git
     version: "0.0.1"
@@ -424,7 +424,7 @@ packages:
     description:
       path: "packages/gql_client"
       ref: HEAD
-      resolved-ref: a15a36d6f2e7bb838b829b3d7ab227436d55c150
+      resolved-ref: "01b539cd157fb3e33dd18d83a4a443028d66097f"
       url: "git@github.com:FindX-0/findx_dart_client.git"
     source: git
     version: "0.0.1"
@@ -489,7 +489,7 @@ packages:
     description:
       path: "packages/gql_types"
       ref: HEAD
-      resolved-ref: a15a36d6f2e7bb838b829b3d7ab227436d55c150
+      resolved-ref: "01b539cd157fb3e33dd18d83a4a443028d66097f"
       url: "git@github.com:FindX-0/findx_dart_client.git"
     source: git
     version: "1.0.0"
@@ -1062,10 +1062,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: "7c99c0e1e2fa190b48d25c81ca5e42036d5cac81430ef249027d97b0935c553f"
+      sha256: b0f37db61ba2f2e9b7a78a1caece0052564d1bc70668156cf3a29d676fe4e574
       url: "https://pub.dev"
     source: hosted
-    version: "5.1.0"
+    version: "5.1.1"
   xdg_directories:
     dependency: transitive
     description:
@@ -1078,10 +1078,10 @@ packages:
     dependency: transitive
     description:
       name: xml
-      sha256: af5e77e9b83f2f4adc5d3f0a4ece1c7f45a2467b695c2540381bac793e34e556
+      sha256: b015a8ad1c488f66851d762d3090a21c600e479dc75e68328c52774040cf9226
       url: "https://pub.dev"
     source: hosted
-    version: "6.4.2"
+    version: "6.5.0"
   yaml:
     dependency: transitive
     description:

@@ -22,16 +22,14 @@ class DropdownField<T, V> extends StatelessWidget {
   final SimpleDataState<DataPage<T>> data;
   final V? currentValue;
   final EntityMenuItemBuilder<T> itemBuilder;
-  final ValueChanged<T?> onChanged;
+  final ValueChanged<T?>? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return DropdownButtonFormField<T>(
       items: data.maybeWhen(
         success: (data) => data.items.map(itemBuilder).toList(),
-        orElse: () => [
-          const DropdownMenuItem(child: SizedBox.shrink()),
-        ],
+        orElse: () => [],
       ),
       autovalidateMode: validateForm ? AutovalidateMode.always : AutovalidateMode.disabled,
       validator: (_) => validateForm && currentValue == null ? 'Field is required' : null,
