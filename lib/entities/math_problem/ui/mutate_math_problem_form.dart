@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app/i18n/failure_i18n_extensions.dart';
 import '../../../shared/ui/widgets/dopdown_field.dart';
+import '../../../shared/ui/widgets/editable_image_dropzone.dart';
 import '../../../shared/ui/widgets/loading_text_button.dart';
 import '../state/mutate_math_problem_form_state.dart';
 
@@ -17,6 +18,10 @@ class MutateMathProblemForm extends StatelessWidget {
           autovalidateMode: state.validateForm ? AutovalidateMode.always : AutovalidateMode.disabled,
           child: ListView(
             children: [
+              EditableImageDropzone(
+                onChangePickedImages: context.mutateMathProblemFormCubit.onPickImages,
+              ),
+              const SizedBox(height: 20),
               const _DifficultyField(),
               const SizedBox(height: 20),
               const _TextField(),

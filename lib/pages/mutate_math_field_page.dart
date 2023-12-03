@@ -32,7 +32,9 @@ class _Content extends StatelessWidget {
     return const SideMenuPage(
       showBackButton: true,
       title: 'Mutate math field',
-      child: ResponsiveForm(child: MutateMathFieldForm()),
+      child: ResponsiveForm(
+        child: MutateMathFieldForm(),
+      ),
     );
   }
 }

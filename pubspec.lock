@@ -171,6 +171,15 @@ packages:
       url: "https://github.com/kume1a/flutter_common.git"
     source: git
     version: "0.0.7"
+  common_widgets:
+    dependency: "direct main"
+    description:
+      path: "packages/common_widgets"
+      ref: HEAD
+      resolved-ref: e4e03e2d69da2cec10ac75e8cd2fed7cb5061bcf
+      url: "https://github.com/kume1a/flutter_common.git"
+    source: git
+    version: "0.0.6"
   convert:
     dependency: transitive
     description:
@@ -195,6 +204,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.4"
+  diffutil_dart:
+    dependency: transitive
+    description:
+      name: diffutil_dart
+      sha256: e0297e4600b9797edff228ed60f4169a778ea357691ec98408fa3b72994c7d06
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   dio:
     dependency: "direct main"
     description:
@@ -265,6 +282,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.1.0"
+  flutter_dropzone:
+    dependency: "direct main"
+    description:
+      name: flutter_dropzone
+      sha256: "1f51bbbf56e27bead3196cf89963afa9e87d20af4d3a4267a598fcdc9ce4b02e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.6"
+  flutter_dropzone_platform_interface:
+    dependency: transitive
+    description:
+      name: flutter_dropzone_platform_interface
+      sha256: b4e2df75364bab2f4c3ca32b87193267d786b6e158c3f345c3a1daeb911d82b9
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.6"
+  flutter_dropzone_web:
+    dependency: transitive
+    description:
+      name: flutter_dropzone_web
+      sha256: "31f9bb515989163a584a8acd0299dafb67ab4470e0633b06106fcbbb16841c1a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.12"
   flutter_hooks:
     dependency: "direct main"
     description:

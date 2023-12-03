@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:common_models/common_models.dart';
 import 'package:findx_dart_client/app_client.dart';
 import 'package:flutter/widgets.dart';
@@ -19,6 +21,7 @@ class MutateMathProblemFormState with _$MutateMathProblemFormState {
     required String tex,
     String? mathFieldId,
     String? mathSubFieldId,
+    required List<Uint8List> images,
     required bool isSubmitting,
     required bool validateForm,
     required SimpleDataState<DataPage<MathFieldPageItem>> mathFields,
@@ -29,6 +32,7 @@ class MutateMathProblemFormState with _$MutateMathProblemFormState {
         difficulty: PositiveInt.empty(),
         text: '',
         tex: '',
+        images: [],
         isSubmitting: false,
         validateForm: false,
         mathFields: SimpleDataState.idle(),
@@ -128,6 +132,10 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
     }
 
     emit(state.copyWith(mathSubFieldId: value.id));
+  }
+
+  void onPickImages(List<Uint8List> files) {
+    emit(state.copyWith(images: files));
   }
 
   Future<void> onSubmit() async {
