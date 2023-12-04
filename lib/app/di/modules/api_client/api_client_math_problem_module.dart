@@ -8,4 +8,26 @@ abstract class ApiClientMathProblemModule {
   MathProblemRemoteRepository mathProblemRemoteRepository(GraphQLClient client) {
     return ApiMathProblemRemoteRepository(client);
   }
+
+  @lazySingleton
+  CreateMathProblemUsecase createMathProblemUsecase(
+    MathProblemRemoteRepository mathProblemRemoteRepository,
+    MediaFileRemoteRepository mediaFileRemoteRepository,
+  ) {
+    return ApiCreateMathProblemUsecase(
+      mathProblemRemoteRepository,
+      mediaFileRemoteRepository,
+    );
+  }
+
+  @lazySingleton
+  UpdateMathProblemUsecase updateMathProblemUsecase(
+    MathProblemRemoteRepository mathProblemRemoteRepository,
+    MediaFileRemoteRepository mediaFileRemoteRepository,
+  ) {
+    return ApiUpdateMathProblemUsecase(
+      mathProblemRemoteRepository,
+      mediaFileRemoteRepository,
+    );
+  }
 }
