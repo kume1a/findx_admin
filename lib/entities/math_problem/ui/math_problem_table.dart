@@ -25,8 +25,18 @@ class MathProblemTable extends StatelessWidget {
           cellsBuilder: (e) => [
             DataCell(Text(e.id)),
             DataCell(Text(e.difficulty.toString())),
-            DataCell(Text(e.text ?? '-')),
-            DataCell(Text(e.tex ?? '-')),
+            DataCell(
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 400),
+                child: Text(e.text ?? '-'),
+              ),
+            ),
+            DataCell(
+              ConstrainedBox(
+                constraints: const BoxConstraints(maxWidth: 400),
+                child: Text(e.tex ?? '-'),
+              ),
+            ),
             DataCell(Text(DateFormat('MMM dd, yyyy HH:mm:ss').format(e.createdAt))),
           ],
         );

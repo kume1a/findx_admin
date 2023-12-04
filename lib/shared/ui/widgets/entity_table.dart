@@ -93,18 +93,21 @@ class _Success<T> extends StatelessWidget {
               style: TextStyle(color: theme.appThemeExtension?.elSecondary),
             ),
           ),
-          DataTable(
-            dividerThickness: 0,
-            headingTextStyle: TextStyle(
-              color: theme.appThemeExtension?.elSecondary,
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: DataTable(
+              dividerThickness: 0,
+              headingTextStyle: TextStyle(
+                color: theme.appThemeExtension?.elSecondary,
+              ),
+              dataRowMaxHeight: 80,
+              horizontalMargin: 0,
+              columns: [
+                ...columns,
+                if (_isAnyActionAvailable) const DataColumn(label: SizedBox.shrink()),
+              ],
+              rows: data.items.map((e) => _dataRow(e, context, theme)).toList(),
             ),
-            dataRowMaxHeight: 80,
-            horizontalMargin: 0,
-            columns: [
-              ...columns,
-              if (_isAnyActionAvailable) const DataColumn(label: SizedBox.shrink()),
-            ],
-            rows: data.items.map((e) => _dataRow(e, context, theme)).toList(),
           ),
           if (_canLoadMore) _LoadMoreButton(onPressed: onLoadMorePressed)
         ],
