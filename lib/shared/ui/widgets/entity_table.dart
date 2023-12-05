@@ -30,9 +30,9 @@ class EntityTable<T> extends StatelessWidget {
 
   final VoidCallback onLoadMorePressed;
 
-  final OnEntityAction? onView;
-  final OnEntityAction? onUpdate;
-  final OnEntityAction? onDelete;
+  final OnEntityAction<T>? onView;
+  final OnEntityAction<T>? onUpdate;
+  final OnEntityAction<T>? onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -70,9 +70,9 @@ class _Success<T> extends StatelessWidget {
 
   final VoidCallback onLoadMorePressed;
 
-  final OnEntityAction? onView;
-  final OnEntityAction? onUpdate;
-  final OnEntityAction? onDelete;
+  final OnEntityAction<T>? onView;
+  final OnEntityAction<T>? onUpdate;
+  final OnEntityAction<T>? onDelete;
 
   bool get _isAnyActionAvailable => onView != null || onUpdate != null || onDelete != null;
 

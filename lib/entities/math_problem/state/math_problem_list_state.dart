@@ -41,4 +41,16 @@ final class MathProblemListCubit extends DataPagerWithLastIdCubit<FetchFailure, 
 
     onRefresh();
   }
+
+  Future<void> onUpdatePressed(MathProblemPageItem entity) async {
+    await _goRouter.push(AppRouteBuilder.mutateMathProblem(entity.id));
+
+    onRefresh();
+  }
+
+  Future<void> onDeletePressed(MathProblemPageItem entity) async {
+    await _mathProblemRemoteRepository.delete(id: entity.id);
+
+    onRefresh();
+  }
 }

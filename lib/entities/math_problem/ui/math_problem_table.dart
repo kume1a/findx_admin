@@ -17,6 +17,8 @@ class MathProblemTable extends StatelessWidget {
         return EntityTable(
           state,
           onLoadMorePressed: context.mathProblemListCubit.fetchNextPage,
+          onUpdate: context.mathProblemListCubit.onUpdatePressed,
+          onDelete: context.mathProblemListCubit.onDeletePressed,
           columns: const [
             DataColumn(label: Text('Id')),
             DataColumn(label: Text('Difficulty')),
