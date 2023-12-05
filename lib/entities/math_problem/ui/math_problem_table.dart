@@ -31,10 +31,14 @@ class MathProblemTable extends StatelessWidget {
                 children: [
                   Text(e.id),
                   for (final image in e.images ?? [])
-                    SafeImage(
-                      width: 100,
-                      height: 100,
-                      url: assembleResourceUrl(image.path),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 6),
+                      child: SafeImage(
+                        width: 100,
+                        height: 100,
+                        borderRadius: BorderRadius.circular(4),
+                        url: assembleResourceUrl(image.path),
+                      ),
                     ),
                 ],
               ),
