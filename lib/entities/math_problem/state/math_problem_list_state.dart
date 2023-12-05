@@ -7,6 +7,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../app/navigation/app_route_builder.dart';
 import '../../../shared/state/data_pager_with_last_id_cubit.dart';
+import '../../../shared/util/toast/notify_simple_action_failure.dart';
 
 typedef MathProblemListState = DataState<FetchFailure, DataPage<MathProblemPageItem>>;
 
@@ -49,8 +50,11 @@ final class MathProblemListCubit extends DataPagerWithLastIdCubit<FetchFailure, 
   }
 
   Future<void> onDeletePressed(MathProblemPageItem entity) async {
-    await _mathProblemRemoteRepository.delete(id: entity.id);
+    final res = await _mathProblemRemoteRepository.delete(id: entity.id);
 
-    onRefresh();
+    res.fold(
+      notifySimpleActionFailure,
+      (_) => onRefresh(),
+    );
   }
 }
