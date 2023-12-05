@@ -1,3 +1,4 @@
+import 'package:findx_dart_client/app_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,6 +17,7 @@ class MutateMathSubFieldForm extends StatelessWidget {
         return Form(
           autovalidateMode: state.validateForm ? AutovalidateMode.always : AutovalidateMode.disabled,
           child: ListView(
+            padding: const EdgeInsets.only(bottom: 100),
             children: [
               const _NameField(),
               const SizedBox(height: 20),
@@ -59,14 +61,14 @@ class _MathFieldIdField extends StatelessWidget {
     return BlocBuilder<MutateMathSubFieldFormCubit, MutateMathSubFieldFormState>(
       buildWhen: (prev, curr) =>
           prev.mathFields != curr.mathFields ||
-          prev.mathFieldId != curr.mathFieldId ||
+          prev.mathField != curr.mathField ||
           prev.validateForm != curr.validateForm,
       builder: (_, state) {
-        return DropdownField(
+        return DropdownField<MathFieldPageItem>(
           hintText: 'Math field id',
           validateForm: state.validateForm,
           data: state.mathFields,
-          currentValue: state.mathFieldId,
+          currentValue: state.mathField,
           itemBuilder: (e) => DropdownMenuItem(value: e, child: Text(e.name)),
           onChanged: context.mutateMathSubFieldFormCubit.onMathFieldChanged,
         );

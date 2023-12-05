@@ -1,3 +1,4 @@
+import 'package:findx_dart_client/app_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,6 +18,7 @@ class MutateMathProblemForm extends StatelessWidget {
         return Form(
           autovalidateMode: state.validateForm ? AutovalidateMode.always : AutovalidateMode.disabled,
           child: ListView(
+            padding: const EdgeInsets.only(bottom: 100),
             children: [
               EditableImageDropzone(
                 onChangePickedImages: context.mutateMathProblemFormCubit.onPickImages,
@@ -108,14 +110,14 @@ class _MathFieldIdField extends StatelessWidget {
     return BlocBuilder<MutateMathProblemFormCubit, MutateMathProblemFormState>(
       buildWhen: (prev, curr) =>
           prev.mathFields != curr.mathFields ||
-          prev.mathFieldId != curr.mathFieldId ||
+          prev.mathField != curr.mathField ||
           prev.validateForm != curr.validateForm,
       builder: (_, state) {
-        return DropdownField(
+        return DropdownField<MathFieldPageItem>(
           hintText: 'Math field id',
           validateForm: state.validateForm,
           data: state.mathFields,
-          currentValue: state.mathFieldId,
+          currentValue: state.mathField,
           itemBuilder: (e) => DropdownMenuItem(value: e, child: Text(e.name)),
           onChanged: context.mutateMathProblemFormCubit.onMathFieldChanged,
         );
@@ -132,18 +134,18 @@ class _MathSubFieldIdField extends StatelessWidget {
     return BlocBuilder<MutateMathProblemFormCubit, MutateMathProblemFormState>(
       buildWhen: (prev, curr) =>
           prev.mathSubFields != curr.mathSubFields ||
-          prev.mathSubFieldId != curr.mathSubFieldId ||
+          prev.mathSubField != curr.mathSubField ||
           prev.validateForm != curr.validateForm ||
-          prev.mathFieldId != curr.mathFieldId,
+          prev.mathField != curr.mathField,
       builder: (_, state) {
         return DropdownField(
           hintText: 'Math sub field id',
           validateForm: state.validateForm,
           data: state.mathSubFields,
-          currentValue: state.mathSubFieldId,
+          currentValue: state.mathSubField,
           itemBuilder: (e) => DropdownMenuItem(value: e, child: Text(e.name)),
           onChanged:
-              state.mathFieldId != null ? context.mutateMathProblemFormCubit.onMathSubFieldChanged : null,
+              state.mathField != null ? context.mutateMathProblemFormCubit.onMathSubFieldChanged : null,
         );
       },
     );

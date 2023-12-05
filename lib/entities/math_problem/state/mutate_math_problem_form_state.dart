@@ -19,8 +19,8 @@ class MutateMathProblemFormState with _$MutateMathProblemFormState {
     required PositiveInt difficulty,
     required String text,
     required String tex,
-    String? mathFieldId,
-    String? mathSubFieldId,
+    MathFieldPageItem? mathField,
+    MathSubFieldPageItem? mathSubField,
     required List<Uint8List> images,
     required bool isSubmitting,
     required bool validateForm,
@@ -101,7 +101,7 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
       return;
     }
 
-    emit(state.copyWith(mathFieldId: value.id));
+    emit(state.copyWith(mathField: value));
 
     _fetchMathSubFields(value);
   }
@@ -111,7 +111,7 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
       return;
     }
 
-    emit(state.copyWith(mathSubFieldId: value.id));
+    emit(state.copyWith(mathSubField: value));
   }
 
   void onPickImages(List<Uint8List> files) {
@@ -121,7 +121,7 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
   Future<void> onSubmit() async {
     emit(state.copyWith(validateForm: true));
 
-    if (state.difficulty.invalid || state.mathFieldId == null || state.mathSubFieldId == null) {
+    if (state.difficulty.invalid || state.mathField == null || state.mathSubField == null) {
       return;
     }
 
@@ -131,8 +131,8 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
       final res = await _updateMathProblemUsecase(
         id: _mathProblemId!,
         difficulty: state.difficulty.getOrThrow,
-        mathFieldId: state.mathFieldId,
-        mathSubFieldId: state.mathSubFieldId,
+        mathFieldId: state.mathField!.id,
+        mathSubFieldId: state.mathSubField!.id,
         tex: state.tex.isNotEmpty ? state.tex : null,
         text: state.text.isNotEmpty ? state.text : null,
         images: state.images,
@@ -152,8 +152,8 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
         difficulty: state.difficulty.getOrThrow,
         tex: state.tex.isNotEmpty ? state.tex : null,
         text: state.text.isNotEmpty ? state.text : null,
-        mathFieldId: state.mathFieldId!,
-        mathSubFieldId: state.mathSubFieldId!,
+        mathFieldId: state.mathField!.id,
+        mathSubFieldId: state.mathSubField!.id,
         images: state.images,
       );
 
@@ -176,7 +176,7 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
 
     final mathProblem = await _mathProblemRemoteRepository.getById(_mathProblemId!);
 
-    mathProblem.ifRight((r) {
+    mathProblem.ifRight((r) async {
       difficultyFieldController.text = r.difficulty.toString();
       if (r.text != null) {
         textFieldController.text = r.text!;
@@ -185,10 +185,17 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
         texFieldController.text = r.tex!;
       }
 
+      final mathField = await _mathFieldRemoteRepository.getById(r.mathFieldId);
+      final mathSubField = await _mathSubFieldRemoteRepository.getById(r.mathSubFieldId);
+
+      mathField.ifRight((r) => _fetchMathSubFields(r));
+
       emit(state.copyWith(
         difficulty: PositiveInt.fromInt(r.difficulty),
         text: r.text ?? state.text,
         tex: r.tex ?? state.tex,
+        mathField: mathField.rightOrNull,
+        mathSubField: mathSubField.rightOrNull,
       ));
     });
   }

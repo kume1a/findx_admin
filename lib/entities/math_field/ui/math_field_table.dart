@@ -15,6 +15,8 @@ class MathFieldTable extends StatelessWidget {
         return EntityTable(
           state,
           onLoadMorePressed: context.mathFieldListCubit.fetchNextPage,
+          onUpdate: context.mathFieldListCubit.onUpdatePressed,
+          onDelete: context.mathFieldListCubit.onDeletePressed,
           columns: const [
             DataColumn(label: Text('Id')),
             DataColumn(label: Text('Name')),

@@ -41,4 +41,16 @@ final class MathSubFieldListCubit extends DataPagerWithLastIdCubit<FetchFailure,
 
     onRefresh();
   }
+
+  Future<void> onUpdatePressed(MathSubFieldPageItem entity) async {
+    await _goRouter.push(AppRouteBuilder.mutateMathSubField(entity.id));
+
+    onRefresh();
+  }
+
+  Future<void> onDeletePressed(MathSubFieldPageItem entity) async {
+    await _mathSubFieldRemoteRepository.delete(id: entity.id);
+
+    onRefresh();
+  }
 }

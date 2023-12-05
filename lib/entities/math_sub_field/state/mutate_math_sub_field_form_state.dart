@@ -15,7 +15,7 @@ part 'mutate_math_sub_field_form_state.freezed.dart';
 class MutateMathSubFieldFormState with _$MutateMathSubFieldFormState {
   const factory MutateMathSubFieldFormState({
     required Name name,
-    String? mathFieldId,
+    MathFieldPageItem? mathField,
     required bool isSubmitting,
     required bool validateForm,
     required SimpleDataState<DataPage<MathFieldPageItem>> mathFields,
@@ -70,10 +70,15 @@ class MutateMathSubFieldFormCubit extends Cubit<MutateMathSubFieldFormState> {
 
     final mathSubField = await _mathSubFieldRemoteRepository.getById(_mathSubFieldId!);
 
-    mathSubField.ifRight((r) {
+    mathSubField.ifRight((r) async {
       nameFieldController.text = r.name;
 
-      emit(state.copyWith(name: Name(r.name)));
+      final mathField = await _mathFieldRemoteRepository.getById(r.mathFieldId);
+
+      emit(state.copyWith(
+        name: Name(r.name),
+        mathField: mathField.rightOrNull,
+      ));
     });
   }
 
@@ -94,13 +99,13 @@ class MutateMathSubFieldFormCubit extends Cubit<MutateMathSubFieldFormState> {
       return;
     }
 
-    emit(state.copyWith(mathFieldId: value.id));
+    emit(state.copyWith(mathField: value));
   }
 
   Future<void> onSubmit() async {
     emit(state.copyWith(validateForm: true));
 
-    if (state.name.invalid || state.mathFieldId == null) {
+    if (state.name.invalid || state.mathField == null) {
       return;
     }
 
@@ -110,6 +115,7 @@ class MutateMathSubFieldFormCubit extends Cubit<MutateMathSubFieldFormState> {
       final res = await _mathSubFieldRemoteRepository.update(
         id: _mathSubFieldId!,
         name: state.name.getOrThrow,
+        mathFieldId: state.mathField!.id,
       );
 
       emit(state.copyWith(isSubmitting: false));
@@ -124,7 +130,7 @@ class MutateMathSubFieldFormCubit extends Cubit<MutateMathSubFieldFormState> {
     } else {
       final res = await _mathSubFieldRemoteRepository.create(
         name: state.name.getOrThrow,
-        mathFieldId: state.mathFieldId!,
+        mathFieldId: state.mathField!.id,
       );
 
       emit(state.copyWith(isSubmitting: false));

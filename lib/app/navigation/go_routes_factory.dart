@@ -67,8 +67,12 @@ class GoRoutesFactory implements Factory<List<RouteBase>> {
               routes: [
                 GoRoute(
                   path: Routes.mutateMathField,
+                  builder: (_, state) => const MutateMathFieldPage(mathFieldId: null),
+                ),
+                GoRoute(
+                  path: '${Routes.mutateMathField}/:mathFieldId',
                   builder: (_, state) {
-                    final mathFieldId = state.uri.queryParameters['mathFieldId'];
+                    final mathFieldId = state.pathParameters['mathFieldId'];
 
                     return MutateMathFieldPage(
                       mathFieldId: mathFieldId,
@@ -87,8 +91,12 @@ class GoRoutesFactory implements Factory<List<RouteBase>> {
               routes: [
                 GoRoute(
                   path: Routes.mutateMathSubField,
+                  builder: (_, state) => const MutateMathSubFieldPage(mathSubFieldId: null),
+                ),
+                GoRoute(
+                  path: '${Routes.mutateMathSubField}/:mathSubFieldId',
                   builder: (_, state) {
-                    final mathSubFieldId = state.uri.queryParameters['mathSubFieldId'];
+                    final mathSubFieldId = state.pathParameters['mathSubFieldId'];
 
                     return MutateMathSubFieldPage(
                       mathSubFieldId: mathSubFieldId,

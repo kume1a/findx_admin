@@ -22,6 +22,7 @@ dependencies:
   google_fonts: ^6.1.0
   flutter_svg: ^2.0.9
   fluttertoast: ^8.2.4
+  dropdown_button2: ^2.3.9
 
   # DI
   injectable: ^2.1.2
