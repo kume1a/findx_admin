@@ -40,14 +40,7 @@ class SignInFormCubit extends Cubit<SignInFormState> {
     this._authTokenStore,
     this._pageNavigator,
   ) : super(SignInFormState.initial()) {
-    if (kDebugMode) {
-      emit(state.copyWith(
-        email: Email(AppEnvironment.debugEmail),
-        password: Password(AppEnvironment.debugPassword),
-      ));
-
-      onSubmit();
-    }
+    _debugSignIn();
   }
 
   final AuthenticationFacade _authenticationFacade;
@@ -83,5 +76,25 @@ class SignInFormCubit extends Cubit<SignInFormState> {
         _pageNavigator.toMain();
       },
     );
+  }
+
+  void _debugSignIn() {
+    if (!kDebugMode) {
+      return;
+    }
+
+    final email = AppEnvironment.debugEmail;
+    final password = AppEnvironment.debugPassword;
+
+    if (email == null || password == null) {
+      return;
+    }
+
+    emit(state.copyWith(
+      email: Email(email),
+      password: Password(password),
+    ));
+
+    onSubmit();
   }
 }

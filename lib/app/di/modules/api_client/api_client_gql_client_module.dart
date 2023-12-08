@@ -16,6 +16,7 @@ abstract class ApiClientGqlClientModule {
     AuthTokenStore authTokenStore,
     @Named(InjectionToken.noInterceptorDio) Dio noInterceptorDio,
     AfterSignOut afterSignOut,
+    RefreshTokenUsecase refreshTokenUsecase,
   ) {
     return NetworkClientFactory.createAuthenticatedDio(
       noInterceptorDio: noInterceptorDio,
@@ -23,6 +24,7 @@ abstract class ApiClientGqlClientModule {
       afterExit: afterSignOut.call,
       logPrint: logger.d,
       apiUrl: AppEnvironment.apiUrl,
+      refreshTokenUsecase: refreshTokenUsecase,
     );
   }
 

@@ -42,7 +42,7 @@ dependencies:
 
   findx_dart_client:
     git:
-      url: git@github.com:FindX-0/findx_dart_client.git
+      url: https://github.com/FindX-0/findx_dart_client.git
 
   common_models:
     git:
@@ -70,6 +70,4 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/logo/
-    - .env.local
-    - .env.development
-    - .env.production
+    - env/

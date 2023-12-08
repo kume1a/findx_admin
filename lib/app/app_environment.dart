@@ -25,10 +25,9 @@ class AppEnvironment {
   AppEnvironment._();
 
   static Future<void> load() async {
-    log('getting env');
     const environment = kDebugMode ? 'development' : 'production';
 
-    const envFileName = '.env.$environment';
+    const envFileName = './env/.env.$environment';
 
     log('Loading environment: $envFileName');
 
@@ -45,9 +44,9 @@ class AppEnvironment {
 
   static String get apiUrl => dotenv.get('API_URL');
 
-  static String get debugEmail => dotenv.get('DEBUG_EMAIL');
+  static String? get debugEmail => dotenv.maybeGet('DEBUG_EMAIL');
 
-  static String get debugPassword => dotenv.get('DEBUG_PASSWORD');
+  static String? get debugPassword => dotenv.maybeGet('DEBUG_PASSWORD');
 }
 
 class _DotEnvLoader {
