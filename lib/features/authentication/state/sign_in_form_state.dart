@@ -8,6 +8,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../app/app_environment.dart';
 import '../../../app/navigation/page_navigator.dart';
+import '../../../shared/logger.dart';
 import '../util/notify_admin_sign_in_failure.dart';
 
 part 'sign_in_form_state.freezed.dart';

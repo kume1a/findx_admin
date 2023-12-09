@@ -31,7 +31,7 @@ class AppEnvironment {
 
     log('Loading environment: $envFileName');
 
-    final localEnv = await _DotEnvLoader.load('.env.local');
+    final localEnv = await _DotEnvLoader.load('./env/.env.local');
 
     if (localEnv.isNotEmpty) {
       log('Merging env with local $localEnv');

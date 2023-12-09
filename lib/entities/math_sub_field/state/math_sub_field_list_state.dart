@@ -7,7 +7,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../app/navigation/app_route_builder.dart';
 import '../../../shared/state/data_pager_with_last_id_cubit.dart';
-import '../../../shared/util/toast/notify_simple_action_failure.dart';
+import '../util/notify_delete_math_sub_field_failure.dart';
 
 typedef MathSubFieldListState = DataState<FetchFailure, DataPage<MathSubFieldPageItem>>;
 
@@ -53,7 +53,7 @@ final class MathSubFieldListCubit extends DataPagerWithLastIdCubit<FetchFailure,
     final res = await _mathSubFieldRemoteRepository.delete(id: entity.id);
 
     res.fold(
-      notifySimpleActionFailure,
+      notifyDeleteMathSubFieldFailure,
       (_) => onRefresh(),
     );
   }
