@@ -17,6 +17,6 @@ abstract class ApiClientAuthenticationModule {
   RefreshTokenUsecase refreshTokenUsecase(
     @Named(InjectionToken.noInterceptorDio) Dio dio,
   ) {
-    return RefreshTokenUsecaseImpl(dio, AppEnvironment.apiUrl);
+    return AdminRefreshTokenUsecaseImpl(dio, AppEnvironment.apiUrl);
   }
 }
