@@ -4,10 +4,12 @@ class DataPagerWithLastId<F, T> {
   DataPagerWithLastId({
     required this.dataPageProvider,
     required this.idSelector,
+    required this.nullDataFailure,
   });
 
   Future<Either<F, DataPage<T>>?> Function(String? lastId) dataPageProvider;
   String Function(T item) idSelector;
+  F nullDataFailure;
 
   bool _fetching = false;
 
@@ -38,6 +40,7 @@ class DataPagerWithLastId<F, T> {
 
     if (result == null) {
       _fetching = false;
+      yield DataState.failure(nullDataFailure);
       return;
     }
 

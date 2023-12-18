@@ -20,7 +20,7 @@ final class MathFieldListCubit extends DataPagerWithLastIdCubit<FetchFailure, Ma
   MathFieldListCubit(
     this._mathFieldRemoteRepository,
     this._goRouter,
-  ) {
+  ) : super(nullDataFailure: FetchFailure.unknown) {
     fetchNextPage();
   }
 

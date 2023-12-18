@@ -47,6 +47,14 @@ class EntityTable<T> extends StatelessWidget {
         onDelete: onDelete,
       ),
       loading: () => const Center(child: CircularProgressIndicator()),
+      failure: (f, _) => Center(
+        child: Text(
+          f.maybeWhen(
+            orElse: () => 'Unknown error',
+            network: () => 'Network error',
+          ),
+        ),
+      ),
       orElse: () => const SizedBox.shrink(),
     );
   }

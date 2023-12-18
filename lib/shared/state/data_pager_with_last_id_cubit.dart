@@ -5,10 +5,13 @@ import 'package:meta/meta.dart';
 import '../util/data_pager_with_last_id.dart';
 
 abstract base class DataPagerWithLastIdCubit<F, T> extends Cubit<DataState<F, DataPage<T>>> {
-  DataPagerWithLastIdCubit() : super(DataState<F, DataPage<T>>.idle()) {
+  DataPagerWithLastIdCubit({
+    required F nullDataFailure,
+  }) : super(DataState<F, DataPage<T>>.idle()) {
     _dataPager = DataPagerWithLastId<F, T>(
       dataPageProvider: provideDataPage,
       idSelector: idSelector,
+      nullDataFailure: nullDataFailure,
     );
   }
 

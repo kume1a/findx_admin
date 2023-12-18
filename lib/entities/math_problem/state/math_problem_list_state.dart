@@ -20,7 +20,7 @@ final class MathProblemListCubit extends DataPagerWithLastIdCubit<FetchFailure, 
   MathProblemListCubit(
     this._mathProblemRemoteRepository,
     this._goRouter,
-  ) {
+  ) : super(nullDataFailure: FetchFailure.unknown) {
     fetchNextPage();
   }
 
