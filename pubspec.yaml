@@ -6,7 +6,7 @@ publish_to: none
 version: 0.0.1+1
 
 environment:
-  sdk: '>=3.2.0 <4.0.0'
+  sdk: '>=3.2.3 <4.0.0'
 
 dependencies:
   flutter:
@@ -23,6 +23,7 @@ dependencies:
   flutter_svg: ^2.0.9
   fluttertoast: ^8.2.4
   dropdown_button2: ^2.3.9
+  flutter_tex: ^4.0.5
 
   # DI
   injectable: ^2.1.2
