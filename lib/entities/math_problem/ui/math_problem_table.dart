@@ -22,8 +22,8 @@ class MathProblemTable extends StatelessWidget {
           columns: const [
             DataColumn(label: Text('Id')),
             DataColumn(label: Text('Difficulty')),
-            DataColumn(label: Text('Text')),
-            DataColumn(label: Text('Tex')),
+            DataColumn(label: Text('MathField')),
+            DataColumn(label: Text('MathSubFIeld')),
             DataColumn(label: Text('CreatedAt')),
           ],
           cellsBuilder: (e) => [
@@ -47,16 +47,10 @@ class MathProblemTable extends StatelessWidget {
             ),
             DataCell(Text(e.difficulty.toString())),
             DataCell(
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 400),
-                child: Text(e.text ?? '-'),
-              ),
+              Text(e.mathField?.name ?? '-'),
             ),
             DataCell(
-              ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 400),
-                child: Text(e.tex ?? '-'),
-              ),
+              Text(e.mathSubField?.name ?? '-'),
             ),
             DataCell(Text(DateFormat('MMM dd, yyyy HH:mm:ss').format(e.createdAt))),
           ],
