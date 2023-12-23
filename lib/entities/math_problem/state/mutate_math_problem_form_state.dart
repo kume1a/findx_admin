@@ -28,6 +28,7 @@ class MutateMathProblemFormState with _$MutateMathProblemFormState {
     required SimpleDataState<DataPage<MathFieldPageItem>> mathFields,
     required SimpleDataState<DataPage<MathSubFieldPageItem>> mathSubFields,
     required List<MediaFile> currentImages,
+    required List<SimpleContentValue> answers,
   }) = _MutateMathProblemFormState;
 
   factory MutateMathProblemFormState.initial() => MutateMathProblemFormState(
@@ -40,6 +41,7 @@ class MutateMathProblemFormState with _$MutateMathProblemFormState {
         mathFields: SimpleDataState.idle(),
         mathSubFields: SimpleDataState.idle(),
         currentImages: [],
+        answers: List.generate(4, (_) => SimpleContentValue.empty()),
       );
 }
 
@@ -117,6 +119,15 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
     emit(state.copyWith(mathSubField: value));
   }
 
+  void onAnswerChanged(int index, String value) {
+    final answers = List.of(state.answers);
+
+    final newAnswer = SimpleContentValue(value);
+    answers.replaceRange(index, index + 1, [newAnswer]);
+
+    emit(state.copyWith(answers: answers));
+  }
+
   void onPickImages(List<Uint8List> files) {
     emit(state.copyWith(images: files));
   }
@@ -124,11 +135,24 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
   Future<void> onSubmit() async {
     emit(state.copyWith(validateForm: true));
 
-    if (state.difficulty.invalid || state.mathField == null || state.mathSubField == null) {
+    if (state.difficulty.invalid ||
+        state.mathField == null ||
+        state.mathSubField == null ||
+        state.answers.any((e) => e.invalid)) {
       return;
     }
 
     emit(state.copyWith(isSubmitting: true));
+
+    // First input contains correct answer, reflected in UI
+    final answers = state.answers
+        .mapIndexed(
+          (index, answerTex) => CreateMathProblemAnswerInput(
+            tex: answerTex.getOrThrow,
+            isCorrect: index == 0,
+          ),
+        )
+        .toList();
 
     if (_mathProblemId != null) {
       final res = await _updateMathProblemUsecase(
@@ -139,6 +163,7 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
         tex: state.tex.isNotEmpty ? state.tex : null,
         text: state.text.isNotEmpty ? state.text : null,
         images: state.images,
+        answers: answers,
       );
 
       emit(state.copyWith(isSubmitting: false));
@@ -158,6 +183,7 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
         mathFieldId: state.mathField!.id,
         mathSubFieldId: state.mathSubField!.id,
         images: state.images,
+        answers: answers,
       );
 
       emit(state.copyWith(isSubmitting: false));
@@ -193,12 +219,15 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
 
       mathField.ifRight((r) => _fetchMathSubFields(r, mathSubField.rightOrNull));
 
+      final answers = r.answers.map((e) => SimpleContentValue(e.tex)).toList();
+
       emit(state.copyWith(
         difficulty: PositiveInt.fromInt(r.difficulty),
         text: r.text ?? state.text,
         tex: r.tex ?? state.tex,
         mathField: mathField.rightOrNull,
         currentImages: r.images ?? [],
+        answers: answers,
       ));
     });
   }

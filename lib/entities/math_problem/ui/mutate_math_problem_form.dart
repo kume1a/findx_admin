@@ -1,6 +1,9 @@
+import 'package:collection/collection.dart';
+import 'package:common_models/common_models.dart';
 import 'package:findx_dart_client/app_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_tex/flutter_tex.dart';
 
 import '../../../app/i18n/failure_i18n_extensions.dart';
@@ -31,14 +34,16 @@ class MutateMathProblemForm extends StatelessWidget {
               const SizedBox(height: 20),
               const _DifficultyField(),
               const SizedBox(height: 20),
-              const _TextField(),
-              const SizedBox(height: 20),
-              const _TexField(),
-              const SizedBox(height: 20),
-              const _TexValue(),
               const _MathFieldIdField(),
               const SizedBox(height: 20),
               const _MathSubFieldIdField(),
+              const SizedBox(height: 20),
+              const _TextField(),
+              const SizedBox(height: 20),
+              const _TexField(),
+              const _TexValue(),
+              const SizedBox(height: 20),
+              const _AnswerFields(),
               const SizedBox(height: 20),
               LoadingTextButton(
                 onPressed: context.mutateMathProblemFormCubit.onSubmit,
@@ -232,6 +237,75 @@ class _MathSubFieldIdField extends StatelessWidget {
               state.mathField != null ? context.mutateMathProblemFormCubit.onMathSubFieldChanged : null,
         );
       },
+    );
+  }
+}
+
+class _AnswerFields extends StatelessWidget {
+  const _AnswerFields();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MutateMathProblemFormCubit, MutateMathProblemFormState>(
+      buildWhen: (previous, current) => notDeepEquals(previous.answers, current.answers),
+      builder: (_, state) {
+        return Column(
+          mainAxisSize: MainAxisSize.min,
+          children: state.answers
+              .mapIndexed(
+                (index, answer) => _AnswerField(
+                  index: index,
+                  isCorrectAnswerField: index == 0,
+                  stateContent: answer,
+                ),
+              )
+              .toList(),
+        );
+      },
+    );
+  }
+}
+
+class _AnswerField extends HookWidget {
+  const _AnswerField({
+    required this.index,
+    required this.isCorrectAnswerField,
+    required this.stateContent,
+  });
+
+  final int index;
+  final bool isCorrectAnswerField;
+  final SimpleContentValue stateContent;
+
+  @override
+  Widget build(BuildContext context) {
+    final textController = useTextEditingController();
+
+    useEffect(
+      () {
+        final currentStr = textController.text;
+        final stateStr = stateContent.get ?? '';
+
+        if (currentStr != stateStr) {
+          WidgetsBinding.instance.addPostFrameCallback((_) {
+            textController.text = stateStr;
+          });
+        }
+        return null;
+      },
+      [textController, stateContent],
+    );
+
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 20),
+      child: TextFormField(
+        controller: textController,
+        decoration:
+            InputDecoration(hintText: 'Answer ${index + 1}${isCorrectAnswerField ? ' (Correct)' : ''}'),
+        onChanged: (value) => context.mutateMathProblemFormCubit.onAnswerChanged(index, value),
+        validator: (_) =>
+            context.mutateMathProblemFormCubit.state.answers[index].failureToString((f) => f.translate()),
+      ),
     );
   }
 }

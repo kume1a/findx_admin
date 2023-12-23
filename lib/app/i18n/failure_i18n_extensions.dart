@@ -41,3 +41,12 @@ extension ValueFailureI18nX on ValueFailure {
     );
   }
 }
+
+extension SimpleContentFailureI18nX on SimpleContentValueFailure {
+  String? translate() {
+    return when(
+      empty: () => 'Field is required',
+      tooLong: () => 'Value is too long',
+    );
+  }
+}
