@@ -4,7 +4,6 @@ import 'package:graphql/client.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../../features/authentication/api/after_sign_out.dart';
-import '../../../../shared/logger.dart';
 import '../../../app_environment.dart';
 import '../../injection_token.dart';
 
@@ -22,7 +21,7 @@ abstract class ApiClientGqlClientModule {
       noInterceptorDio: noInterceptorDio,
       authTokenStore: authTokenStore,
       afterExit: afterSignOut.call,
-      logPrint: logger.d,
+      logPrint: null,
       apiUrl: AppEnvironment.apiUrl,
       refreshTokenUsecase: refreshTokenUsecase,
     );
@@ -32,7 +31,6 @@ abstract class ApiClientGqlClientModule {
   @Named(InjectionToken.noInterceptorDio)
   Dio refreshTokenDio() {
     return NetworkClientFactory.createNoInterceptorDio(
-      logPrint: logger.d,
       apiUrl: AppEnvironment.apiUrl,
     );
   }

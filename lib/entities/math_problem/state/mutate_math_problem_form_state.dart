@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 
+import 'package:collection/collection.dart';
 import 'package:common_models/common_models.dart';
 import 'package:findx_dart_client/app_client.dart';
 import 'package:flutter/widgets.dart';
@@ -26,6 +27,7 @@ class MutateMathProblemFormState with _$MutateMathProblemFormState {
     required bool validateForm,
     required SimpleDataState<DataPage<MathFieldPageItem>> mathFields,
     required SimpleDataState<DataPage<MathSubFieldPageItem>> mathSubFields,
+    required List<MediaFile> currentImages,
   }) = _MutateMathProblemFormState;
 
   factory MutateMathProblemFormState.initial() => MutateMathProblemFormState(
@@ -37,6 +39,7 @@ class MutateMathProblemFormState with _$MutateMathProblemFormState {
         validateForm: false,
         mathFields: SimpleDataState.idle(),
         mathSubFields: SimpleDataState.idle(),
+        currentImages: [],
       );
 }
 
@@ -103,7 +106,7 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
 
     emit(state.copyWith(mathField: value));
 
-    _fetchMathSubFields(value);
+    _fetchMathSubFields(value, null);
   }
 
   void onMathSubFieldChanged(MathSubFieldPageItem? value) {
@@ -188,14 +191,14 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
       final mathField = await _mathFieldRemoteRepository.getById(r.mathFieldId);
       final mathSubField = await _mathSubFieldRemoteRepository.getById(r.mathSubFieldId);
 
-      mathField.ifRight((r) => _fetchMathSubFields(r));
+      mathField.ifRight((r) => _fetchMathSubFields(r, mathSubField.rightOrNull));
 
       emit(state.copyWith(
         difficulty: PositiveInt.fromInt(r.difficulty),
         text: r.text ?? state.text,
         tex: r.tex ?? state.tex,
         mathField: mathField.rightOrNull,
-        mathSubField: mathSubField.rightOrNull,
+        currentImages: r.images ?? [],
       ));
     });
   }
@@ -208,12 +211,20 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
     emit(state.copyWith(mathFields: SimpleDataState.fromEither(res)));
   }
 
-  Future<void> _fetchMathSubFields(MathFieldPageItem mathField) async {
+  Future<void> _fetchMathSubFields(
+    MathFieldPageItem mathField,
+    MathSubFieldGetByIdRes? mathSubField,
+  ) async {
     final res = await _mathSubFieldRemoteRepository.filter(
       limit: 200,
       mathFieldId: mathField.id,
     );
 
-    emit(state.copyWith(mathSubFields: SimpleDataState.fromEither(res)));
+    final selected = res.rightOrNull?.items.firstWhereOrNull((e) => e.id == mathSubField?.id);
+
+    emit(state.copyWith(
+      mathSubFields: SimpleDataState.fromEither(res),
+      mathSubField: selected,
+    ));
   }
 }

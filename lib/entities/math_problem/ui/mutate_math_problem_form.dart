@@ -1,11 +1,15 @@
+import 'package:common_widgets/common_widgets.dart';
 import 'package:findx_dart_client/app_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tex/flutter_tex.dart';
 
 import '../../../app/i18n/failure_i18n_extensions.dart';
 import '../../../shared/ui/widgets/dopdown_field.dart';
 import '../../../shared/ui/widgets/editable_image_dropzone.dart';
 import '../../../shared/ui/widgets/loading_text_button.dart';
+import '../../../shared/util/assemble_media_url.dart';
+import '../../../shared/util/equality.dart';
 import '../state/mutate_math_problem_form_state.dart';
 
 class MutateMathProblemForm extends StatelessWidget {
@@ -20,6 +24,7 @@ class MutateMathProblemForm extends StatelessWidget {
           child: ListView(
             padding: const EdgeInsets.only(bottom: 100),
             children: [
+              const _CurrentMathProblemImages(),
               EditableImageDropzone(
                 onChangePickedImages: context.mutateMathProblemFormCubit.onPickImages,
               ),
@@ -30,6 +35,7 @@ class MutateMathProblemForm extends StatelessWidget {
               const SizedBox(height: 20),
               const _TexField(),
               const SizedBox(height: 20),
+              const _TexValue(),
               const _MathFieldIdField(),
               const SizedBox(height: 20),
               const _MathSubFieldIdField(),
@@ -38,6 +44,58 @@ class MutateMathProblemForm extends StatelessWidget {
                 onPressed: context.mutateMathProblemFormCubit.onSubmit,
                 isLoading: state.isSubmitting,
                 label: 'Submit',
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+}
+
+class _CurrentMathProblemImages extends StatelessWidget {
+  const _CurrentMathProblemImages();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MutateMathProblemFormCubit, MutateMathProblemFormState>(
+      buildWhen: (previous, current) => notDeepEquals(previous.currentImages, current.currentImages),
+      builder: (_, state) {
+        if (state.currentImages.isEmpty) {
+          return const SizedBox.shrink();
+        }
+
+        return Container(
+          height: 200,
+          padding: const EdgeInsets.all(12),
+          margin: const EdgeInsets.only(bottom: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Text(
+                'Current images:',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+              ),
+              const SizedBox(height: 10),
+              Expanded(
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  itemCount: state.currentImages.length,
+                  itemBuilder: (context, index) {
+                    final image = state.currentImages[index];
+
+                    return Padding(
+                      padding: const EdgeInsets.only(right: 12),
+                      child: AspectRatio(
+                        aspectRatio: 1,
+                        child: SafeImage(
+                          borderRadius: BorderRadius.circular(8),
+                          url: assembleResourceUrl(image.path),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               ),
             ],
           ),
@@ -98,6 +156,33 @@ class _TexField extends StatelessWidget {
       onChanged: context.mutateMathProblemFormCubit.onTexChanged,
       minLines: 4,
       maxLines: 10,
+    );
+  }
+}
+
+class _TexValue extends StatelessWidget {
+  const _TexValue();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MutateMathProblemFormCubit, MutateMathProblemFormState>(
+      buildWhen: (prev, curr) => prev.tex != curr.tex,
+      builder: (_, state) {
+        if (state.tex.isEmpty) {
+          return const SizedBox.shrink();
+        }
+
+        return Container(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: TeXView(
+            style: const TeXViewStyle(
+              contentColor: Colors.white,
+              textAlign: TeXViewTextAlign.left,
+            ),
+            child: TeXViewDocument(state.tex),
+          ),
+        );
+      },
     );
   }
 }

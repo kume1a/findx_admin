@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../shared/logger.dart';
 import '../../../shared/ui/widgets/entity_table.dart';
 import '../../../shared/values/shared_date_format.dart';
 import '../state/math_sub_field_list_state.dart';
