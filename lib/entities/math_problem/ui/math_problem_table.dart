@@ -5,6 +5,7 @@ import 'package:flutter_tex/flutter_tex.dart';
 import 'package:intl/intl.dart';
 
 import '../../../shared/ui/widgets/entity_table.dart';
+import '../../../shared/ui/widgets/expandable_image.dart';
 import '../../../shared/util/assemble_media_url.dart';
 import '../state/math_problem_list_state.dart';
 
@@ -38,7 +39,7 @@ class MathProblemTable extends StatelessWidget {
                   for (final image in e.images ?? [])
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 6),
-                      child: SafeImage(
+                      child: ExpandableImage(
                         width: 80,
                         height: 80,
                         borderRadius: BorderRadius.circular(4),

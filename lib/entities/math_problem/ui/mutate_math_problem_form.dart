@@ -1,4 +1,3 @@
-import 'package:common_widgets/common_widgets.dart';
 import 'package:findx_dart_client/app_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -7,6 +6,7 @@ import 'package:flutter_tex/flutter_tex.dart';
 import '../../../app/i18n/failure_i18n_extensions.dart';
 import '../../../shared/ui/widgets/dopdown_field.dart';
 import '../../../shared/ui/widgets/editable_image_dropzone.dart';
+import '../../../shared/ui/widgets/expandable_image.dart';
 import '../../../shared/ui/widgets/loading_text_button.dart';
 import '../../../shared/util/assemble_media_url.dart';
 import '../../../shared/util/equality.dart';
@@ -88,8 +88,7 @@ class _CurrentMathProblemImages extends StatelessWidget {
                       padding: const EdgeInsets.only(right: 12),
                       child: AspectRatio(
                         aspectRatio: 1,
-                        child: SafeImage(
-                          borderRadius: BorderRadius.circular(8),
+                        child: ExpandableImage(
                           url: assembleResourceUrl(image.path),
                         ),
                       ),
