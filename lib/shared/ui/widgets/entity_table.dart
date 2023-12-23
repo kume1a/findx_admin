@@ -108,7 +108,7 @@ class _Success<T> extends StatelessWidget {
               headingTextStyle: TextStyle(
                 color: theme.appThemeExtension?.elSecondary,
               ),
-              dataRowMaxHeight: 80,
+              dataRowMaxHeight: 100,
               horizontalMargin: 0,
               columns: [
                 ...columns,

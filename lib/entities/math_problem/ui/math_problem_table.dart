@@ -1,6 +1,7 @@
 import 'package:common_widgets/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tex/flutter_tex.dart';
 import 'package:intl/intl.dart';
 
 import '../../../shared/ui/widgets/entity_table.dart';
@@ -22,6 +23,7 @@ class MathProblemTable extends StatelessWidget {
           columns: const [
             DataColumn(label: Text('Id')),
             DataColumn(label: Text('Difficulty')),
+            DataColumn(label: Text('Tex')),
             DataColumn(label: Text('MathField')),
             DataColumn(label: Text('MathSubFIeld')),
             DataColumn(label: Text('CreatedAt')),
@@ -32,12 +34,13 @@ class MathProblemTable extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Text(e.id),
+                  const SizedBox(width: 10),
                   for (final image in e.images ?? [])
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 6),
                       child: SafeImage(
-                        width: 100,
-                        height: 100,
+                        width: 80,
+                        height: 80,
                         borderRadius: BorderRadius.circular(4),
                         url: assembleResourceUrl(image.path),
                       ),
@@ -46,6 +49,21 @@ class MathProblemTable extends StatelessWidget {
               ),
             ),
             DataCell(Text(e.difficulty.toString())),
+            DataCell(
+              e.tex != null
+                  ? SizedBox(
+                      height: 80,
+                      width: 300,
+                      child: TeXView(
+                        style: const TeXViewStyle(
+                          contentColor: Colors.white,
+                          textAlign: TeXViewTextAlign.left,
+                        ),
+                        child: TeXViewDocument(e.tex!),
+                      ),
+                    )
+                  : const Text('-'),
+            ),
             DataCell(
               Text(e.mathField?.name ?? '-'),
             ),
