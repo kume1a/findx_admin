@@ -4,7 +4,7 @@ RUN apt-get update
 RUN apt-get install -yqq curl git unzip ssh
 
 ARG FLUTTER_SDK=/usr/local/flutter
-ARG FLUTTER_VERSION=3.16.0
+ARG FLUTTER_VERSION=3.16.5
 ARG APP=/app/
 
 RUN git clone https://github.com/flutter/flutter.git $FLUTTER_SDK
