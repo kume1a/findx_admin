@@ -17,7 +17,7 @@ class ResponsiveForm extends StatelessWidget {
       desktop: (_, constraints) => Align(
         alignment: Alignment.topLeft,
         child: SizedBox(
-          width: constraints.maxWidth * .5,
+          width: constraints.maxWidth * .7,
           child: child,
         ),
       ),

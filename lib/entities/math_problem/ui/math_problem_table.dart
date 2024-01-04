@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:intl/intl.dart';
 
 import '../../../shared/ui/widgets/entity_table.dart';
 import '../../../shared/ui/widgets/expandable_image.dart';
+import '../../../shared/ui/widgets/scrollable_tex.dart';
 import '../../../shared/util/assemble_media_url.dart';
 import '../state/math_problem_list_state.dart';
 
@@ -54,19 +54,9 @@ class MathProblemTable extends StatelessWidget {
                   ? SizedBox(
                       height: 80,
                       width: 300,
-                      child: Scrollbar(
-                        thumbVisibility: true,
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Container(
-                            padding: const EdgeInsets.only(bottom: 20),
-                            alignment: Alignment.center,
-                            child: Math.tex(
-                              e.tex!,
-                              textStyle: const TextStyle(fontSize: 14),
-                            ),
-                          ),
-                        ),
+                      child: ScrollableTex(
+                        e.tex!,
+                        style: const TextStyle(fontSize: 14),
                       ),
                     )
                   : const Text('-'),

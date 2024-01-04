@@ -4,13 +4,13 @@ import 'package:findx_dart_client/app_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_math_fork/flutter_math.dart';
 
 import '../../../app/i18n/failure_i18n_extensions.dart';
 import '../../../shared/ui/widgets/dopdown_field.dart';
 import '../../../shared/ui/widgets/editable_image_dropzone.dart';
 import '../../../shared/ui/widgets/expandable_image.dart';
 import '../../../shared/ui/widgets/loading_text_button.dart';
+import '../../../shared/ui/widgets/scrollable_tex.dart';
 import '../../../shared/util/assemble_media_url.dart';
 import '../../../shared/util/equality.dart';
 import '../state/mutate_math_problem_form_state.dart';
@@ -176,20 +176,9 @@ class _TexValue extends StatelessWidget {
           return const SizedBox.shrink();
         }
 
-        return Scrollbar(
-          trackVisibility: true,
-          thumbVisibility: true,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Container(
-              padding: const EdgeInsets.only(bottom: 20),
-              alignment: Alignment.center,
-              child: Math.tex(
-                state.tex,
-                textStyle: const TextStyle(fontSize: 20),
-              ),
-            ),
-          ),
+        return ScrollableTex(
+          state.tex,
+          style: const TextStyle(fontSize: 20),
         );
       },
     );
@@ -303,13 +292,25 @@ class _AnswerField extends HookWidget {
 
     return Padding(
       padding: const EdgeInsets.only(bottom: 20),
-      child: TextFormField(
-        controller: textController,
-        decoration:
-            InputDecoration(hintText: 'Answer ${index + 1}${isCorrectAnswerField ? ' (Correct)' : ''}'),
-        onChanged: (value) => context.mutateMathProblemFormCubit.onAnswerChanged(index, value),
-        validator: (_) =>
-            context.mutateMathProblemFormCubit.state.answers[index].failureToString((f) => f.translate()),
+      child: Row(
+        children: [
+          Expanded(
+            child: TextFormField(
+              controller: textController,
+              decoration:
+                  InputDecoration(hintText: 'Answer ${index + 1}${isCorrectAnswerField ? ' (Correct)' : ''}'),
+              onChanged: (value) => context.mutateMathProblemFormCubit.onAnswerChanged(index, value),
+              validator: (_) => context.mutateMathProblemFormCubit.state.answers[index]
+                  .failureToString((f) => f.translate()),
+            ),
+          ),
+          const SizedBox(width: 6),
+          Expanded(
+            child: ScrollableTex(
+              textController.text,
+            ),
+          ),
+        ],
       ),
     );
   }
