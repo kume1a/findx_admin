@@ -23,7 +23,7 @@ dependencies:
   flutter_svg: ^2.0.9
   fluttertoast: ^8.2.4
   dropdown_button2: ^2.3.9
-  flutter_tex: ^4.0.5
+  flutter_math_fork: ^0.7.2
 
   # DI
   injectable: ^2.1.2

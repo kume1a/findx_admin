@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_tex/flutter_tex.dart';
+import 'package:flutter_math_fork/flutter_math.dart';
 import 'package:intl/intl.dart';
 
 import '../../../shared/ui/widgets/entity_table.dart';
@@ -54,12 +54,19 @@ class MathProblemTable extends StatelessWidget {
                   ? SizedBox(
                       height: 80,
                       width: 300,
-                      child: TeXView(
-                        style: const TeXViewStyle(
-                          contentColor: Colors.white,
-                          textAlign: TeXViewTextAlign.left,
+                      child: Scrollbar(
+                        thumbVisibility: true,
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          child: Container(
+                            padding: const EdgeInsets.only(bottom: 20),
+                            alignment: Alignment.center,
+                            child: Math.tex(
+                              e.tex!,
+                              textStyle: const TextStyle(fontSize: 14),
+                            ),
+                          ),
                         ),
-                        child: TeXViewDocument(e.tex!),
                       ),
                     )
                   : const Text('-'),

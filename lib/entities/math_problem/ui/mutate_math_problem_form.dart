@@ -4,7 +4,7 @@ import 'package:findx_dart_client/app_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_tex/flutter_tex.dart';
+import 'package:flutter_math_fork/flutter_math.dart';
 
 import '../../../app/i18n/failure_i18n_extensions.dart';
 import '../../../shared/ui/widgets/dopdown_field.dart';
@@ -176,14 +176,19 @@ class _TexValue extends StatelessWidget {
           return const SizedBox.shrink();
         }
 
-        return Container(
-          padding: const EdgeInsets.only(bottom: 20),
-          child: TeXView(
-            style: const TeXViewStyle(
-              contentColor: Colors.white,
-              textAlign: TeXViewTextAlign.left,
+        return Scrollbar(
+          trackVisibility: true,
+          thumbVisibility: true,
+          child: SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Container(
+              padding: const EdgeInsets.only(bottom: 20),
+              alignment: Alignment.center,
+              child: Math.tex(
+                state.tex,
+                textStyle: const TextStyle(fontSize: 20),
+              ),
             ),
-            child: TeXViewDocument(state.tex),
           ),
         );
       },
