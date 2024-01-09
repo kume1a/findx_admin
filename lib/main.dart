@@ -1,3 +1,4 @@
+import 'package:common_models/common_models.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -14,6 +15,8 @@ Future<void> main() async {
   await registerDependencies(kDebugMode ? Environment.dev : Environment.prod);
 
   GoRouter.optionURLReflectsImperativeAPIs = true;
+
+  VVOConfig.requiredString.maxLength = 4095;
 
   runApp(const App());
 }

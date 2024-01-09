@@ -30,7 +30,7 @@ class GenerateMathProblemsForm extends StatelessWidget {
 }
 
 class _TemplateField extends StatelessWidget {
-  const _TemplateField({super.key});
+  const _TemplateField();
 
   @override
   Widget build(BuildContext context) {
