@@ -42,7 +42,17 @@ extension ValueFailureI18nX on ValueFailure {
   }
 }
 
-extension SimpleContentFailureI18nX on SimpleContentValueFailure {
+extension PositiveIntFailureI18nX on PositiveIntFailure {
+  String? translate() {
+    return when(
+      empty: () => 'Field is required',
+      invalid: () => 'Value is invalid',
+      negative: () => "Value shouldn't be negative",
+    );
+  }
+}
+
+extension RequiredStringFailureI18nX on RequiredStringFailure {
   String? translate() {
     return when(
       empty: () => 'Field is required',

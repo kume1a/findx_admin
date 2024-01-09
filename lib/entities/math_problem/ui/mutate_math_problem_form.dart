@@ -269,7 +269,7 @@ class _AnswerField extends HookWidget {
 
   final int index;
   final bool isCorrectAnswerField;
-  final SimpleContentValue stateContent;
+  final RequiredString stateContent;
 
   @override
   Widget build(BuildContext context) {

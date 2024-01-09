@@ -28,7 +28,7 @@ class MutateMathProblemFormState with _$MutateMathProblemFormState {
     required SimpleDataState<DataPage<MathFieldPageItem>> mathFields,
     required SimpleDataState<DataPage<MathSubFieldPageItem>> mathSubFields,
     required List<MediaFile> currentImages,
-    required List<SimpleContentValue> answers,
+    required List<RequiredString> answers,
   }) = _MutateMathProblemFormState;
 
   factory MutateMathProblemFormState.initial() => MutateMathProblemFormState(
@@ -41,7 +41,7 @@ class MutateMathProblemFormState with _$MutateMathProblemFormState {
         mathFields: SimpleDataState.idle(),
         mathSubFields: SimpleDataState.idle(),
         currentImages: [],
-        answers: List.generate(4, (_) => SimpleContentValue.empty()),
+        answers: List.generate(4, (_) => RequiredString.empty()),
       );
 }
 
@@ -122,7 +122,7 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
   void onAnswerChanged(int index, String value) {
     final answers = List.of(state.answers);
 
-    final newAnswer = SimpleContentValue(value);
+    final newAnswer = RequiredString(value);
     answers.replaceRange(index, index + 1, [newAnswer]);
 
     emit(state.copyWith(answers: answers));
@@ -169,7 +169,7 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
       emit(state.copyWith(isSubmitting: false));
 
       res.fold(
-        notifySimpleActionFailure,
+        notifyActionFailure,
         (r) {
           showToast('Updated math problem successfully');
           _pageNavigator.pop();
@@ -189,7 +189,7 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
       emit(state.copyWith(isSubmitting: false));
 
       res.fold(
-        notifySimpleActionFailure,
+        notifyActionFailure,
         (r) {
           showToast('Math problem successfully');
           _pageNavigator.pop();
@@ -219,7 +219,7 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
 
       mathField.ifRight((r) => _fetchMathSubFields(r, mathSubField.rightOrNull));
 
-      final answers = r.answers.map((e) => SimpleContentValue(e.tex)).toList();
+      final answers = r.answers.map((e) => RequiredString(e.tex)).toList();
 
       emit(state.copyWith(
         difficulty: PositiveInt.fromInt(r.difficulty),

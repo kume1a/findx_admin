@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../app/di/register_dependencies.dart';
+import '../entities/math_problem/state/generate_math_problems_form_state.dart';
+import '../entities/math_problem/ui/generate_math_problems_form.dart';
+import '../shared/ui/widgets/responsive_form.dart';
 import 'main/side_menu_page.dart';
 
 class GenerateMathProblemsPage extends StatelessWidget {
@@ -7,7 +12,10 @@ class GenerateMathProblemsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const _Content();
+    return BlocProvider(
+      create: (_) => getIt<GenerateMathProblemsFormCubit>(),
+      child: const _Content(),
+    );
   }
 }
 
@@ -19,7 +27,9 @@ class _Content extends StatelessWidget {
     return const SideMenuPage(
       showBackButton: true,
       title: 'Generate math problems',
-      child: SizedBox.shrink(),
+      child: ResponsiveForm(
+        child: GenerateMathProblemsForm(),
+      ),
     );
   }
 }

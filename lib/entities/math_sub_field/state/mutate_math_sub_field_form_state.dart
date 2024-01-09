@@ -121,7 +121,7 @@ class MutateMathSubFieldFormCubit extends Cubit<MutateMathSubFieldFormState> {
       emit(state.copyWith(isSubmitting: false));
 
       res.fold(
-        notifySimpleActionFailure,
+        notifyActionFailure,
         (r) {
           showToast('Updated math field successfully');
           _pageNavigator.pop();
@@ -136,7 +136,7 @@ class MutateMathSubFieldFormCubit extends Cubit<MutateMathSubFieldFormState> {
       emit(state.copyWith(isSubmitting: false));
 
       res.fold(
-        notifySimpleActionFailure,
+        notifyActionFailure,
         (r) {
           showToast('Math field created successfully');
           _pageNavigator.pop();

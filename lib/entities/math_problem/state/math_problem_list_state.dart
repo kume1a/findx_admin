@@ -53,7 +53,7 @@ final class MathProblemListCubit extends DataPagerWithLastIdCubit<FetchFailure, 
     final res = await _mathProblemRemoteRepository.delete(id: entity.id);
 
     res.fold(
-      notifySimpleActionFailure,
+      notifyActionFailure,
       (_) => onRefresh(),
     );
   }
