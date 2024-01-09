@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../pages/dashboard_page.dart';
+import '../../pages/generate_math_problems_page.dart';
 import '../../pages/main/main_page.dart';
 import '../../pages/math_field_list_page.dart';
 import '../../pages/math_problem_list_page.dart';
@@ -126,6 +127,10 @@ class GoRoutesFactory implements Factory<List<RouteBase>> {
                 GoRoute(
                   path: Routes.mutateMathProblem,
                   builder: (_, state) => const MutateMathProblemPage(mathProblemId: null),
+                ),
+                GoRoute(
+                  path: Routes.generateMathProblems,
+                  builder: (_, state) => const GenerateMathProblemsPage(),
                 ),
               ],
             ),

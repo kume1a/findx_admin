@@ -33,7 +33,7 @@ final class MathProblemListCubit extends DataPagerWithLastIdCubit<FetchFailure, 
   @override
   Future<Either<FetchFailure, DataPage<MathProblemPageItem>>?> provideDataPage(
     String? lastId,
-  ) {
+  ) async {
     return _mathProblemRemoteRepository.filter(limit: 10, lastId: lastId);
   }
 
@@ -56,5 +56,11 @@ final class MathProblemListCubit extends DataPagerWithLastIdCubit<FetchFailure, 
       notifySimpleActionFailure,
       (_) => onRefresh(),
     );
+  }
+
+  Future<void> onGenerateMathProblemsPressed() async {
+    await _goRouter.push(AppRouteBuilder.generateMathProblems());
+
+    onRefresh();
   }
 }

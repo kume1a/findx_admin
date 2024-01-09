@@ -30,4 +30,8 @@ abstract final class AppRouteBuilder {
 
     return routePath;
   }
+
+  static generateMathProblems() {
+    return '${Routes.mathProblemList}/${Routes.generateMathProblems}';
+  }
 }

@@ -11,4 +11,5 @@ abstract final class Routes {
   static const String mutateMathSubField = 'mutateMathSubField';
   static const String mathProblemList = '/mathProblemList';
   static const String mutateMathProblem = 'mutateMathProblem';
+  static const String generateMathProblems = 'generateMathProblems';
 }
