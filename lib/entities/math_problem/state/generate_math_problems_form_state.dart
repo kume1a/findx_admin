@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:collection/collection.dart';
 import 'package:common_models/common_models.dart';
 import 'package:findx_dart_client/app_client.dart';
@@ -64,16 +66,17 @@ class GenerateMathProblemsFormCubit extends Cubit<GenerateMathProblemsFormState>
     final newParamForms = newTemplatePlaceholders.map(
       (e) => MathProblemTemplateParameterForm.number(
         index: e.templateParamIndex,
-        min: RequiredInt.fromInt(0),
-        max: RequiredInt.fromInt(0),
-        step: PositiveInt.fromInt(1),
+        min: RequiredInt.empty(),
+        max: RequiredInt.empty(),
+        step: PositiveInt.empty(),
       ),
     );
 
     final paramForms = paramFormsClone
         .where(
-          (paramForm) => existingTemplatePlaceholders
-              .any((placeholder) => placeholder.templateParamIndex == paramForm.index),
+          (paramForm) => existingTemplatePlaceholders.any(
+            (placeholder) => placeholder.templateParamIndex == paramForm.index,
+          ),
         )
         .toList()
       ..addAll(newParamForms);
@@ -95,6 +98,33 @@ class GenerateMathProblemsFormCubit extends Cubit<GenerateMathProblemsFormState>
   void onNumberParamStepChanged(int index, String value) {}
 
   void onCustomStrParamValueChanged(int index, String value) {}
+
+  void onParamFormToggled(int index, MathProblemTemplateParameterFormType formType) {
+    final form = state.paramForms.elementAtOrNull(index);
+    if (form == null) {
+      return;
+    }
+
+    log('called with $formType');
+
+    final newForm = switch (formType) {
+      MathProblemTemplateParameterFormType.number => MathProblemTemplateParameterForm.number(
+          index: form.index,
+          min: RequiredInt.empty(),
+          max: RequiredInt.empty(),
+          step: PositiveInt.empty(),
+        ),
+      MathProblemTemplateParameterFormType.customStr => MathProblemTemplateParameterForm.customStr(
+          index: form.index,
+          values: RequiredString.empty(),
+        ),
+    };
+
+    final formsCopy = List.of(state.paramForms);
+    formsCopy.removeAt(index);
+    formsCopy.insert(index, newForm);
+    emit(state.copyWith(paramForms: formsCopy));
+  }
 
   List<MathProblemTemplatePlaceholder> _parseTemplatePlaceholders(String template) {
     return groupBy(

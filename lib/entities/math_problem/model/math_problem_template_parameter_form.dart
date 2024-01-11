@@ -3,6 +3,11 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'math_problem_template_parameter_form.freezed.dart';
 
+enum MathProblemTemplateParameterFormType {
+  number,
+  customStr,
+}
+
 @freezed
 sealed class MathProblemTemplateParameterForm with _$MathProblemTemplateParameterForm {
   const factory MathProblemTemplateParameterForm.number({
