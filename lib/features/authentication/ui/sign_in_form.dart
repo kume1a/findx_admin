@@ -42,7 +42,7 @@ class SignInForm extends StatelessWidget {
                     hintText: 'Email',
                   ),
                   onChanged: context.signInFormCubit.onEmailChanged,
-                  validator: (_) => context.signInFormCubit.state.email.failureToString((f) => f.translate()),
+                  validator: (_) => context.signInFormCubit.state.email.translateFailure(),
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
@@ -51,8 +51,7 @@ class SignInForm extends StatelessWidget {
                     hintText: 'Password',
                   ),
                   onChanged: context.signInFormCubit.onPasswordChanged,
-                  validator: (_) =>
-                      context.signInFormCubit.state.password.failureToString((f) => f.translate()),
+                  validator: (_) => context.signInFormCubit.state.password.translateFailure(),
                 ),
                 const SizedBox(height: 100),
                 BlocBuilder<SignInFormCubit, SignInFormState>(

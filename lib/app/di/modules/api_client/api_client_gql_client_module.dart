@@ -21,7 +21,7 @@ abstract class ApiClientGqlClientModule {
       noInterceptorDio: noInterceptorDio,
       authTokenStore: authTokenStore,
       afterExit: afterSignOut.call,
-      logPrint: null,
+      // logPrint: null,
       apiUrl: AppEnvironment.apiUrl,
       refreshTokenUsecase: refreshTokenUsecase,
     );

@@ -15,12 +15,14 @@ class GenerateMathProblemsForm extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GenerateMathProblemsFormCubit, GenerateMathProblemsFormState>(
       buildWhen: (previous, current) => previous.validateForm != current.validateForm,
-      builder: (context, state) {
+      builder: (_, state) {
         return ValidatedForm(
           showErrors: state.validateForm,
           child: ListView(
             children: const [
               _TemplateField(),
+              SizedBox(height: 24),
+              _TemplateParamFields(),
             ],
           ),
         );
@@ -40,22 +42,22 @@ class _TemplateField extends StatelessWidget {
       maxLines: 6,
       decoration: const InputDecoration(hintText: 'Template'),
       onChanged: context.generateMathProblemsFormCubit.onTemplateChanged,
-      validator: (_) =>
-          context.generateMathProblemsFormCubit.state.template.failureToString((p0) => p0.translate()),
+      validator: (_) => context.generateMathProblemsFormCubit.state.template.translateFailure(),
     );
   }
 }
 
-class _TemplateNumberFields extends StatelessWidget {
-  const _TemplateNumberFields({super.key});
+class _TemplateParamFields extends StatelessWidget {
+  const _TemplateParamFields();
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<GenerateMathProblemsFormCubit, GenerateMathProblemsFormState>(
-      buildWhen: (previous, current) => notDeepEquals(previous.numberParams, current.numberParams),
+      buildWhen: (previous, current) => notDeepEquals(previous.paramForms, current.paramForms),
       builder: (_, state) {
         return Column(
-          children: state.numberParams
+          mainAxisSize: MainAxisSize.min,
+          children: state.paramForms
               .mapIndexed(
                 (index, param) => Row(
                   children: [
@@ -100,14 +102,5 @@ class _TemplateNumberFields extends StatelessWidget {
         );
       },
     );
-  }
-}
-
-class _TemplateCustomStrFields extends StatelessWidget {
-  const _TemplateCustomStrFields({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Placeholder();
   }
 }

@@ -119,9 +119,7 @@ class _DifficultyField extends StatelessWidget {
       keyboardType: TextInputType.name,
       decoration: const InputDecoration(hintText: 'Difficulty'),
       onChanged: context.mutateMathProblemFormCubit.onDifficultyChanged,
-      validator: (_) => context.mutateMathProblemFormCubit.state.difficulty.failureToString(
-        (f) => f.translate(),
-      ),
+      validator: (_) => context.mutateMathProblemFormCubit.state.difficulty.translateFailure(),
     );
   }
 }
@@ -297,11 +295,11 @@ class _AnswerField extends HookWidget {
           Expanded(
             child: TextFormField(
               controller: textController,
-              decoration:
-                  InputDecoration(hintText: 'Answer ${index + 1}${isCorrectAnswerField ? ' (Correct)' : ''}'),
+              decoration: InputDecoration(
+                hintText: 'Answer ${index + 1}${isCorrectAnswerField ? ' (Correct)' : ''}',
+              ),
               onChanged: (value) => context.mutateMathProblemFormCubit.onAnswerChanged(index, value),
-              validator: (_) => context.mutateMathProblemFormCubit.state.answers[index]
-                  .failureToString((f) => f.translate()),
+              validator: (_) => context.mutateMathProblemFormCubit.state.answers[index].translateFailure(),
             ),
           ),
           const SizedBox(width: 6),

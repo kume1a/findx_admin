@@ -46,9 +46,7 @@ class _NameField extends StatelessWidget {
       keyboardType: TextInputType.name,
       decoration: const InputDecoration(hintText: 'Name'),
       onChanged: context.mutateMathSubFieldFormCubit.onNameChanged,
-      validator: (_) => context.mutateMathSubFieldFormCubit.state.name.failureToString(
-        (f) => f.translate(),
-      ),
+      validator: (_) => context.mutateMathSubFieldFormCubit.state.name.translateFailure(),
     );
   }
 }
