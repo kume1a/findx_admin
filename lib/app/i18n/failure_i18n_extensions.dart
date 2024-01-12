@@ -41,11 +41,22 @@ extension NameI18nX on Name {
 
 extension PositiveIntI18nX on PositiveInt {
   String? translateFailure() {
+    return failureToString(_tranlsatePositiveNumberFailure);
+  }
+}
+
+extension RequiredDoubleI18n on PositiveDouble {
+  String? translateFailure() {
+    return failureToString(_tranlsatePositiveNumberFailure);
+  }
+}
+
+extension RequiredIntI18nX on RequiredInt {
+  String? translateFailure() {
     return failureToString(
       (f) => f.when(
         empty: () => 'Field is required',
         invalid: () => 'Value is invalid',
-        negative: () => "Value shouldn't be negative",
       ),
     );
   }
@@ -60,4 +71,12 @@ extension RequiredStringI18nX on RequiredString {
       ),
     );
   }
+}
+
+String _tranlsatePositiveNumberFailure(PositiveNumberFailure f) {
+  return f.when(
+    empty: () => 'Field is required',
+    invalid: () => 'Value is invalid',
+    negative: () => "Value shouldn't be negative",
+  );
 }

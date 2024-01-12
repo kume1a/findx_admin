@@ -4,7 +4,6 @@ import 'package:common_widgets/common_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../../app/i18n/failure_i18n_extensions.dart';
 import '../../../shared/util/equality.dart';
@@ -55,8 +54,6 @@ class _TemplateParamFields extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-
     return BlocBuilder<GenerateMathProblemsFormCubit, GenerateMathProblemsFormState>(
       buildWhen: (previous, current) => notDeepEquals(previous.paramForms, current.paramForms),
       builder: (_, state) {
@@ -68,6 +65,11 @@ class _TemplateParamFields extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 6),
                 child: Row(
                   children: [
+                    Text(
+                      '${param.index}',
+                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    ),
+                    const SizedBox(width: 6),
                     _ParamFormSwitch(
                       formIndex: formIndex,
                     ),
@@ -97,7 +99,10 @@ class _TemplateParamFields extends StatelessWidget {
             ),
             onChanged: (value) =>
                 context.generateMathProblemsFormCubit.onCustomStrParamValueChanged(formIndex, value),
-            // validator: (_) => context.generateMathProblemsFormCubit.state.numberParams[i].min,
+            validator: (_) => context.generateMathProblemsFormCubit.state.paramForms[formIndex].when(
+              number: (_, __, ___, ____) => null,
+              customStr: (_, values) => values.translateFailure(),
+            ),
           ),
         ),
       ],
@@ -111,7 +116,10 @@ class _TemplateParamFields extends StatelessWidget {
             ),
             onChanged: (value) =>
                 context.generateMathProblemsFormCubit.onNumberParamMinChanged(formIndex, value),
-            // validator: (_) => context.generateMathProblemsFormCubit.state.numberParams[i].min,
+            validator: (_) => context.generateMathProblemsFormCubit.state.paramForms[formIndex].when(
+              number: (_, min, __, ___) => min.translateFailure(),
+              customStr: (_, __) => null,
+            ),
           ),
         ),
         const SizedBox(width: 12),
@@ -124,6 +132,10 @@ class _TemplateParamFields extends StatelessWidget {
             ),
             onChanged: (value) =>
                 context.generateMathProblemsFormCubit.onNumberParamMaxChanged(formIndex, value),
+            validator: (_) => context.generateMathProblemsFormCubit.state.paramForms[formIndex].when(
+              number: (_, __, max, ___) => max.translateFailure(),
+              customStr: (_, __) => null,
+            ),
           ),
         ),
         const SizedBox(width: 12),
@@ -136,6 +148,10 @@ class _TemplateParamFields extends StatelessWidget {
             ),
             onChanged: (value) =>
                 context.generateMathProblemsFormCubit.onNumberParamStepChanged(formIndex, value),
+            validator: (_) => context.generateMathProblemsFormCubit.state.paramForms[formIndex].when(
+              number: (_, __, ___, step) => step.translateFailure(),
+              customStr: (_, __) => null,
+            ),
           ),
         ),
       ],
@@ -143,9 +159,8 @@ class _TemplateParamFields extends StatelessWidget {
   }
 }
 
-class _ParamFormSwitch extends HookWidget {
+class _ParamFormSwitch extends StatelessWidget {
   const _ParamFormSwitch({
-    super.key,
     required this.formIndex,
   });
 
@@ -153,29 +168,37 @@ class _ParamFormSwitch extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final i = useState(0);
+    final theme = Theme.of(context);
 
     return BlocBuilder<GenerateMathProblemsFormCubit, GenerateMathProblemsFormState>(
       buildWhen: (previous, current) => notDeepEquals(previous.paramForms, current.paramForms),
       builder: (context, state) {
-        return AnimatedToggleSwitch<int>.rolling(
-          // current: state.paramForms[formIndex].map(
-          //   number: (_) => MathProblemTemplateParameterFormType.number,
-          //   customStr: (_) => MathProblemTemplateParameterFormType.customStr,
-          // ),
-          current: i.value,
-          // values: MathProblemTemplateParameterFormType.values,
-          values: const [0, 1],
-          onChanged: (index) {
-            i.value = index;
-            return;
-            context.generateMathProblemsFormCubit.onParamFormToggled(
-              formIndex,
-              index == 0
-                  ? MathProblemTemplateParameterFormType.number
-                  : MathProblemTemplateParameterFormType.customStr,
+        return AnimatedToggleSwitch.size(
+          current: state.paramForms[formIndex].map(
+            number: (_) => MathProblemTemplateParameterFormType.number,
+            customStr: (_) => MathProblemTemplateParameterFormType.customStr,
+          ),
+          indicatorSize: const Size.fromWidth(42),
+          height: 37,
+          borderWidth: 1,
+          style: ToggleStyle(
+            borderColor: theme.colorScheme.primary,
+            indicatorColor: theme.colorScheme.primary,
+          ),
+          customIconBuilder: (context, local, global) {
+            final text = const ['N', 'S'][local.index];
+
+            return Center(
+              child: Text(
+                text,
+                style: TextStyle(
+                  color: Color.lerp(Colors.white, Colors.black, local.animationValue),
+                ),
+              ),
             );
           },
+          values: MathProblemTemplateParameterFormType.values,
+          onChanged: (value) => context.generateMathProblemsFormCubit.onParamFormToggled(formIndex, value),
         );
       },
     );

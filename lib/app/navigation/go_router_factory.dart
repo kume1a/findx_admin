@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
@@ -23,6 +24,7 @@ class GoRouterFactory implements Factory<GoRouter> {
       navigatorKey: NavigatorKeyHolder.rootKey,
       initialLocation: Routes.dashboard,
       routes: _goRoutesFactory.newInstance(),
+      observers: [FlutterSmartDialog.observer],
       redirect: (BuildContext context, GoRouterState state) async {
         if (state.fullPath == '/') {
           return Routes.dashboard;

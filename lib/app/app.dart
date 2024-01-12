@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_smart_dialog/flutter_smart_dialog.dart';
 import 'package:go_router/go_router.dart';
 
 import '../shared/values/app_theme.dart';
@@ -15,6 +16,7 @@ class App extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'FindX',
       theme: AppTheme.darkTheme,
+      builder: FlutterSmartDialog.init(),
     );
   }
 }

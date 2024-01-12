@@ -102,10 +102,10 @@ packages:
     dependency: "direct dev"
     description:
       name: build_runner
-      sha256: "67d591d602906ef9201caf93452495ad1812bea2074f04e25dbd7c133785821b"
+      sha256: "581bacf68f89ec8792f5e5a0b2c4decd1c948e97ce659dc783688c8a88fbec21"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.7"
+    version: "2.4.8"
   build_runner_core:
     dependency: transitive
     description:
@@ -175,7 +175,7 @@ packages:
     description:
       path: "packages/common_models"
       ref: HEAD
-      resolved-ref: "9ca3b8d57c7bc6b4da79083d4151702e209b8029"
+      resolved-ref: "88bf47cc0478225362474474874dd680db53f541"
       url: "https://github.com/kume1a/flutter_common.git"
     source: git
     version: "0.0.4"
@@ -184,7 +184,7 @@ packages:
     description:
       path: "packages/common_network_components"
       ref: HEAD
-      resolved-ref: "9ca3b8d57c7bc6b4da79083d4151702e209b8029"
+      resolved-ref: "88bf47cc0478225362474474874dd680db53f541"
       url: "https://github.com/kume1a/flutter_common.git"
     source: git
     version: "0.0.7"
@@ -193,7 +193,7 @@ packages:
     description:
       path: "packages/common_widgets"
       ref: HEAD
-      resolved-ref: "9ca3b8d57c7bc6b4da79083d4151702e209b8029"
+      resolved-ref: "88bf47cc0478225362474474874dd680db53f541"
       url: "https://github.com/kume1a/flutter_common.git"
     source: git
     version: "0.0.6"
@@ -403,6 +403,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.0.0"
+  flutter_smart_dialog:
+    dependency: "direct main"
+    description:
+      name: flutter_smart_dialog
+      sha256: e9ee69eeac16165d142f1974b4db05ca9846cffafb7c94674a38ec07d7e6cda1
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.9.6"
   flutter_svg:
     dependency: "direct main"
     description:
@@ -489,18 +497,18 @@ packages:
     dependency: transitive
     description:
       name: gql
-      sha256: f57eb635aa2f134ced585584f3d53006816f1fdd909480bb7626a1d41063ce25
+      sha256: "2017bea7d33a61131366800bd19022b12c96923b438c211c7a4c714afe71b4d5"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1-alpha+1704118137418"
+    version: "1.0.1-alpha+1704999006891"
   gql_dedupe_link:
     dependency: transitive
     description:
       name: gql_dedupe_link
-      sha256: d0ba6388a52dab95e7e9a9fa3fec43c11172d3d3feda21bf88df39427c8e282f
+      sha256: "2aa1bdc1d248ba6f9decd83481f8dd7fef6d6b31233b929ef37c952f0c3f6d02"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.4-alpha+1704118137496"
+    version: "2.0.4-alpha+1704999006976"
   gql_dio_link:
     dependency: transitive
     description:
@@ -537,10 +545,10 @@ packages:
     dependency: transitive
     description:
       name: gql_link
-      sha256: "4cce5019a2ce727023a5e5f9763a9ff85b2770801b10a51738a10472ae779786"
+      sha256: f40a593fc81efb8f06754d11365d83fc62877ba4ec945b11eb7116212da21711
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1-alpha+1704118137432"
+    version: "1.0.1-alpha+1704999006905"
   gql_transform_link:
     dependency: transitive
     description:
@@ -794,10 +802,10 @@ packages:
     dependency: transitive
     description:
       name: path_provider_foundation
-      sha256: "19314d595120f82aca0ba62787d58dde2cc6b5df7d2f0daf72489e38d1b57f2d"
+      sha256: "5a7999be66e000916500be4f15a3633ebceb8302719b47b9cc49ce924125350f"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.1"
+    version: "2.3.2"
   path_provider_linux:
     dependency: transitive
     description:
@@ -914,10 +922,10 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences_foundation
-      sha256: "7bf53a9f2d007329ee6f3df7268fd498f8373602f943c975598bbb34649b62a7"
+      sha256: "7708d83064f38060c7b39db12aefe449cb8cdc031d6062280087bc4cdb988f5c"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.4"
+    version: "2.3.5"
   shared_preferences_linux:
     dependency: transitive
     description:
@@ -1095,10 +1103,10 @@ packages:
     dependency: transitive
     description:
       name: uuid
-      sha256: "22c94e5ad1e75f9934b766b53c742572ee2677c56bc871d850a57dad0f82127f"
+      sha256: cd210a09f7c18cbe5a02511718e0334de6559871052c90a90c0cca46a4aa81c8
       url: "https://pub.dev"
     source: hosted
-    version: "4.2.2"
+    version: "4.3.3"
   vector_graphics:
     dependency: transitive
     description:

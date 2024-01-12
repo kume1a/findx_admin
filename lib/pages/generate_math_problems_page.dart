@@ -24,10 +24,14 @@ class _Content extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const SideMenuPage(
+    return SideMenuPage(
       showBackButton: true,
       title: 'Generate math problems',
-      child: ResponsiveForm(
+      headerEnd: TextButton(
+        onPressed: context.generateMathProblemsFormCubit.onSubmit,
+        child: const Text('Generate'),
+      ),
+      child: const ResponsiveForm(
         child: GenerateMathProblemsForm(),
       ),
     );
