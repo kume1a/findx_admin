@@ -1,4 +1,5 @@
 import 'package:findx_dart_client/app_client.dart';
+import 'package:injectable/injectable.dart';
 
 import '../model/math_problem_template_parameter_form.dart';
 
@@ -12,6 +13,7 @@ class MathProblemParams {
   final List<GenerateMathProblemNumberParam> numberParams;
 }
 
+@lazySingleton
 class MapMathProblemTemplateParams {
   MathProblemParams call(List<MathProblemTemplateParameterForm> forms) {
     final customStrParams = <GenerateMathProblemCustomStrParam>[];
@@ -20,18 +22,22 @@ class MapMathProblemTemplateParams {
     for (final form in forms) {
       form.when(
         number: (index, min, max, step) {
-          return GenerateMathProblemNumberParam(
+          final param = GenerateMathProblemNumberParam(
             index: index,
             min: min.getOrThrow,
             max: max.getOrThrow,
             step: step.getOrThrow,
           );
+
+          numberParams.add(param);
         },
         customStr: (index, values) {
-          return GenerateMathProblemCustomStrParam(
+          final param = GenerateMathProblemCustomStrParam(
             index: index,
             values: values.getOrThrow,
           );
+
+          customStrParams.add(param);
         },
       );
     }

@@ -7,29 +7,38 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../shared/logger.dart';
 import '../model/math_problem_template_parameter_form.dart';
 import '../model/math_problem_template_placeholder.dart';
 import '../util/map_math_problem_template_params.dart';
 
 part 'generate_math_problems_form_state.freezed.dart';
 
+enum GenerateMathProblemsFormStage {
+  templating,
+  submitting,
+  generated,
+}
+
 @freezed
 class GenerateMathProblemsFormState with _$GenerateMathProblemsFormState {
   const factory GenerateMathProblemsFormState({
+    required GenerateMathProblemsFormStage stage,
     required bool validateForm,
     required RequiredString template,
     required List<MathProblemTemplateParameterForm> paramForms,
     required bool reloadingParamForms,
     required bool isSubmitting,
+    required DataState<FetchFailure, List<GenerateMathProblemValuesRes>> generatedMathProblemValues,
     int? generatedTotalCount,
   }) = _GenerateMathProblemsFormState;
 
   factory GenerateMathProblemsFormState.initial() => GenerateMathProblemsFormState(
+        stage: GenerateMathProblemsFormStage.templating,
         validateForm: false,
         template: RequiredString.empty(),
         paramForms: [],
         reloadingParamForms: false,
+        generatedMathProblemValues: DataState.idle(),
         isSubmitting: false,
       );
 }
@@ -74,6 +83,7 @@ class GenerateMathProblemsFormCubit extends Cubit<GenerateMathProblemsFormState>
       paramForms: paramForms,
       reloadingParamForms: false,
       generatedTotalCount: null,
+      template: RequiredString(value),
     ));
   }
 
@@ -84,7 +94,10 @@ class GenerateMathProblemsFormCubit extends Cubit<GenerateMathProblemsFormState>
       return;
     }
 
-    emit(state.copyWith(isSubmitting: false));
+    emit(state.copyWith(
+      isSubmitting: true,
+      stage: GenerateMathProblemsFormStage.submitting,
+    ));
 
     final templateParams = _mapMathProblemTemplateParams(state.paramForms);
 
@@ -104,7 +117,10 @@ class GenerateMathProblemsFormCubit extends Cubit<GenerateMathProblemsFormState>
       return;
     }
 
-    emit(state.copyWith(isSubmitting: false));
+    emit(state.copyWith(
+      isSubmitting: true,
+      generatedMathProblemValues: DataState.loading(),
+    ));
 
     final templateParams = _mapMathProblemTemplateParams(state.paramForms);
 
@@ -114,9 +130,20 @@ class GenerateMathProblemsFormCubit extends Cubit<GenerateMathProblemsFormState>
       template: state.template.getOrThrow,
     );
 
-    emit(state.copyWith(isSubmitting: false));
+    emit(state.copyWith(
+      isSubmitting: false,
+      stage: GenerateMathProblemsFormStage.generated,
+      generatedMathProblemValues: DataState.fromEither(generated),
+    ));
+  }
 
-    logger.i(generated);
+  Future<void> cancelGenerateMathProblems() async {
+    emit(state.copyWith(
+      isSubmitting: false,
+      generatedTotalCount: null,
+      stage: GenerateMathProblemsFormStage.templating,
+      generatedMathProblemValues: DataState.idle(),
+    ));
   }
 
   void onNumberParamMinChanged(int index, String value) {
