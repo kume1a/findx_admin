@@ -30,4 +30,15 @@ abstract class ApiClientMathProblemModule {
       mediaFileRemoteRepository,
     );
   }
+
+  @lazySingleton
+  BulkCreateMathProblemsUsecase bulkCreateMathProblemsUsecase(
+    MathProblemRemoteRepository mathProblemRemoteRepository,
+    MediaFileRemoteRepository mediaFileRemoteRepository,
+  ) {
+    return ApiBulkCreateMathProblemsUsecase(
+      mediaFileRemoteRepository,
+      mathProblemRemoteRepository,
+    );
+  }
 }

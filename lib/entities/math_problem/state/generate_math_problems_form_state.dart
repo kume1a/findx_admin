@@ -5,8 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../../shared/logger.dart';
+import '../../../shared/ui/toast.dart';
+import '../../../shared/util/toast/notify_simple_action_failure.dart';
 import '../model/math_problem_template_parameter_form.dart';
 import '../model/math_problem_template_placeholder.dart';
 import '../util/map_math_problem_template_params.dart';
@@ -30,6 +34,11 @@ class GenerateMathProblemsFormState with _$GenerateMathProblemsFormState {
     required bool isSubmitting,
     required DataState<FetchFailure, List<GenerateMathProblemValuesRes>> generatedMathProblemValues,
     int? generatedTotalCount,
+    required SimpleDataState<DataPage<MathFieldPageItem>> mathFields,
+    required SimpleDataState<DataPage<MathSubFieldPageItem>> mathSubFields,
+    MathFieldPageItem? mathField,
+    MathSubFieldPageItem? mathSubField,
+    required PositiveInt difficulty,
   }) = _GenerateMathProblemsFormState;
 
   factory GenerateMathProblemsFormState.initial() => GenerateMathProblemsFormState(
@@ -40,6 +49,9 @@ class GenerateMathProblemsFormState with _$GenerateMathProblemsFormState {
         reloadingParamForms: false,
         generatedMathProblemValues: DataState.idle(),
         isSubmitting: false,
+        mathFields: SimpleDataState.idle(),
+        mathSubFields: SimpleDataState.idle(),
+        difficulty: PositiveInt.empty(),
       );
 }
 
@@ -54,10 +66,24 @@ class GenerateMathProblemsFormCubit extends Cubit<GenerateMathProblemsFormState>
   GenerateMathProblemsFormCubit(
     this._mathProblemRemoteRepository,
     this._mapMathProblemTemplateParams,
-  ) : super(GenerateMathProblemsFormState.initial());
+    this._bulkCreateMathProblemsUsecase,
+    this._mathFieldRemoteRepository,
+    this._mathSubFieldRemoteRepository,
+    this._router,
+  ) : super(GenerateMathProblemsFormState.initial()) {
+    _init();
+  }
 
   final MathProblemRemoteRepository _mathProblemRemoteRepository;
   final MapMathProblemTemplateParams _mapMathProblemTemplateParams;
+  final BulkCreateMathProblemsUsecase _bulkCreateMathProblemsUsecase;
+  final MathSubFieldRemoteRepository _mathSubFieldRemoteRepository;
+  final MathFieldRemoteRepository _mathFieldRemoteRepository;
+  final GoRouter _router;
+
+  Future<void> _init() async {
+    await _fetchMathFields();
+  }
 
   Future<void> onTemplateChanged(String value) async {
     if (state.reloadingParamForms) {
@@ -90,7 +116,11 @@ class GenerateMathProblemsFormCubit extends Cubit<GenerateMathProblemsFormState>
   Future<void> onSubmit() async {
     emit(state.copyWith(validateForm: true));
 
-    if (state.template.invalid || state.paramForms.any((e) => e.invalid)) {
+    if (state.template.invalid ||
+        state.difficulty.invalid ||
+        state.mathField == null ||
+        state.mathSubField == null ||
+        state.paramForms.any((e) => e.invalid)) {
       return;
     }
 
@@ -144,6 +174,55 @@ class GenerateMathProblemsFormCubit extends Cubit<GenerateMathProblemsFormState>
       stage: GenerateMathProblemsFormStage.templating,
       generatedMathProblemValues: DataState.idle(),
     ));
+  }
+
+  Future<void> onSubmitGeneratedValues() async {
+    if (state.difficulty.invalid || state.mathField == null || state.mathSubField == null) {
+      return;
+    }
+
+    final values = state.generatedMathProblemValues.getOrNull;
+
+    if (values == null) {
+      return;
+    }
+
+    if (values.any((element) => element.answers == null || element.answers?.length != 4)) {
+      showToast('All answers must be defined');
+      return;
+    }
+
+    final params = List.of(values)
+        .map(
+          (e) => CreateMathProblemParams(
+            difficulty: state.difficulty.getOrThrow,
+            text: null,
+            tex: e.tex,
+            mathFieldId: state.mathField!.id,
+            mathSubFieldId: state.mathSubField!.id,
+            images: null,
+            answers: e.answers!
+                .map(
+                  (answer) => CreateMathProblemAnswerInput(
+                    isCorrect: answer.isCorrect,
+                    tex: answer.tex,
+                  ),
+                )
+                .toList(),
+          ),
+        )
+        .toList();
+
+    emit(state.copyWith(isSubmitting: true));
+
+    final res = await _bulkCreateMathProblemsUsecase(params);
+
+    emit(state.copyWith(isSubmitting: false));
+
+    res.fold(
+      notifyActionFailure,
+      (_) => _router.pop(),
+    );
   }
 
   void onNumberParamMinChanged(int index, String value) {
@@ -202,6 +281,28 @@ class GenerateMathProblemsFormCubit extends Cubit<GenerateMathProblemsFormState>
         ),
       ),
     );
+  }
+
+  void onDifficultyChanged(String value) {
+    emit(state.copyWith(difficulty: PositiveInt(value)));
+  }
+
+  void onMathFieldChanged(MathFieldPageItem? value) {
+    if (value == null) {
+      return;
+    }
+
+    emit(state.copyWith(mathField: value));
+
+    _fetchMathSubFields(value, null);
+  }
+
+  void onMathSubFieldChanged(MathSubFieldPageItem? value) {
+    if (value == null) {
+      return;
+    }
+
+    emit(state.copyWith(mathSubField: value));
   }
 
   Future<void> _onParamFormValueChanged(
@@ -289,5 +390,30 @@ class GenerateMathProblemsFormCubit extends Cubit<GenerateMathProblemsFormState>
         .where((e) => e != null)
         .cast<MathProblemTemplatePlaceholder>()
         .toList();
+  }
+
+  Future<void> _fetchMathFields() async {
+    final res = await _mathFieldRemoteRepository.filter(
+      limit: 200,
+    );
+
+    emit(state.copyWith(mathFields: SimpleDataState.fromEither(res)));
+  }
+
+  Future<void> _fetchMathSubFields(
+    MathFieldPageItem mathField,
+    MathSubFieldGetByIdRes? mathSubField,
+  ) async {
+    final res = await _mathSubFieldRemoteRepository.filter(
+      limit: 200,
+      mathFieldId: mathField.id,
+    );
+
+    final selected = res.rightOrNull?.items.firstWhereOrNull((e) => e.id == mathSubField?.id);
+
+    emit(state.copyWith(
+      mathSubFields: SimpleDataState.fromEither(res),
+      mathSubField: selected,
+    ));
   }
 }

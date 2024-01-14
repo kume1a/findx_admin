@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../app/i18n/failure_i18n_extensions.dart';
+import '../../../shared/ui/widgets/dopdown_field.dart';
 import '../../../shared/util/equality.dart';
 import '../model/math_problem_template_parameter_form.dart';
 import '../state/generate_math_problems_form_state.dart';
@@ -22,11 +23,81 @@ class GenerateMathProblemsForm extends StatelessWidget {
           showErrors: state.validateForm,
           child: ListView(
             children: const [
+              _DifficultyField(),
+              SizedBox(height: 12),
+              _MathFieldIdField(),
+              SizedBox(height: 12),
+              _MathSubFieldIdField(),
+              SizedBox(height: 12),
               _TemplateField(),
               SizedBox(height: 24),
               _TemplateParamFields(),
             ],
           ),
+        );
+      },
+    );
+  }
+}
+
+class _DifficultyField extends StatelessWidget {
+  const _DifficultyField();
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      keyboardType: TextInputType.name,
+      decoration: const InputDecoration(hintText: 'Difficulty'),
+      onChanged: context.generateMathProblemsFormCubit.onDifficultyChanged,
+      validator: (_) => context.generateMathProblemsFormCubit.state.difficulty.translateFailure(),
+    );
+  }
+}
+
+class _MathFieldIdField extends StatelessWidget {
+  const _MathFieldIdField();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<GenerateMathProblemsFormCubit, GenerateMathProblemsFormState>(
+      buildWhen: (prev, curr) =>
+          prev.mathFields != curr.mathFields ||
+          prev.mathField != curr.mathField ||
+          prev.validateForm != curr.validateForm,
+      builder: (_, state) {
+        return DropdownField(
+          hintText: 'Math field id',
+          validateForm: state.validateForm,
+          data: state.mathFields,
+          currentValue: state.mathField,
+          itemBuilder: (e) => DropdownMenuItem(value: e, child: Text(e.name)),
+          onChanged: context.generateMathProblemsFormCubit.onMathFieldChanged,
+        );
+      },
+    );
+  }
+}
+
+class _MathSubFieldIdField extends StatelessWidget {
+  const _MathSubFieldIdField();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<GenerateMathProblemsFormCubit, GenerateMathProblemsFormState>(
+      buildWhen: (prev, curr) =>
+          prev.mathSubFields != curr.mathSubFields ||
+          prev.mathSubField != curr.mathSubField ||
+          prev.validateForm != curr.validateForm ||
+          prev.mathField != curr.mathField,
+      builder: (_, state) {
+        return DropdownField(
+          hintText: 'Math sub field id',
+          validateForm: state.validateForm,
+          data: state.mathSubFields,
+          currentValue: state.mathSubField,
+          itemBuilder: (e) => DropdownMenuItem(value: e, child: Text(e.name)),
+          onChanged:
+              state.mathField != null ? context.generateMathProblemsFormCubit.onMathSubFieldChanged : null,
         );
       },
     );

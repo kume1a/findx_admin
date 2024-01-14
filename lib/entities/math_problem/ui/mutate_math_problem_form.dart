@@ -1,6 +1,5 @@
 import 'package:collection/collection.dart';
 import 'package:common_models/common_models.dart';
-import 'package:findx_dart_client/app_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -194,7 +193,7 @@ class _MathFieldIdField extends StatelessWidget {
           prev.mathField != curr.mathField ||
           prev.validateForm != curr.validateForm,
       builder: (_, state) {
-        return DropdownField<MathFieldPageItem>(
+        return DropdownField(
           hintText: 'Math field id',
           validateForm: state.validateForm,
           data: state.mathFields,

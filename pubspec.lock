@@ -30,7 +30,7 @@ packages:
     description:
       path: "packages/app_client"
       ref: HEAD
-      resolved-ref: af9d2bdd24360b222bcfb965050001ae5b09fe68
+      resolved-ref: "26e02d1d83e38d3ffefcbf29a3060aab2b918967"
       url: "https://github.com/FindX-0/findx_dart_client.git"
     source: git
     version: "0.0.1"
@@ -274,7 +274,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: af9d2bdd24360b222bcfb965050001ae5b09fe68
+      resolved-ref: "26e02d1d83e38d3ffefcbf29a3060aab2b918967"
       url: "https://github.com/FindX-0/findx_dart_client.git"
     source: git
     version: "0.0.1"
@@ -497,18 +497,18 @@ packages:
     dependency: transitive
     description:
       name: gql
-      sha256: "2017bea7d33a61131366800bd19022b12c96923b438c211c7a4c714afe71b4d5"
+      sha256: "0bdd22c3a9464970ae590559e4f0568769b219dda9e94cb10c4cf999a3e263f7"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1-alpha+1704999006891"
+    version: "1.0.1-alpha+1705114622973"
   gql_dedupe_link:
     dependency: transitive
     description:
       name: gql_dedupe_link
-      sha256: "2aa1bdc1d248ba6f9decd83481f8dd7fef6d6b31233b929ef37c952f0c3f6d02"
+      sha256: e5359dd0c7a38f95e2b12f6ab305989a4e30028e4032825c8e9f610150999c69
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.4-alpha+1704999006976"
+    version: "2.0.4-alpha+1705114623057"
   gql_dio_link:
     dependency: transitive
     description:
@@ -545,10 +545,10 @@ packages:
     dependency: transitive
     description:
       name: gql_link
-      sha256: f40a593fc81efb8f06754d11365d83fc62877ba4ec945b11eb7116212da21711
+      sha256: "63941513a688d856546f0c3218e7ad94d47fc6e04662dcdb06de92a4cde2d7db"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.1-alpha+1704999006905"
+    version: "1.0.1-alpha+1705114622987"
   gql_transform_link:
     dependency: transitive
     description:
@@ -562,7 +562,7 @@ packages:
     description:
       path: "packages/gql_types"
       ref: HEAD
-      resolved-ref: af9d2bdd24360b222bcfb965050001ae5b09fe68
+      resolved-ref: "26e02d1d83e38d3ffefcbf29a3060aab2b918967"
       url: "https://github.com/FindX-0/findx_dart_client.git"
     source: git
     version: "1.0.0"

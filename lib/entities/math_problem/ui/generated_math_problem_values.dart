@@ -12,7 +12,7 @@ class GeneratedMathProblemValues extends StatelessWidget {
     return BlocBuilder<GenerateMathProblemsFormCubit, GenerateMathProblemsFormState>(
       buildWhen: (previous, current) =>
           previous.generatedMathProblemValues != current.generatedMathProblemValues,
-      builder: (context, state) {
+      builder: (_, state) {
         return state.generatedMathProblemValues.maybeWhen(
           orElse: () => IconButton(
             onPressed: context.generateMathProblemsFormCubit.cancelGenerateMathProblems,
@@ -30,7 +30,6 @@ class GeneratedMathProblemValues extends StatelessWidget {
 
 class _Item extends StatelessWidget {
   const _Item({
-    super.key,
     required this.values,
   });
 
@@ -39,9 +38,20 @@ class _Item extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(16),
-      child: Text(
-          'tex: ${values.tex}, answers = ${values.answers?.map((e) => '{tex: ${e.tex}, correct ? ${e.isCorrect}}').join(', ') ?? '-'}'),
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(values.tex),
+          Padding(
+            padding: const EdgeInsets.only(left: 20),
+            child: Text(
+              values.answers?.map((e) => '${e.isCorrect ? 'correct   ' : 'incorrect'} ${e.tex}').join('\n') ??
+                  '-',
+            ),
+          )
+        ],
+      ),
     );
   }
 }

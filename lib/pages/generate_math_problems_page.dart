@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../app/di/register_dependencies.dart';
 import '../entities/math_problem/state/generate_math_problems_form_state.dart';
 import '../entities/math_problem/ui/generate_math_problems_form.dart';
-import '../entities/math_problem/ui/generate_math_problems_submition.dart';
+import '../entities/math_problem/ui/generate_math_problems_submit.dart';
 import '../entities/math_problem/ui/generated_math_problem_values.dart';
 import '../shared/ui/widgets/responsive_form.dart';
 import 'main/side_menu_page.dart';
@@ -29,7 +29,7 @@ class _Content extends StatelessWidget {
     return SideMenuPage(
       showBackButton: true,
       title: 'Generate math problems',
-      headerEnd: const GenerateMathProblemsSubmitButton(),
+      headerEnd: const GenerateMathProblemsSubmit(),
       child: BlocBuilder<GenerateMathProblemsFormCubit, GenerateMathProblemsFormState>(
         buildWhen: (previous, current) =>
             previous.stage != current.stage || previous.isSubmitting != current.isSubmitting,
