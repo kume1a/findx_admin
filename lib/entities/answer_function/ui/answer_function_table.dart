@@ -24,13 +24,18 @@ class AnswerFunctionTable extends StatelessWidget {
             DataColumn(label: Text('Condition')),
             DataColumn(label: Text('Weight')),
           ],
-          cellsBuilder: (e) => [
-            DataCell(Text(e.id)),
-            DataCell(Text(DateFormat('MMM dd, yyyy HH:mm:ss').format(e.createdAt))),
-            DataCell(Text(e.func)),
-            DataCell(Text(e.condition ?? '-')),
-            DataCell(Text(e.weight)),
-          ],
+          cellsBuilder: (e) {
+            final weightNum = double.tryParse(e.weight);
+            final formattedWeight = weightNum != null ? weightNum.toStringAsFixed(2) : e.weight;
+
+            return [
+              DataCell(Text(e.id)),
+              DataCell(Text(DateFormat('MMM dd, yyyy HH:mm:ss').format(e.createdAt))),
+              DataCell(Text(e.func)),
+              DataCell(Text(e.condition ?? '-')),
+              DataCell(Text(formattedWeight)),
+            ];
+          },
         );
       },
     );

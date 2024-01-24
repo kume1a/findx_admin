@@ -11,6 +11,8 @@ class MutateAnswerFunctionForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<MutateAnswerFunctionFormCubit, MutateAnswerFunctionFormState>(
+      buildWhen: (previous, current) =>
+          previous.validateForm != current.validateForm || previous.isSubmitting != current.isSubmitting,
       builder: (_, state) {
         return Form(
           autovalidateMode: state.validateForm ? AutovalidateMode.always : AutovalidateMode.disabled,
@@ -22,6 +24,8 @@ class MutateAnswerFunctionForm extends StatelessWidget {
                 decoration: const InputDecoration(hintText: 'Func'),
                 onChanged: context.mutateAnswerFunctionFormCubit.onFuncChanged,
                 validator: (_) => context.mutateAnswerFunctionFormCubit.state.func.translateFailure(),
+                minLines: 20,
+                maxLines: 20,
               ),
               const SizedBox(height: 20),
               TextFormField(
@@ -29,6 +33,8 @@ class MutateAnswerFunctionForm extends StatelessWidget {
                 keyboardType: TextInputType.multiline,
                 decoration: const InputDecoration(hintText: 'Condition'),
                 onChanged: context.mutateAnswerFunctionFormCubit.onConditionChanged,
+                minLines: 10,
+                maxLines: 20,
               ),
               const SizedBox(height: 20),
               TextFormField(
@@ -38,7 +44,7 @@ class MutateAnswerFunctionForm extends StatelessWidget {
                 onChanged: context.mutateAnswerFunctionFormCubit.onWeightChanged,
                 validator: (_) => context.mutateAnswerFunctionFormCubit.state.weight.translateFailure(),
               ),
-              const SizedBox(height: 20),
+              const SizedBox(height: 32),
               LoadingTextButton(
                 onPressed: context.mutateAnswerFunctionFormCubit.onSubmit,
                 isLoading: state.isSubmitting,

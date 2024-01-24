@@ -68,7 +68,6 @@ class MutateAnswerFunctionFormCubit extends Cubit<MutateAnswerFunctionFormState>
 
   Future<void> _fetchInitialEntity() async {
     if (_answerFunctionId == null) {
-      logger.w('answerFunctionId is null');
       return;
     }
 

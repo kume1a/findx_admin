@@ -33,18 +33,16 @@ class SideMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 400,
-      child: Drawer(
-        child: ListView(
-          children: [
-            DrawerHeader(
-              padding: const EdgeInsets.all(36),
-              child: Image.asset(Assets.imageLogoTransparentBgWhite),
-            ),
-            ...getItems(context),
-          ],
-        ),
+    return Drawer(
+      width: 200,
+      child: ListView(
+        children: [
+          DrawerHeader(
+            padding: const EdgeInsets.all(36),
+            child: Image.asset(Assets.imageLogoTransparentBgWhite),
+          ),
+          ...getItems(context),
+        ],
       ),
     );
   }

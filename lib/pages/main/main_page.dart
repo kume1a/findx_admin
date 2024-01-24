@@ -25,7 +25,7 @@ class MainPage extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            if (Responsive.isDesktop(context)) Expanded(child: sideMenu),
+            if (Responsive.isDesktop(context)) sideMenu,
             Expanded(
               flex: 5,
               child: child,
