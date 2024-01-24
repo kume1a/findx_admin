@@ -18,6 +18,7 @@ final List<SideMenuItem> sideMenuItems = [
   SideMenuNavDestination(assetName: Assets.iconCategory, name: 'MathField'),
   SideMenuNavDestination(assetName: Assets.iconSubCategory, name: 'MathSubField'),
   SideMenuNavDestination(assetName: Assets.iconMathFunction, name: 'MathProblem'),
+  SideMenuNavDestination(assetName: Assets.iconParentheses, name: 'AnswerFunction'),
 ];
 
 class SideMenu extends StatelessWidget {
@@ -32,15 +33,18 @@ class SideMenu extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      child: ListView(
-        children: [
-          DrawerHeader(
-            padding: const EdgeInsets.all(36),
-            child: Image.asset(Assets.imageLogoTransparentBgWhite),
-          ),
-          ...getItems(context),
-        ],
+    return SizedBox(
+      width: 400,
+      child: Drawer(
+        child: ListView(
+          children: [
+            DrawerHeader(
+              padding: const EdgeInsets.all(36),
+              child: Image.asset(Assets.imageLogoTransparentBgWhite),
+            ),
+            ...getItems(context),
+          ],
+        ),
       ),
     );
   }

@@ -24,4 +24,5 @@ class Assets {
   static const String iconTrashCan = '$_icons/trash_can.svg';
   static const String iconChevronDown = '$_icons/chevron_down.svg';
   static const String iconFactory = '$_icons/factory.svg';
+  static const String iconParentheses = '$_icons/parentheses.svg';
 }

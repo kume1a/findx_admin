@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
+import '../../pages/answer_function_list_page.dart';
 import '../../pages/dashboard_page.dart';
 import '../../pages/generate_math_problems_page.dart';
 import '../../pages/main/main_page.dart';
 import '../../pages/math_field_list_page.dart';
 import '../../pages/math_problem_list_page.dart';
 import '../../pages/math_sub_field_list_page.dart';
+import '../../pages/mutate_answer_function_page.dart';
 import '../../pages/mutate_math_field_page.dart';
 import '../../pages/mutate_math_problem_page.dart';
 import '../../pages/mutate_math_sub_field_page.dart';
@@ -131,6 +133,30 @@ class GoRoutesFactory implements Factory<List<RouteBase>> {
                 GoRoute(
                   path: Routes.generateMathProblems,
                   builder: (_, state) => const GenerateMathProblemsPage(),
+                ),
+              ],
+            ),
+          ],
+        ),
+        StatefulShellBranch(
+          routes: [
+            GoRoute(
+              path: Routes.answerFunctionList,
+              builder: (_, __) => const AnswerFunctionListPage(),
+              routes: [
+                GoRoute(
+                  path: Routes.mutateAnswerFunction,
+                  builder: (_, state) => const MutateAnswerFunctionPage(answerFunctionId: null),
+                ),
+                GoRoute(
+                  path: '${Routes.mutateAnswerFunction}/:answerFunctionId',
+                  builder: (_, state) {
+                    final answerFunctionId = state.pathParameters['answerFunctionId'];
+
+                    return MutateAnswerFunctionPage(
+                      answerFunctionId: answerFunctionId,
+                    );
+                  },
                 ),
               ],
             ),

@@ -34,4 +34,14 @@ abstract final class AppRouteBuilder {
   static generateMathProblems() {
     return '${Routes.mathProblemList}/${Routes.generateMathProblems}';
   }
+
+  static mutateAnswerFunction([String? answerFunctionId]) {
+    String routePath = '${Routes.answerFunctionList}/${Routes.mutateAnswerFunction}';
+
+    if (answerFunctionId != null) {
+      routePath += '/$answerFunctionId';
+    }
+
+    return routePath;
+  }
 }

@@ -12,4 +12,6 @@ abstract final class Routes {
   static const String mathProblemList = '/mathProblemList';
   static const String mutateMathProblem = 'mutateMathProblem';
   static const String generateMathProblems = 'generateMathProblems';
+  static const String answerFunctionList = '/answerFunctionList';
+  static const String mutateAnswerFunction = 'mutateAnswerFunction';
 }

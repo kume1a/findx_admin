@@ -73,6 +73,18 @@ extension RequiredStringI18nX on RequiredString {
   }
 }
 
+extension PercentI18nX on Percent {
+  String? translateFailure() {
+    return failureToString(
+      (f) => f.when(
+        empty: () => 'Field is required',
+        invalid: () => 'Value is invalid',
+        outOfRange: () => 'Value is out of range, should be between 0 and 100',
+      ),
+    );
+  }
+}
+
 String _tranlsatePositiveNumberFailure(PositiveNumberFailure f) {
   return f.when(
     empty: () => 'Field is required',
