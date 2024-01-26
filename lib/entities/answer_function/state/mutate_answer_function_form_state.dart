@@ -82,6 +82,7 @@ class MutateAnswerFunctionFormCubit extends Cubit<MutateAnswerFunctionFormState>
         func: RequiredString(r.func),
         condition: r.condition,
         weight: Percent(r.weight),
+        numberType: r.numberType,
       ));
     });
   }

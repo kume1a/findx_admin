@@ -14,9 +14,8 @@ class GeneratedMathProblemValues extends StatelessWidget {
           previous.generatedMathProblemValues != current.generatedMathProblemValues,
       builder: (_, state) {
         return state.generatedMathProblemValues.maybeWhen(
-          orElse: () => IconButton(
-            onPressed: context.generateMathProblemsFormCubit.cancelGenerateMathProblems,
-            icon: const Icon(Icons.refresh),
+          orElse: () => const Center(
+            child: Text('Error, refresh the page bro'),
           ),
           success: (data) => ListView.builder(
             itemCount: data.length,

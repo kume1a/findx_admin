@@ -25,7 +25,7 @@ class MutateAnswerFunctionForm extends StatelessWidget {
                 buildWhen: (prev, curr) => prev.numberType != curr.numberType,
                 builder: (_, dropdownState) {
                   return DropdownField<NumberType>(
-                    hintText: 'Math field id',
+                    hintText: 'Number type',
                     validateForm: state.validateForm,
                     data: SimpleDataState.success(
                       DataPage(
