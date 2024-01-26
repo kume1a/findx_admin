@@ -6,7 +6,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../app/navigation/page_navigator.dart';
-import '../../../shared/logger.dart';
 import '../../../shared/ui/toast.dart';
 import '../../../shared/util/toast/notify_simple_action_failure.dart';
 
@@ -20,6 +19,7 @@ class MutateAnswerFunctionFormState with _$MutateAnswerFunctionFormState {
     required Percent weight,
     required bool isSubmitting,
     required bool validateForm,
+    NumberType? numberType,
   }) = _MutateAnswerFunctionFormState;
 
   factory MutateAnswerFunctionFormState.initial() => MutateAnswerFunctionFormState(
@@ -98,10 +98,14 @@ class MutateAnswerFunctionFormCubit extends Cubit<MutateAnswerFunctionFormState>
     emit(state.copyWith(weight: Percent(value)));
   }
 
+  void onNumberTypeChanged(NumberType? value) {
+    emit(state.copyWith(numberType: value));
+  }
+
   Future<void> onSubmit() async {
     emit(state.copyWith(validateForm: true));
 
-    if (state.func.invalid || state.weight.invalid) {
+    if (state.func.invalid || state.weight.invalid || state.numberType == null) {
       return;
     }
 
@@ -113,6 +117,7 @@ class MutateAnswerFunctionFormCubit extends Cubit<MutateAnswerFunctionFormState>
         func: state.func.getOrThrow,
         condition: state.condition?.isNotEmpty == true ? state.condition : null,
         weight: state.weight.getOrThrow,
+        numberType: state.numberType!,
       );
 
       emit(state.copyWith(isSubmitting: false));
@@ -131,6 +136,7 @@ class MutateAnswerFunctionFormCubit extends Cubit<MutateAnswerFunctionFormState>
       func: state.func.getOrThrow,
       condition: state.condition?.isNotEmpty == true ? state.condition : null,
       weight: state.weight.getOrThrow,
+      numberType: state.numberType!,
     );
 
     emit(state.copyWith(isSubmitting: false));

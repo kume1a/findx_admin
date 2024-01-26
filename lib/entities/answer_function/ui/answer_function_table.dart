@@ -23,6 +23,7 @@ class AnswerFunctionTable extends StatelessWidget {
             DataColumn(label: Text('Func')),
             DataColumn(label: Text('Condition')),
             DataColumn(label: Text('Weight')),
+            DataColumn(label: Text('Number Type')),
           ],
           cellsBuilder: (e) {
             final weightNum = double.tryParse(e.weight);
@@ -34,6 +35,7 @@ class AnswerFunctionTable extends StatelessWidget {
               DataCell(Text(e.func)),
               DataCell(Text(e.condition ?? '-')),
               DataCell(Text(formattedWeight)),
+              DataCell(Text(e.numberType.name)),
             ];
           },
         );

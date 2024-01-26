@@ -30,7 +30,7 @@ packages:
     description:
       path: "packages/app_client"
       ref: HEAD
-      resolved-ref: ae95e7f93382a19d396ce27f76174c44dcf832b5
+      resolved-ref: ec6e499ecb31cd3a6bc33ee451f5818ccafd62f8
       url: "https://github.com/FindX-0/findx_dart_client.git"
     source: git
     version: "0.0.1"
@@ -274,7 +274,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: ae95e7f93382a19d396ce27f76174c44dcf832b5
+      resolved-ref: ec6e499ecb31cd3a6bc33ee451f5818ccafd62f8
       url: "https://github.com/FindX-0/findx_dart_client.git"
     source: git
     version: "0.0.1"
@@ -562,7 +562,7 @@ packages:
     description:
       path: "packages/gql_types"
       ref: HEAD
-      resolved-ref: ae95e7f93382a19d396ce27f76174c44dcf832b5
+      resolved-ref: ec6e499ecb31cd3a6bc33ee451f5818ccafd62f8
       url: "https://github.com/FindX-0/findx_dart_client.git"
     source: git
     version: "1.0.0"
@@ -738,10 +738,10 @@ packages:
     dependency: transitive
     description:
       name: mime
-      sha256: e4ff8e8564c03f255408decd16e7899da1733852a9110a58fe6d1b817684a63e
+      sha256: "2e123074287cc9fd6c09de8336dae606d1ddb88d9ac47358826db698c176a1f2"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.4"
+    version: "1.0.5"
   nested:
     dependency: transitive
     description:

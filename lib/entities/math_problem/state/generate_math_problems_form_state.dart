@@ -8,7 +8,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
-import '../../../shared/logger.dart';
 import '../../../shared/ui/toast.dart';
 import '../../../shared/util/toast/notify_simple_action_failure.dart';
 import '../model/math_problem_template_parameter_form.dart';
