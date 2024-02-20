@@ -21,6 +21,8 @@ class MutateAnswerFunctionForm extends StatelessWidget {
           autovalidateMode: state.validateForm ? AutovalidateMode.always : AutovalidateMode.disabled,
           child: ListView(
             children: [
+              const _MathSubFieldIdField(),
+              const SizedBox(height: 20),
               BlocBuilder<MutateAnswerFunctionFormCubit, MutateAnswerFunctionFormState>(
                 buildWhen: (prev, curr) => prev.numberType != curr.numberType,
                 builder: (_, dropdownState) {
@@ -74,6 +76,30 @@ class MutateAnswerFunctionForm extends StatelessWidget {
               ),
             ],
           ),
+        );
+      },
+    );
+  }
+}
+
+class _MathSubFieldIdField extends StatelessWidget {
+  const _MathSubFieldIdField();
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MutateAnswerFunctionFormCubit, MutateAnswerFunctionFormState>(
+      buildWhen: (prev, curr) =>
+          prev.mathSubFields != curr.mathSubFields ||
+          prev.mathSubField != curr.mathSubField ||
+          prev.validateForm != curr.validateForm,
+      builder: (_, state) {
+        return DropdownField(
+          hintText: 'Math sub field id',
+          validateForm: state.validateForm,
+          data: state.mathSubFields,
+          currentValue: state.mathSubField,
+          itemBuilder: (e) => DropdownMenuItem(value: e, child: Text(e.name)),
+          onChanged: context.mutateAnswerFunctionFormCubit.onMathSubFieldChanged,
         );
       },
     );

@@ -24,6 +24,7 @@ class MathProblemTable extends StatelessWidget {
             DataColumn(label: Text('Id')),
             DataColumn(label: Text('Difficulty')),
             DataColumn(label: Text('Tex')),
+            DataColumn(label: Text('Batch name')),
             DataColumn(label: Text('MathField')),
             DataColumn(label: Text('MathSubFIeld')),
             DataColumn(label: Text('CreatedAt')),
@@ -60,6 +61,9 @@ class MathProblemTable extends StatelessWidget {
                       ),
                     )
                   : const Text('-'),
+            ),
+            DataCell(
+              Text(e.generatedBatchName ?? '-'),
             ),
             DataCell(
               Text(e.mathField?.name ?? '-'),

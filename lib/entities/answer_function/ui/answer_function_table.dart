@@ -20,6 +20,7 @@ class AnswerFunctionTable extends StatelessWidget {
           columns: const [
             DataColumn(label: Text('Id')),
             DataColumn(label: Text('CreatedAt')),
+            DataColumn(label: Text('Math sub field')),
             DataColumn(label: Text('Func')),
             DataColumn(label: Text('Condition')),
             DataColumn(label: Text('Weight')),
@@ -32,6 +33,7 @@ class AnswerFunctionTable extends StatelessWidget {
             return [
               DataCell(Text(e.id)),
               DataCell(Text(DateFormat('MMM dd, yyyy HH:mm:ss').format(e.createdAt))),
+              DataCell(Text(e.mathSubField?.name ?? '-')),
               DataCell(Text(e.func)),
               DataCell(Text(e.condition ?? '-')),
               DataCell(Text(formattedWeight)),

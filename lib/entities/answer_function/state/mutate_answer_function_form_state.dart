@@ -20,6 +20,8 @@ class MutateAnswerFunctionFormState with _$MutateAnswerFunctionFormState {
     required bool isSubmitting,
     required bool validateForm,
     NumberType? numberType,
+    MathSubFieldPageItem? mathSubField,
+    required SimpleDataState<DataPage<MathSubFieldPageItem>> mathSubFields,
   }) = _MutateAnswerFunctionFormState;
 
   factory MutateAnswerFunctionFormState.initial() => MutateAnswerFunctionFormState(
@@ -28,6 +30,7 @@ class MutateAnswerFunctionFormState with _$MutateAnswerFunctionFormState {
         weight: Percent.empty(),
         isSubmitting: false,
         validateForm: false,
+        mathSubFields: SimpleDataState.idle(),
       );
 }
 
@@ -39,10 +42,12 @@ extension MutateAnswerFunctionFormCubitX on BuildContext {
 class MutateAnswerFunctionFormCubit extends Cubit<MutateAnswerFunctionFormState> {
   MutateAnswerFunctionFormCubit(
     this._answerFunctionRemoteRepository,
+    this._mathSubFieldRemoteRepository,
     this._pageNavigator,
   ) : super(MutateAnswerFunctionFormState.initial());
 
   final AnswerFunctionRemoteRepository _answerFunctionRemoteRepository;
+  final MathSubFieldRemoteRepository _mathSubFieldRemoteRepository;
   final PageNavigator _pageNavigator;
 
   final funcFieldController = TextEditingController();
@@ -55,6 +60,7 @@ class MutateAnswerFunctionFormCubit extends Cubit<MutateAnswerFunctionFormState>
     _answerFunctionId = answerFunctionId;
 
     _fetchInitialEntity();
+    _fetchMathSubFields();
   }
 
   @override
@@ -103,10 +109,17 @@ class MutateAnswerFunctionFormCubit extends Cubit<MutateAnswerFunctionFormState>
     emit(state.copyWith(numberType: value));
   }
 
+  void onMathSubFieldChanged(Fragment$MathSubFieldWithRelations? value) {
+    emit(state.copyWith(mathSubField: value));
+  }
+
   Future<void> onSubmit() async {
     emit(state.copyWith(validateForm: true));
 
-    if (state.func.invalid || state.weight.invalid || state.numberType == null) {
+    if (state.func.invalid ||
+        state.weight.invalid ||
+        state.numberType == null ||
+        state.mathSubField == null) {
       return;
     }
 
@@ -138,6 +151,7 @@ class MutateAnswerFunctionFormCubit extends Cubit<MutateAnswerFunctionFormState>
       condition: state.condition?.isNotEmpty == true ? state.condition : null,
       weight: state.weight.getOrThrow,
       numberType: state.numberType!,
+      mathSubFieldId: state.mathSubField!.id,
     );
 
     emit(state.copyWith(isSubmitting: false));
@@ -149,5 +163,15 @@ class MutateAnswerFunctionFormCubit extends Cubit<MutateAnswerFunctionFormState>
         _pageNavigator.pop();
       },
     );
+  }
+
+  Future<void> _fetchMathSubFields() async {
+    emit(state.copyWith(mathSubFields: SimpleDataState.loading()));
+
+    final res = await _mathSubFieldRemoteRepository.filter(
+      limit: 200,
+    );
+
+    emit(state.copyWith(mathSubFields: SimpleDataState.fromEither(res)));
   }
 }

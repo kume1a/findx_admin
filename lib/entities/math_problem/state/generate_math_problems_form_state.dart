@@ -38,6 +38,7 @@ class GenerateMathProblemsFormState with _$GenerateMathProblemsFormState {
     MathFieldPageItem? mathField,
     MathSubFieldPageItem? mathSubField,
     required PositiveInt difficulty,
+    required RequiredString generatedBatchName,
   }) = _GenerateMathProblemsFormState;
 
   factory GenerateMathProblemsFormState.initial() => GenerateMathProblemsFormState(
@@ -51,6 +52,7 @@ class GenerateMathProblemsFormState with _$GenerateMathProblemsFormState {
         mathFields: SimpleDataState.idle(),
         mathSubFields: SimpleDataState.idle(),
         difficulty: PositiveInt.empty(),
+        generatedBatchName: RequiredString.empty(),
       );
 }
 
@@ -142,7 +144,7 @@ class GenerateMathProblemsFormCubit extends Cubit<GenerateMathProblemsFormState>
   }
 
   Future<void> onConfirmGenerate() async {
-    if (state.template.invalid || state.paramForms.any((e) => e.invalid)) {
+    if (state.template.invalid || state.paramForms.any((e) => e.invalid) || state.mathSubField == null) {
       return;
     }
 
@@ -157,6 +159,7 @@ class GenerateMathProblemsFormCubit extends Cubit<GenerateMathProblemsFormState>
       numberParams: templateParams.numberParams,
       customStrParams: templateParams.customStrParams,
       template: state.template.getOrThrow,
+      mathSubFieldId: state.mathSubField!.id,
     );
 
     emit(state.copyWith(
@@ -176,7 +179,10 @@ class GenerateMathProblemsFormCubit extends Cubit<GenerateMathProblemsFormState>
   }
 
   Future<void> onSubmitGeneratedValues() async {
-    if (state.difficulty.invalid || state.mathField == null || state.mathSubField == null) {
+    if (state.difficulty.invalid ||
+        state.mathField == null ||
+        state.mathSubField == null ||
+        state.generatedBatchName.invalid) {
       return;
     }
 
@@ -214,7 +220,10 @@ class GenerateMathProblemsFormCubit extends Cubit<GenerateMathProblemsFormState>
 
     emit(state.copyWith(isSubmitting: true));
 
-    final res = await _bulkCreateMathProblemsUsecase(params);
+    final res = await _bulkCreateMathProblemsUsecase(
+      params,
+      generatedBatchName: state.generatedBatchName.getOrThrow,
+    );
 
     emit(state.copyWith(isSubmitting: false));
 
@@ -284,6 +293,10 @@ class GenerateMathProblemsFormCubit extends Cubit<GenerateMathProblemsFormState>
 
   void onDifficultyChanged(String value) {
     emit(state.copyWith(difficulty: PositiveInt(value)));
+  }
+
+  void onGeneratedBatchNameChanged(String value) {
+    emit(state.copyWith(generatedBatchName: RequiredString(value)));
   }
 
   void onMathFieldChanged(MathFieldPageItem? value) {

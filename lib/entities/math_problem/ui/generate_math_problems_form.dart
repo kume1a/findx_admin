@@ -25,6 +25,8 @@ class GenerateMathProblemsForm extends StatelessWidget {
             children: const [
               _DifficultyField(),
               SizedBox(height: 12),
+              _GeneratedBatchNameField(),
+              SizedBox(height: 12),
               _MathFieldIdField(),
               SizedBox(height: 12),
               _MathSubFieldIdField(),
@@ -50,6 +52,20 @@ class _DifficultyField extends StatelessWidget {
       decoration: const InputDecoration(hintText: 'Difficulty'),
       onChanged: context.generateMathProblemsFormCubit.onDifficultyChanged,
       validator: (_) => context.generateMathProblemsFormCubit.state.difficulty.translateFailure(),
+    );
+  }
+}
+
+class _GeneratedBatchNameField extends StatelessWidget {
+  const _GeneratedBatchNameField();
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      keyboardType: TextInputType.name,
+      decoration: const InputDecoration(hintText: 'Generated batch name'),
+      onChanged: context.generateMathProblemsFormCubit.onGeneratedBatchNameChanged,
+      validator: (_) => context.generateMathProblemsFormCubit.state.generatedBatchName.translateFailure(),
     );
   }
 }
