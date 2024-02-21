@@ -5,7 +5,6 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:logger/logger.dart';
 
 import '../../../app/navigation/page_navigator.dart';
 import '../../../shared/ui/toast.dart';

@@ -6,17 +6,18 @@ import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../app/navigation/app_route_builder.dart';
-import '../../../shared/state/data_pager_with_last_id_cubit.dart';
+import '../../../shared/state/filtered_data_pager_with_last_id_cubit.dart';
 import '../../../shared/util/toast/notify_simple_action_failure.dart';
 
-typedef AnswerFunctionListState = DataState<FetchFailure, DataPage<AnswerFunctionPageItem>>;
+typedef AnswerFunctionListState = FilteredDataPageState<FetchFailure, AnswerFunctionPageItem, Unit>;
 
 extension AnswerFunctionListCubitX on BuildContext {
   AnswerFunctionListCubit get answerFunctionListCubit => read<AnswerFunctionListCubit>();
 }
 
 @injectable
-final class AnswerFunctionListCubit extends DataPagerWithLastIdCubit<FetchFailure, AnswerFunctionPageItem> {
+final class AnswerFunctionListCubit
+    extends FilteredDataPagerWithLastIdCubit<FetchFailure, AnswerFunctionPageItem, Unit> {
   AnswerFunctionListCubit(
     this._answerFunctionRemoteRepository,
     this._goRouter,
@@ -33,8 +34,12 @@ final class AnswerFunctionListCubit extends DataPagerWithLastIdCubit<FetchFailur
   @override
   Future<Either<FetchFailure, DataPage<AnswerFunctionPageItem>>?> provideDataPage(
     String? lastId,
+    Unit? filter,
   ) {
-    return _answerFunctionRemoteRepository.filter(limit: 20, lastId: lastId);
+    return _answerFunctionRemoteRepository.filter(
+      limit: 20,
+      lastId: lastId,
+    );
   }
 
   Future<void> onNewAnswerFunctionPressed() async {

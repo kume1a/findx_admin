@@ -6,17 +6,18 @@ import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../app/navigation/app_route_builder.dart';
-import '../../../shared/state/data_pager_with_last_id_cubit.dart';
+import '../../../shared/state/filtered_data_pager_with_last_id_cubit.dart';
 import '../util/notify_delete_math_sub_field_failure.dart';
 
-typedef MathSubFieldListState = DataState<FetchFailure, DataPage<MathSubFieldPageItem>>;
+typedef MathSubFieldListState = FilteredDataPageState<FetchFailure, MathSubFieldPageItem, Unit>;
 
 extension MathSubFieldListCubitX on BuildContext {
   MathSubFieldListCubit get mathSubFieldListCubit => read<MathSubFieldListCubit>();
 }
 
 @injectable
-final class MathSubFieldListCubit extends DataPagerWithLastIdCubit<FetchFailure, MathSubFieldPageItem> {
+final class MathSubFieldListCubit
+    extends FilteredDataPagerWithLastIdCubit<FetchFailure, MathSubFieldPageItem, Unit> {
   MathSubFieldListCubit(
     this._mathSubFieldRemoteRepository,
     this._goRouter,
@@ -33,6 +34,7 @@ final class MathSubFieldListCubit extends DataPagerWithLastIdCubit<FetchFailure,
   @override
   Future<Either<FetchFailure, DataPage<MathSubFieldPageItem>>?> provideDataPage(
     String? lastId,
+    Unit? filter,
   ) {
     return _mathSubFieldRemoteRepository.filter(limit: 10, lastId: lastId);
   }

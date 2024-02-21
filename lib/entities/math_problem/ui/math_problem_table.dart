@@ -16,7 +16,7 @@ class MathProblemTable extends StatelessWidget {
     return BlocBuilder<MathProblemListCubit, MathProblemListState>(
       builder: (_, state) {
         return EntityTable(
-          state,
+          state.data,
           onLoadMorePressed: context.mathProblemListCubit.fetchNextPage,
           onUpdate: context.mathProblemListCubit.onUpdatePressed,
           onDelete: context.mathProblemListCubit.onDeletePressed,

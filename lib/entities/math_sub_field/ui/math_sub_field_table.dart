@@ -13,7 +13,7 @@ class MathSubFieldTable extends StatelessWidget {
     return BlocBuilder<MathSubFieldListCubit, MathSubFieldListState>(
       builder: (_, state) {
         return EntityTable(
-          state,
+          state.data,
           onLoadMorePressed: context.mathSubFieldListCubit.fetchNextPage,
           onUpdate: context.mathSubFieldListCubit.onUpdatePressed,
           onDelete: context.mathSubFieldListCubit.onDeletePressed,

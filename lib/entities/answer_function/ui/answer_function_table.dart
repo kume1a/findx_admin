@@ -13,7 +13,7 @@ class AnswerFunctionTable extends StatelessWidget {
     return BlocBuilder<AnswerFunctionListCubit, AnswerFunctionListState>(
       builder: (_, state) {
         return EntityTable(
-          state,
+          state.data,
           onLoadMorePressed: context.answerFunctionListCubit.fetchNextPage,
           onUpdate: context.answerFunctionListCubit.onUpdatePressed,
           onDelete: context.answerFunctionListCubit.onDeletePressed,
