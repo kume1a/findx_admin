@@ -8,8 +8,10 @@ import 'package:injectable/injectable.dart';
 import '../../../app/navigation/app_route_builder.dart';
 import '../../../shared/state/filtered_data_pager_with_last_id_cubit.dart';
 import '../../../shared/util/toast/notify_simple_action_failure.dart';
+import '../model/answer_function_list_filter.dart';
 
-typedef AnswerFunctionListState = FilteredDataPageState<FetchFailure, AnswerFunctionPageItem, Unit>;
+typedef AnswerFunctionListState
+    = FilteredDataPageState<FetchFailure, AnswerFunctionPageItem, AnswerFunctionListFilter>;
 
 extension AnswerFunctionListCubitX on BuildContext {
   AnswerFunctionListCubit get answerFunctionListCubit => read<AnswerFunctionListCubit>();
@@ -17,15 +19,19 @@ extension AnswerFunctionListCubitX on BuildContext {
 
 @injectable
 final class AnswerFunctionListCubit
-    extends FilteredDataPagerWithLastIdCubit<FetchFailure, AnswerFunctionPageItem, Unit> {
+    extends FilteredDataPagerWithLastIdCubit<FetchFailure, AnswerFunctionPageItem, AnswerFunctionListFilter> {
   AnswerFunctionListCubit(
     this._answerFunctionRemoteRepository,
     this._goRouter,
+    this._mathSubFieldRemoteRepository,
   ) : super(nullDataFailure: FetchFailure.unknown) {
     fetchNextPage();
+
+    _fetchMathSubFields();
   }
 
   final AnswerFunctionRemoteRepository _answerFunctionRemoteRepository;
+  final MathSubFieldRemoteRepository _mathSubFieldRemoteRepository;
   final GoRouter _goRouter;
 
   @override
@@ -34,11 +40,13 @@ final class AnswerFunctionListCubit
   @override
   Future<Either<FetchFailure, DataPage<AnswerFunctionPageItem>>?> provideDataPage(
     String? lastId,
-    Unit? filter,
+    AnswerFunctionListFilter? filter,
   ) {
     return _answerFunctionRemoteRepository.filter(
       limit: 20,
       lastId: lastId,
+      mathSubFieldId: filter?.mathSubField?.id,
+      numberType: filter?.numberType,
     );
   }
 
@@ -61,5 +69,37 @@ final class AnswerFunctionListCubit
       notifyActionFailure,
       (_) => onRefresh(),
     );
+  }
+
+  void onNumberTypeChanged(NumberType? numberType) {
+    if (numberType == null) {
+      return;
+    }
+
+    final filter = state.filter ?? AnswerFunctionListFilter.initial();
+
+    emit(state.copyWith(filter: filter.copyWith(numberType: numberType)));
+  }
+
+  void onMathSubFieldChanged(MathSubFieldPageItem? mathSubField) {
+    final filter = state.filter ?? AnswerFunctionListFilter.initial();
+
+    emit(state.copyWith(filter: filter.copyWith(mathSubField: mathSubField)));
+  }
+
+  Future<void> _fetchMathSubFields() async {
+    final filter = state.filter ?? AnswerFunctionListFilter.initial();
+
+    emit(state.copyWith(
+      filter: filter.copyWith(mathSubFields: SimpleDataState.loading()),
+    ));
+
+    final res = await _mathSubFieldRemoteRepository.filter(
+      limit: 200,
+    );
+
+    emit(state.copyWith(
+      filter: filter.copyWith(mathSubFields: SimpleDataState.fromEither(res)),
+    ));
   }
 }

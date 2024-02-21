@@ -16,31 +16,14 @@ class MutateAnswerFunctionForm extends StatelessWidget {
     return BlocBuilder<MutateAnswerFunctionFormCubit, MutateAnswerFunctionFormState>(
       buildWhen: (previous, current) =>
           previous.validateForm != current.validateForm || previous.isSubmitting != current.isSubmitting,
-      builder: (_, state) {
+      builder: (_, formState) {
         return Form(
-          autovalidateMode: state.validateForm ? AutovalidateMode.always : AutovalidateMode.disabled,
+          autovalidateMode: formState.validateForm ? AutovalidateMode.always : AutovalidateMode.disabled,
           child: ListView(
             children: [
               const _MathSubFieldIdField(),
               const SizedBox(height: 20),
-              BlocBuilder<MutateAnswerFunctionFormCubit, MutateAnswerFunctionFormState>(
-                buildWhen: (prev, curr) => prev.numberType != curr.numberType,
-                builder: (_, dropdownState) {
-                  return DropdownField<NumberType>(
-                    hintText: 'Number type',
-                    validateForm: state.validateForm,
-                    data: SimpleDataState.success(
-                      DataPage(
-                        items: [NumberType.INTEGER, NumberType.DECIMAL],
-                        count: 2,
-                      ),
-                    ),
-                    currentValue: dropdownState.numberType,
-                    itemBuilder: (e) => DropdownMenuItem(value: e, child: Text(e.name)),
-                    onChanged: context.mutateAnswerFunctionFormCubit.onNumberTypeChanged,
-                  );
-                },
-              ),
+              _NumberTypeField(formState: formState),
               const SizedBox(height: 20),
               TextFormField(
                 controller: context.mutateAnswerFunctionFormCubit.weightFieldController,
@@ -71,11 +54,41 @@ class MutateAnswerFunctionForm extends StatelessWidget {
               const SizedBox(height: 32),
               LoadingTextButton(
                 onPressed: context.mutateAnswerFunctionFormCubit.onSubmit,
-                isLoading: state.isSubmitting,
+                isLoading: formState.isSubmitting,
                 label: 'Submit',
               ),
             ],
           ),
+        );
+      },
+    );
+  }
+}
+
+class _NumberTypeField extends StatelessWidget {
+  const _NumberTypeField({
+    required this.formState,
+  });
+
+  final MutateAnswerFunctionFormState formState;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<MutateAnswerFunctionFormCubit, MutateAnswerFunctionFormState>(
+      buildWhen: (prev, curr) => prev.numberType != curr.numberType,
+      builder: (_, dropdownState) {
+        return DropdownField<NumberType>(
+          hintText: 'Number type',
+          validateForm: formState.validateForm,
+          data: SimpleDataState.success(
+            DataPage(
+              items: [NumberType.INTEGER, NumberType.DECIMAL],
+              count: 2,
+            ),
+          ),
+          currentValue: dropdownState.numberType,
+          itemBuilder: (e) => DropdownMenuItem(value: e, child: Text(e.name)),
+          onChanged: context.mutateAnswerFunctionFormCubit.onNumberTypeChanged,
         );
       },
     );

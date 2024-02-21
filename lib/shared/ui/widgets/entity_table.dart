@@ -14,6 +14,7 @@ class EntityTable<T> extends StatelessWidget {
   const EntityTable(
     this.dataState, {
     super.key,
+    this.filters,
     required this.columns,
     required this.cellsBuilder,
     required this.onLoadMorePressed,
@@ -24,6 +25,7 @@ class EntityTable<T> extends StatelessWidget {
 
   final DataState<FetchFailure, DataPage<T>> dataState;
 
+  final Widget? filters;
   final List<DataColumn> columns;
   final EntityCellsBuilder<T> cellsBuilder;
 
@@ -38,6 +40,7 @@ class EntityTable<T> extends StatelessWidget {
     return dataState.maybeWhen(
       success: (data) => _Success<T>(
         data,
+        filters: filters,
         columns: columns,
         cellsBuilder: cellsBuilder,
         onLoadMorePressed: onLoadMorePressed,
@@ -62,6 +65,7 @@ class EntityTable<T> extends StatelessWidget {
 class _Success<T> extends StatelessWidget {
   const _Success(
     this.data, {
+    this.filters,
     required this.columns,
     required this.cellsBuilder,
     required this.onLoadMorePressed,
@@ -72,6 +76,7 @@ class _Success<T> extends StatelessWidget {
 
   final DataPage<T> data;
 
+  final Widget? filters;
   final List<DataColumn> columns;
   final EntityCellsBuilder<T> cellsBuilder;
 
@@ -93,6 +98,11 @@ class _Success<T> extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
+          if (filters != null)
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: filters!,
+            ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 12),
             child: Text(

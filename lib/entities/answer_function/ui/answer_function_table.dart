@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 
 import '../../../shared/ui/widgets/entity_table.dart';
 import '../state/answer_function_list_state.dart';
+import 'answer_function_filters.dart';
 
 class AnswerFunctionTable extends StatelessWidget {
   const AnswerFunctionTable({Key? key}) : super(key: key);
@@ -14,6 +15,7 @@ class AnswerFunctionTable extends StatelessWidget {
       builder: (_, state) {
         return EntityTable(
           state.data,
+          filters: const AnswerFunctionFilters(),
           onLoadMorePressed: context.answerFunctionListCubit.fetchNextPage,
           onUpdate: context.answerFunctionListCubit.onUpdatePressed,
           onDelete: context.answerFunctionListCubit.onDeletePressed,
