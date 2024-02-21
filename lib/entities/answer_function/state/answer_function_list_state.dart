@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../app/navigation/app_route_builder.dart';
+import '../../../shared/state/filtered_data_page_state.dart';
 import '../../../shared/state/filtered_data_pager_with_last_id_cubit.dart';
 import '../../../shared/util/toast/notify_simple_action_failure.dart';
 import '../model/answer_function_list_filter.dart';
@@ -72,19 +73,25 @@ final class AnswerFunctionListCubit
   }
 
   void onNumberTypeChanged(NumberType? numberType) {
-    if (numberType == null) {
-      return;
-    }
-
     final filter = state.filter ?? AnswerFunctionListFilter.initial();
 
     emit(state.copyWith(filter: filter.copyWith(numberType: numberType)));
+
+    onRefresh();
   }
 
   void onMathSubFieldChanged(MathSubFieldPageItem? mathSubField) {
     final filter = state.filter ?? AnswerFunctionListFilter.initial();
 
     emit(state.copyWith(filter: filter.copyWith(mathSubField: mathSubField)));
+
+    onRefresh();
+  }
+
+  void onClearFilter() {
+    emit(state.copyWith(filter: AnswerFunctionListFilter.initial()));
+
+    onRefresh();
   }
 
   Future<void> _fetchMathSubFields() async {

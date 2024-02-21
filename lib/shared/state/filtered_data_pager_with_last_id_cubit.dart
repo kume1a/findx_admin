@@ -3,47 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:meta/meta.dart';
 
 import '../util/data_pager_with_last_id.dart';
-
-final class FilteredDataPageState<FAILURE, ITEM, FILTER> {
-  FilteredDataPageState({
-    required this.data,
-    required this.filter,
-  });
-
-  factory FilteredDataPageState.initial() {
-    return FilteredDataPageState(
-      data: DataState.idle(),
-      filter: null,
-    );
-  }
-
-  final DataState<FAILURE, DataPage<ITEM>> data;
-  final FILTER? filter;
-
-  FilteredDataPageState<FAILURE, ITEM, FILTER> copyWith({
-    DataState<FAILURE, DataPage<ITEM>>? data,
-    FILTER? filter,
-  }) {
-    return FilteredDataPageState(
-      data: data ?? this.data,
-      filter: filter ?? this.filter,
-    );
-  }
-
-  @override
-  bool operator ==(Object other) {
-    if (identical(this, other)) {
-      return true;
-    }
-
-    return other is FilteredDataPageState<FAILURE, ITEM, FILTER> &&
-        other.data == data &&
-        other.filter == filter;
-  }
-
-  @override
-  int get hashCode => Object.hashAll([data.hashCode ^ filter.hashCode]);
-}
+import 'filtered_data_page_state.dart';
 
 abstract base class FilteredDataPagerWithLastIdCubit<FAILURE, ITEM, FILTER>
     extends Cubit<FilteredDataPageState<FAILURE, ITEM, FILTER>> {

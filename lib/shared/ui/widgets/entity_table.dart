@@ -100,7 +100,7 @@ class _Success<T> extends StatelessWidget {
         children: [
           if (filters != null)
             Padding(
-              padding: const EdgeInsets.only(bottom: 12),
+              padding: const EdgeInsets.only(top: 20),
               child: filters!,
             ),
           Padding(
