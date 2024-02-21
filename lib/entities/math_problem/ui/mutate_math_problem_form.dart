@@ -194,7 +194,7 @@ class _MathFieldIdField extends StatelessWidget {
           prev.validateForm != curr.validateForm,
       builder: (_, state) {
         return DropdownField(
-          hintText: 'Math field id',
+          hintText: 'Math field',
           validateForm: state.validateForm,
           data: state.mathFields,
           currentValue: state.mathField,
@@ -219,7 +219,7 @@ class _MathSubFieldIdField extends StatelessWidget {
           prev.mathField != curr.mathField,
       builder: (_, state) {
         return DropdownField(
-          hintText: 'Math sub field id',
+          hintText: 'Math sub field',
           validateForm: state.validateForm,
           data: state.mathSubFields,
           currentValue: state.mathSubField,

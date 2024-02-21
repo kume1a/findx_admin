@@ -1,9 +1,11 @@
 import 'package:common_models/common_models.dart';
+
 import 'package:findx_dart_client/app_client.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:logger/logger.dart';
 
 import '../../../app/navigation/page_navigator.dart';
 import '../../../shared/ui/toast.dart';
@@ -56,11 +58,11 @@ class MutateAnswerFunctionFormCubit extends Cubit<MutateAnswerFunctionFormState>
 
   String? _answerFunctionId;
 
-  void init(String? answerFunctionId) {
+  Future<void> init(String? answerFunctionId) async {
     _answerFunctionId = answerFunctionId;
 
-    _fetchInitialEntity();
-    _fetchMathSubFields();
+    await _fetchMathSubFields();
+    await _fetchInitialEntity();
   }
 
   @override
@@ -70,27 +72,6 @@ class MutateAnswerFunctionFormCubit extends Cubit<MutateAnswerFunctionFormState>
     weightFieldController.dispose();
 
     super.close();
-  }
-
-  Future<void> _fetchInitialEntity() async {
-    if (_answerFunctionId == null) {
-      return;
-    }
-
-    final answerFunction = await _answerFunctionRemoteRepository.getById(_answerFunctionId!);
-
-    answerFunction.ifRight((r) {
-      funcFieldController.text = r.func;
-      conditionFieldController.text = r.condition ?? '';
-      weightFieldController.text = r.weight.toString();
-
-      emit(state.copyWith(
-        func: RequiredString(r.func),
-        condition: r.condition,
-        weight: Percent(r.weight),
-        numberType: r.numberType,
-      ));
-    });
   }
 
   void onFuncChanged(String value) {
@@ -173,5 +154,30 @@ class MutateAnswerFunctionFormCubit extends Cubit<MutateAnswerFunctionFormState>
     );
 
     emit(state.copyWith(mathSubFields: SimpleDataState.fromEither(res)));
+  }
+
+  Future<void> _fetchInitialEntity() async {
+    if (_answerFunctionId == null) {
+      return;
+    }
+
+    final answerFunction = await _answerFunctionRemoteRepository.getById(_answerFunctionId!);
+
+    final mathSubField =
+        await answerFunction.ifRight((r) => _mathSubFieldRemoteRepository.getById(r.mathSubFieldId));
+
+    answerFunction.ifRight((r) {
+      funcFieldController.text = r.func;
+      conditionFieldController.text = r.condition ?? '';
+      weightFieldController.text = r.weight.toString();
+
+      emit(state.copyWith(
+        func: RequiredString(r.func),
+        condition: r.condition,
+        weight: Percent(r.weight),
+        numberType: r.numberType,
+        mathSubField: mathSubField?.rightOrNull,
+      ));
+    });
   }
 }
