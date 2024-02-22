@@ -21,12 +21,12 @@ class AnswerFunctionTable extends StatelessWidget {
           onDelete: context.answerFunctionListCubit.onDeletePressed,
           columns: const [
             DataColumn(label: Text('Id')),
-            DataColumn(label: Text('CreatedAt')),
             DataColumn(label: Text('Math sub field')),
+            DataColumn(label: Text('Weight')),
             DataColumn(label: Text('Func')),
             DataColumn(label: Text('Condition')),
-            DataColumn(label: Text('Weight')),
             DataColumn(label: Text('Number Type')),
+            DataColumn(label: Text('CreatedAt')),
           ],
           cellsBuilder: (e) {
             final weightNum = double.tryParse(e.weight);
@@ -34,12 +34,12 @@ class AnswerFunctionTable extends StatelessWidget {
 
             return [
               DataCell(Text(e.id)),
-              DataCell(Text(DateFormat('MMM dd, yyyy HH:mm:ss').format(e.createdAt))),
               DataCell(Text(e.mathSubField?.name ?? '-')),
+              DataCell(Text(formattedWeight)),
               DataCell(Text(e.func)),
               DataCell(Text(e.condition ?? '-')),
-              DataCell(Text(formattedWeight)),
               DataCell(Text(e.numberType.name)),
+              DataCell(Text(DateFormat('MMM dd, yyyy HH:mm:ss').format(e.createdAt))),
             ];
           },
         );
