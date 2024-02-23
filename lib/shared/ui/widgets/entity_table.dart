@@ -10,6 +10,11 @@ import '../../../shared/values/assets.dart';
 typedef OnEntityAction<T> = void Function(T entity);
 typedef EntityCellsBuilder<T> = List<DataCell> Function(T entity);
 
+enum ActionsPosition {
+  start,
+  end,
+}
+
 class EntityTable<T> extends StatelessWidget {
   const EntityTable(
     this.dataState, {
@@ -21,6 +26,7 @@ class EntityTable<T> extends StatelessWidget {
     this.onView,
     this.onUpdate,
     this.onDelete,
+    this.actionsPosition = ActionsPosition.end,
   });
 
   final DataState<FetchFailure, DataPage<T>> dataState;
@@ -35,6 +41,8 @@ class EntityTable<T> extends StatelessWidget {
   final OnEntityAction<T>? onUpdate;
   final OnEntityAction<T>? onDelete;
 
+  final ActionsPosition actionsPosition;
+
   @override
   Widget build(BuildContext context) {
     return dataState.maybeWhen(
@@ -47,6 +55,7 @@ class EntityTable<T> extends StatelessWidget {
         onView: onView,
         onUpdate: onUpdate,
         onDelete: onDelete,
+        actionsPosition: actionsPosition,
       ),
       loading: () => const Center(child: CircularProgressIndicator()),
       failure: (f, _) => Center(
@@ -72,6 +81,7 @@ class _Success<T> extends StatelessWidget {
     this.onView,
     this.onUpdate,
     this.onDelete,
+    required this.actionsPosition,
   });
 
   final DataPage<T> data;
@@ -85,6 +95,8 @@ class _Success<T> extends StatelessWidget {
   final OnEntityAction<T>? onView;
   final OnEntityAction<T>? onUpdate;
   final OnEntityAction<T>? onDelete;
+
+  final ActionsPosition actionsPosition;
 
   bool get _isAnyActionAvailable => onView != null || onUpdate != null || onDelete != null;
 
@@ -123,7 +135,14 @@ class _Success<T> extends StatelessWidget {
                 ...columns,
                 if (_isAnyActionAvailable) const DataColumn(label: SizedBox.shrink()),
               ],
-              rows: data.items.map((e) => _dataRow(e, context, theme)).toList(),
+              rows: data.items
+                  .map((e) => _dataRow(
+                        e,
+                        context,
+                        theme,
+                        actionsPosition,
+                      ))
+                  .toList(),
             ),
           ),
           if (_canLoadMore) _LoadMoreButton(onPressed: onLoadMorePressed)
@@ -136,35 +155,45 @@ class _Success<T> extends StatelessWidget {
     T item,
     BuildContext context,
     ThemeData theme,
+    ActionsPosition actionsPosition,
   ) {
-    final rows = cellsBuilder(item);
+    final cells = cellsBuilder(item);
 
-    return DataRow(
-      cells: [
-        ...rows,
-        if (_isAnyActionAvailable)
-          DataCell(
-            Row(
-              children: [
-                if (onView != null)
-                  _ActionButton(
-                    assetName: Assets.iconEye,
-                    onPressed: () => onView!(item),
-                  ),
-                if (onUpdate != null)
-                  _ActionButton(
-                    assetName: Assets.iconPencil,
-                    onPressed: () => onUpdate!(item),
-                  ),
-                if (onDelete != null)
-                  _DeleteButton(
-                    onPressed: () => onDelete!(item),
-                  ),
-              ],
+    if (!_isAnyActionAvailable) {
+      return DataRow(cells: cells);
+    }
+
+    final actions = DataCell(
+      Row(
+        children: [
+          if (onView != null)
+            _ActionButton(
+              assetName: Assets.iconEye,
+              onPressed: () => onView!(item),
             ),
-          ),
-      ],
+          if (onUpdate != null)
+            _ActionButton(
+              assetName: Assets.iconPencil,
+              onPressed: () => onUpdate!(item),
+            ),
+          if (onDelete != null)
+            _DeleteButton(
+              onPressed: () => onDelete!(item),
+            ),
+        ],
+      ),
     );
+
+    switch (actionsPosition) {
+      case ActionsPosition.start:
+        cells.insert(0, actions);
+        break;
+      case ActionsPosition.end:
+        cells.add(actions);
+        break;
+    }
+
+    return DataRow(cells: cells);
   }
 }
 

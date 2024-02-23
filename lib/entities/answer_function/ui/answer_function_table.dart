@@ -19,6 +19,7 @@ class AnswerFunctionTable extends StatelessWidget {
           onLoadMorePressed: context.answerFunctionListCubit.fetchNextPage,
           onUpdate: context.answerFunctionListCubit.onUpdatePressed,
           onDelete: context.answerFunctionListCubit.onDeletePressed,
+          actionsPosition: ActionsPosition.start,
           columns: const [
             DataColumn(label: Text('Id')),
             DataColumn(label: Text('Math sub field')),
