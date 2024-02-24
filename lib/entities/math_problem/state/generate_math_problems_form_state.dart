@@ -39,6 +39,7 @@ class GenerateMathProblemsFormState with _$GenerateMathProblemsFormState {
     MathSubFieldPageItem? mathSubField,
     required PositiveInt difficulty,
     required RequiredString generatedBatchName,
+    required String answerConditionFunc,
   }) = _GenerateMathProblemsFormState;
 
   factory GenerateMathProblemsFormState.initial() => GenerateMathProblemsFormState(
@@ -53,6 +54,7 @@ class GenerateMathProblemsFormState with _$GenerateMathProblemsFormState {
         mathSubFields: SimpleDataState.idle(),
         difficulty: PositiveInt.empty(),
         generatedBatchName: RequiredString.empty(),
+        answerConditionFunc: '',
       );
 }
 
@@ -160,6 +162,7 @@ class GenerateMathProblemsFormCubit extends Cubit<GenerateMathProblemsFormState>
       customStrParams: templateParams.customStrParams,
       template: state.template.getOrThrow,
       mathSubFieldId: state.mathSubField!.id,
+      answerConditionFunc: state.answerConditionFunc.isNotEmpty ? state.answerConditionFunc : null,
     );
 
     emit(state.copyWith(
@@ -297,6 +300,10 @@ class GenerateMathProblemsFormCubit extends Cubit<GenerateMathProblemsFormState>
 
   void onGeneratedBatchNameChanged(String value) {
     emit(state.copyWith(generatedBatchName: RequiredString(value)));
+  }
+
+  void onAnswerConditionFuncChanged(String value) {
+    emit(state.copyWith(answerConditionFunc: value));
   }
 
   void onMathFieldChanged(MathFieldPageItem? value) {

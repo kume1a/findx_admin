@@ -131,10 +131,7 @@ class _Success<T> extends StatelessWidget {
               ),
               dataRowMaxHeight: 100,
               horizontalMargin: 0,
-              columns: [
-                ...columns,
-                if (_isAnyActionAvailable) const DataColumn(label: SizedBox.shrink()),
-              ],
+              columns: _getColumns(columns, actionsPosition),
               rows: data.items
                   .map((e) => _dataRow(
                         e,
@@ -194,6 +191,23 @@ class _Success<T> extends StatelessWidget {
     }
 
     return DataRow(cells: cells);
+  }
+
+  _getColumns(List<DataColumn> columns, ActionsPosition actionsPosition) {
+    if (!_isAnyActionAvailable) {
+      return columns;
+    }
+
+    const actionsColumn = DataColumn(
+      label: Text('Actions'),
+    );
+
+    switch (actionsPosition) {
+      case ActionsPosition.start:
+        return [actionsColumn, ...columns];
+      case ActionsPosition.end:
+        return [...columns, actionsColumn];
+    }
   }
 }
 

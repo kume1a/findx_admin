@@ -31,6 +31,8 @@ class GenerateMathProblemsForm extends StatelessWidget {
               SizedBox(height: 12),
               _MathSubFieldIdField(),
               SizedBox(height: 12),
+              _AnswerConditionFuncField(),
+              SizedBox(height: 12),
               _TemplateField(),
               SizedBox(height: 24),
               _TemplateParamFields(),
@@ -116,6 +118,21 @@ class _MathSubFieldIdField extends StatelessWidget {
               state.mathField != null ? context.generateMathProblemsFormCubit.onMathSubFieldChanged : null,
         );
       },
+    );
+  }
+}
+
+class _AnswerConditionFuncField extends StatelessWidget {
+  const _AnswerConditionFuncField();
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      keyboardType: TextInputType.multiline,
+      minLines: 2,
+      maxLines: 6,
+      decoration: const InputDecoration(hintText: 'Answer condition function'),
+      onChanged: context.generateMathProblemsFormCubit.onAnswerConditionFuncChanged,
     );
   }
 }
