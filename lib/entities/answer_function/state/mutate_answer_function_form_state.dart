@@ -91,10 +91,7 @@ class MutateAnswerFunctionFormCubit extends Cubit<MutateAnswerFunctionFormState>
   Future<void> onSubmit() async {
     emit(state.copyWith(validateForm: true));
 
-    if (state.func.invalid ||
-        state.weight.invalid ||
-        state.numberType == null ||
-        state.mathSubField == null) {
+    if (state.func.invalid || state.weight.invalid || state.mathSubField == null) {
       return;
     }
 
