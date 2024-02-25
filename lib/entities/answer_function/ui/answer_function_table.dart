@@ -26,7 +26,6 @@ class AnswerFunctionTable extends StatelessWidget {
             DataColumn(label: Text('Weight')),
             DataColumn(label: Text('Func')),
             DataColumn(label: Text('Condition')),
-            DataColumn(label: Text('Number Type')),
             DataColumn(label: Text('CreatedAt')),
           ],
           cellsBuilder: (e) {
@@ -39,7 +38,6 @@ class AnswerFunctionTable extends StatelessWidget {
               DataCell(Text(formattedWeight)),
               DataCell(Text(e.func)),
               DataCell(Text(e.condition ?? '-')),
-              DataCell(Text(e.numberType.name)),
               DataCell(Text(DateFormat('MMM dd, yyyy HH:mm:ss').format(e.createdAt))),
             ];
           },

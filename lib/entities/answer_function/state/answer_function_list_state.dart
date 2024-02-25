@@ -47,7 +47,6 @@ final class AnswerFunctionListCubit
       limit: 20,
       lastId: lastId,
       mathSubFieldId: filter?.mathSubField?.id,
-      numberType: filter?.numberType,
     );
   }
 
@@ -70,14 +69,6 @@ final class AnswerFunctionListCubit
       notifyActionFailure,
       (_) => onRefresh(),
     );
-  }
-
-  void onNumberTypeChanged(NumberType? numberType) {
-    final filter = state.filter ?? AnswerFunctionListFilter.initial();
-
-    emit(state.copyWith(filter: filter.copyWith(numberType: numberType)));
-
-    onRefresh();
   }
 
   void onMathSubFieldChanged(MathSubFieldPageItem? mathSubField) {

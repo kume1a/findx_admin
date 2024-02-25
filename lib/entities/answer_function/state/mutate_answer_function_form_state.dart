@@ -20,7 +20,6 @@ class MutateAnswerFunctionFormState with _$MutateAnswerFunctionFormState {
     required Percent weight,
     required bool isSubmitting,
     required bool validateForm,
-    NumberType? numberType,
     MathSubFieldPageItem? mathSubField,
     required SimpleDataState<DataPage<MathSubFieldPageItem>> mathSubFields,
   }) = _MutateAnswerFunctionFormState;
@@ -85,10 +84,6 @@ class MutateAnswerFunctionFormCubit extends Cubit<MutateAnswerFunctionFormState>
     emit(state.copyWith(weight: Percent(value)));
   }
 
-  void onNumberTypeChanged(NumberType? value) {
-    emit(state.copyWith(numberType: value));
-  }
-
   void onMathSubFieldChanged(Fragment$MathSubFieldWithRelations? value) {
     emit(state.copyWith(mathSubField: value));
   }
@@ -111,7 +106,6 @@ class MutateAnswerFunctionFormCubit extends Cubit<MutateAnswerFunctionFormState>
         func: state.func.getOrThrow,
         condition: state.condition?.isNotEmpty == true ? state.condition : null,
         weight: state.weight.getOrThrow,
-        numberType: state.numberType!,
       );
 
       emit(state.copyWith(isSubmitting: false));
@@ -130,7 +124,6 @@ class MutateAnswerFunctionFormCubit extends Cubit<MutateAnswerFunctionFormState>
       func: state.func.getOrThrow,
       condition: state.condition?.isNotEmpty == true ? state.condition : null,
       weight: state.weight.getOrThrow,
-      numberType: state.numberType!,
       mathSubFieldId: state.mathSubField!.id,
     );
 
@@ -174,7 +167,6 @@ class MutateAnswerFunctionFormCubit extends Cubit<MutateAnswerFunctionFormState>
         func: RequiredString(r.func),
         condition: r.condition,
         weight: Percent(r.weight),
-        numberType: r.numberType,
         mathSubField: mathSubField?.rightOrNull,
       ));
     });

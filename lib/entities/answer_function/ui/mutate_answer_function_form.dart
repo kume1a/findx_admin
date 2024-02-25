@@ -1,5 +1,3 @@
-import 'package:common_models/common_models.dart';
-import 'package:findx_dart_client/app_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -22,8 +20,6 @@ class MutateAnswerFunctionForm extends StatelessWidget {
           child: ListView(
             children: [
               const _MathSubFieldIdField(),
-              const SizedBox(height: 20),
-              _NumberTypeField(formState: formState),
               const SizedBox(height: 20),
               TextFormField(
                 controller: context.mutateAnswerFunctionFormCubit.weightFieldController,
@@ -59,36 +55,6 @@ class MutateAnswerFunctionForm extends StatelessWidget {
               ),
             ],
           ),
-        );
-      },
-    );
-  }
-}
-
-class _NumberTypeField extends StatelessWidget {
-  const _NumberTypeField({
-    required this.formState,
-  });
-
-  final MutateAnswerFunctionFormState formState;
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<MutateAnswerFunctionFormCubit, MutateAnswerFunctionFormState>(
-      buildWhen: (prev, curr) => prev.numberType != curr.numberType,
-      builder: (_, dropdownState) {
-        return DropdownField<NumberType>(
-          hintText: 'Number type',
-          validateForm: formState.validateForm,
-          data: SimpleDataState.success(
-            DataPage(
-              items: [NumberType.INTEGER, NumberType.DECIMAL],
-              count: 2,
-            ),
-          ),
-          currentValue: dropdownState.numberType,
-          itemBuilder: (e) => DropdownMenuItem(value: e, child: Text(e.name)),
-          onChanged: context.mutateAnswerFunctionFormCubit.onNumberTypeChanged,
         );
       },
     );

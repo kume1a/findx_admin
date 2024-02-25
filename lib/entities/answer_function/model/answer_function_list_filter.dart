@@ -7,7 +7,6 @@ part 'answer_function_list_filter.freezed.dart';
 @freezed
 class AnswerFunctionListFilter with _$AnswerFunctionListFilter {
   const factory AnswerFunctionListFilter({
-    NumberType? numberType,
     MathSubFieldPageItem? mathSubField,
     required SimpleDataState<DataPage<MathSubFieldPageItem>> mathSubFields,
   }) = _AnswerFunctionListFilter;
