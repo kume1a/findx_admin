@@ -21,16 +21,16 @@ packages:
     dependency: "direct main"
     description:
       name: animated_toggle_switch
-      sha256: "79dc2901da470bdd5753d9d6689a9a00cc4d378f806a60df89f3bdd4ef455884"
+      sha256: "35e3d6c74eef79c415ac3986046c35cb1ea42720afce13ec7f1a014f72dfd71c"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.1"
+    version: "0.8.2"
   app_client:
     dependency: transitive
     description:
       path: "packages/app_client"
       ref: HEAD
-      resolved-ref: "7762ab9b2f9525b592a63a6a9281e1d18ce3092e"
+      resolved-ref: ba5dbfa2b2c6687f6e1605ea3d06e3a785eb0ae2
       url: "https://github.com/FindX-0/findx_dart_client.git"
     source: git
     version: "0.0.1"
@@ -274,7 +274,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "7762ab9b2f9525b592a63a6a9281e1d18ce3092e"
+      resolved-ref: ba5dbfa2b2c6687f6e1605ea3d06e3a785eb0ae2
       url: "https://github.com/FindX-0/findx_dart_client.git"
     source: git
     version: "0.0.1"
@@ -562,7 +562,7 @@ packages:
     description:
       path: "packages/gql_types"
       ref: HEAD
-      resolved-ref: "7762ab9b2f9525b592a63a6a9281e1d18ce3092e"
+      resolved-ref: ba5dbfa2b2c6687f6e1605ea3d06e3a785eb0ae2
       url: "https://github.com/FindX-0/findx_dart_client.git"
     source: git
     version: "1.0.0"
