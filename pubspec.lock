@@ -30,7 +30,7 @@ packages:
     description:
       path: "packages/app_client"
       ref: HEAD
-      resolved-ref: "35de07b59d0d8d899da53d1384124d5f69cf6625"
+      resolved-ref: ff32b60522dbeb213a57f3be8924a81780396020
       url: "https://github.com/FindX-0/findx_dart_client.git"
     source: git
     version: "0.0.1"
@@ -175,7 +175,7 @@ packages:
     description:
       path: "packages/common_models"
       ref: HEAD
-      resolved-ref: bdeed4ff93bf98d9ecce51ad7f9abfc4b6b8c2c0
+      resolved-ref: "354dc74a917fa76cd3b3d8e75b7fa5187c80a9f6"
       url: "https://github.com/kume1a/flutter_common.git"
     source: git
     version: "0.0.4"
@@ -184,7 +184,7 @@ packages:
     description:
       path: "packages/common_network_components"
       ref: HEAD
-      resolved-ref: bdeed4ff93bf98d9ecce51ad7f9abfc4b6b8c2c0
+      resolved-ref: "354dc74a917fa76cd3b3d8e75b7fa5187c80a9f6"
       url: "https://github.com/kume1a/flutter_common.git"
     source: git
     version: "0.0.7"
@@ -193,7 +193,7 @@ packages:
     description:
       path: "packages/common_widgets"
       ref: HEAD
-      resolved-ref: bdeed4ff93bf98d9ecce51ad7f9abfc4b6b8c2c0
+      resolved-ref: "354dc74a917fa76cd3b3d8e75b7fa5187c80a9f6"
       url: "https://github.com/kume1a/flutter_common.git"
     source: git
     version: "0.0.6"
@@ -217,10 +217,10 @@ packages:
     dependency: transitive
     description:
       name: dart_style
-      sha256: "25b4624c231844a7a70a3817a729a6190a751ef1c07ded256e126a3b72261444"
+      sha256: "99e066ce75c89d6b29903d788a7bb9369cf754f7b24bf70bf4b6d6d6b26853b9"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.5"
+    version: "2.3.6"
   diffutil_dart:
     dependency: transitive
     description:
@@ -274,7 +274,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: "35de07b59d0d8d899da53d1384124d5f69cf6625"
+      resolved-ref: ff32b60522dbeb213a57f3be8924a81780396020
       url: "https://github.com/FindX-0/findx_dart_client.git"
     source: git
     version: "0.0.1"
@@ -562,7 +562,7 @@ packages:
     description:
       path: "packages/gql_types"
       ref: HEAD
-      resolved-ref: "35de07b59d0d8d899da53d1384124d5f69cf6625"
+      resolved-ref: ff32b60522dbeb213a57f3be8924a81780396020
       url: "https://github.com/FindX-0/findx_dart_client.git"
     source: git
     version: "1.0.0"

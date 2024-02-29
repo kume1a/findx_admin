@@ -37,7 +37,7 @@ class GenerateMathProblemsFormState with _$GenerateMathProblemsFormState {
     required SimpleDataState<DataPage<MathSubFieldPageItem>> mathSubFields,
     MathFieldPageItem? mathField,
     MathSubFieldPageItem? mathSubField,
-    required PositiveInt difficulty,
+    required Percent difficulty,
     required RequiredString generatedBatchName,
     required String answerConditionFunc,
     required String correctAnswerConditionFunc,
@@ -53,7 +53,7 @@ class GenerateMathProblemsFormState with _$GenerateMathProblemsFormState {
         isSubmitting: false,
         mathFields: SimpleDataState.idle(),
         mathSubFields: SimpleDataState.idle(),
-        difficulty: PositiveInt.empty(),
+        difficulty: Percent.empty(),
         generatedBatchName: RequiredString.empty(),
         answerConditionFunc: '',
         correctAnswerConditionFunc: '',
@@ -299,7 +299,7 @@ class GenerateMathProblemsFormCubit extends Cubit<GenerateMathProblemsFormState>
   }
 
   void onDifficultyChanged(String value) {
-    emit(state.copyWith(difficulty: PositiveInt(value)));
+    emit(state.copyWith(difficulty: Percent(value)));
   }
 
   void onGeneratedBatchNameChanged(String value) {

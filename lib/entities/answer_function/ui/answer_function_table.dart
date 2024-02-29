@@ -29,8 +29,7 @@ class AnswerFunctionTable extends StatelessWidget {
             DataColumn(label: Text('CreatedAt')),
           ],
           cellsBuilder: (e) {
-            final weightNum = double.tryParse(e.weight);
-            final formattedWeight = weightNum != null ? weightNum.toStringAsFixed(2) : e.weight;
+            final formattedWeight = e.weight.toStringAsFixed(2);
 
             return [
               DataCell(Text(e.id)),

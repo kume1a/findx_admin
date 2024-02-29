@@ -163,7 +163,7 @@ class MutateAnswerFunctionFormCubit extends Cubit<MutateAnswerFunctionFormState>
       emit(state.copyWith(
         func: RequiredString(r.func),
         condition: r.condition,
-        weight: Percent(r.weight),
+        weight: Percent.fromDouble(r.weight),
         mathSubField: mathSubField?.rightOrNull,
       ));
     });

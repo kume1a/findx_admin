@@ -17,7 +17,7 @@ part 'mutate_math_problem_form_state.freezed.dart';
 @freezed
 class MutateMathProblemFormState with _$MutateMathProblemFormState {
   const factory MutateMathProblemFormState({
-    required PositiveInt difficulty,
+    required Percent difficulty,
     required String text,
     required String tex,
     MathFieldPageItem? mathField,
@@ -32,7 +32,7 @@ class MutateMathProblemFormState with _$MutateMathProblemFormState {
   }) = _MutateMathProblemFormState;
 
   factory MutateMathProblemFormState.initial() => MutateMathProblemFormState(
-        difficulty: PositiveInt.empty(),
+        difficulty: Percent.empty(),
         text: '',
         tex: '',
         images: [],
@@ -90,7 +90,7 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
   }
 
   void onDifficultyChanged(String value) {
-    emit(state.copyWith(difficulty: PositiveInt(value)));
+    emit(state.copyWith(difficulty: Percent(value)));
   }
 
   void onTextChanged(String value) {
@@ -222,7 +222,7 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
       final answers = r.answers.map((e) => RequiredString(e.tex)).toList();
 
       emit(state.copyWith(
-        difficulty: PositiveInt.fromInt(r.difficulty),
+        difficulty: Percent.fromDouble(r.difficulty),
         text: r.text ?? state.text,
         tex: r.tex ?? state.tex,
         mathField: mathField.rightOrNull,
