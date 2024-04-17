@@ -1,20 +1,20 @@
 import 'package:common_models/common_models.dart';
 
-typedef DataPageProvider<FAILURE, ITEM, FILTER> = Future<Either<FAILURE, DataPage<ITEM>>?> Function(
+typedef DataPageProvider<ERROR, ITEM, FILTER> = Future<Either<ERROR, DataPage<ITEM>>?> Function(
   String? lastId,
   FILTER? filter,
 );
 
-class DataPagerWithLastId<FAILURE, ITEM, FILTER> {
+class DataPagerWithLastId<ERROR, ITEM, FILTER> {
   DataPagerWithLastId({
     required this.dataPageProvider,
     required this.idSelector,
-    required this.nullDataFailure,
+    required this.nullDataErr,
   });
 
-  DataPageProvider<FAILURE, ITEM, FILTER> dataPageProvider;
+  DataPageProvider<ERROR, ITEM, FILTER> dataPageProvider;
   String Function(ITEM item) idSelector;
-  FAILURE nullDataFailure;
+  ERROR nullDataErr;
 
   bool _fetching = false;
 
@@ -28,7 +28,7 @@ class DataPagerWithLastId<FAILURE, ITEM, FILTER> {
     _data = DataPage<ITEM>.empty();
   }
 
-  Stream<DataState<FAILURE, DataPage<ITEM>>> fetchNextPage(
+  Stream<DataState<ERROR, DataPage<ITEM>>> fetchNextPage(
     FILTER? filter,
   ) async* {
     if (_fetching) {
@@ -38,7 +38,7 @@ class DataPagerWithLastId<FAILURE, ITEM, FILTER> {
     _fetching = true;
 
     if (_data.items.isEmpty) {
-      yield DataState<FAILURE, DataPage<ITEM>>.loading();
+      yield DataState<ERROR, DataPage<ITEM>>.loading();
     }
 
     final lastItem = _data.items.lastOrNull;
@@ -47,12 +47,12 @@ class DataPagerWithLastId<FAILURE, ITEM, FILTER> {
 
     if (result == null) {
       _fetching = false;
-      yield DataState.failure(nullDataFailure);
+      yield DataState.failure(nullDataErr);
       return;
     }
 
     if (result.isLeft) {
-      yield DataState<FAILURE, DataPage<ITEM>>.failure(result.leftOrThrow, _data);
+      yield DataState<ERROR, DataPage<ITEM>>.failure(result.leftOrThrow, _data);
     } else {
       final DataPage<ITEM> r = result.rightOrThrow;
 
@@ -62,7 +62,7 @@ class DataPagerWithLastId<FAILURE, ITEM, FILTER> {
         _data = _data.copyWith(count: r.count, items: r.items);
       }
 
-      yield DataState<FAILURE, DataPage<ITEM>>.success(_data);
+      yield DataState<ERROR, DataPage<ITEM>>.success(_data);
     }
 
     _fetching = false;

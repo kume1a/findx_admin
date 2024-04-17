@@ -10,7 +10,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../app/navigation/page_navigator.dart';
 import '../../../shared/ui/toast.dart';
-import '../../../shared/util/toast/notify_simple_action_failure.dart';
+import '../../../shared/util/toast/notify_network_call_error.dart';
 
 part 'mutate_math_problem_form_state.freezed.dart';
 
@@ -169,7 +169,7 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
       emit(state.copyWith(isSubmitting: false));
 
       res.fold(
-        notifyActionFailure,
+        notifyNetworkCallError,
         (r) {
           showToast('Updated math problem successfully');
           _pageNavigator.pop();
@@ -189,7 +189,7 @@ class MutateMathProblemFormCubit extends Cubit<MutateMathProblemFormState> {
       emit(state.copyWith(isSubmitting: false));
 
       res.fold(
-        notifyActionFailure,
+        notifyNetworkCallError,
         (r) {
           showToast('Math problem successfully');
           _pageNavigator.pop();

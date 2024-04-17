@@ -1,8 +1,8 @@
 import 'package:common_models/common_models.dart';
 
 extension EmailI18nX on Email {
-  String? translateFailure() {
-    return failureToString(
+  String? translateErr() {
+    return errToString(
       (f) => f.when(
         empty: () => 'Field is required',
         tooLong: () => 'Email length is too long',
@@ -14,8 +14,8 @@ extension EmailI18nX on Email {
 }
 
 extension PasswordI18nX on Password {
-  String? translateFailure() {
-    return failureToString(
+  String? translateErr() {
+    return errToString(
       (f) => f.maybeWhen(
         empty: () => 'Filed is required',
         tooShort: () => 'Password length is too short',
@@ -28,8 +28,8 @@ extension PasswordI18nX on Password {
 }
 
 extension NameI18nX on Name {
-  String? translateFailure() {
-    return failureToString(
+  String? translateErr() {
+    return errToString(
       (f) => f.when(
         empty: () => 'Field is required',
         tooShort: () => 'Name length is too short',
@@ -40,20 +40,20 @@ extension NameI18nX on Name {
 }
 
 extension PositiveIntI18nX on PositiveInt {
-  String? translateFailure() {
-    return failureToString(_tranlsatePositiveNumberFailure);
+  String? translateErr() {
+    return errToString(_tranlsatePositiveNumberError);
   }
 }
 
 extension RequiredDoubleI18n on PositiveDouble {
-  String? translateFailure() {
-    return failureToString(_tranlsatePositiveNumberFailure);
+  String? translateErr() {
+    return errToString(_tranlsatePositiveNumberError);
   }
 }
 
 extension RequiredIntI18nX on RequiredInt {
-  String? translateFailure() {
-    return failureToString(
+  String? translateErr() {
+    return errToString(
       (f) => f.when(
         empty: () => 'Field is required',
         invalid: () => 'Value is invalid',
@@ -63,8 +63,8 @@ extension RequiredIntI18nX on RequiredInt {
 }
 
 extension RequiredStringI18nX on RequiredString {
-  String? translateFailure() {
-    return failureToString(
+  String? translateErr() {
+    return errToString(
       (f) => f.when(
         empty: () => 'Field is required',
         tooLong: () => 'Value is too long',
@@ -74,8 +74,8 @@ extension RequiredStringI18nX on RequiredString {
 }
 
 extension PercentI18nX on Percent {
-  String? translateFailure() {
-    return failureToString(
+  String? translateErr() {
+    return errToString(
       (f) => f.when(
         empty: () => 'Field is required',
         invalid: () => 'Value is invalid',
@@ -85,7 +85,7 @@ extension PercentI18nX on Percent {
   }
 }
 
-String _tranlsatePositiveNumberFailure(PositiveNumberFailure f) {
+String _tranlsatePositiveNumberError(PositiveNumberError f) {
   return f.when(
     empty: () => 'Field is required',
     invalid: () => 'Value is invalid',

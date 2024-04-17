@@ -8,24 +8,24 @@ import 'package:injectable/injectable.dart';
 import '../../../app/navigation/app_route_builder.dart';
 import '../../../shared/state/filtered_data_page_state.dart';
 import '../../../shared/state/filtered_data_pager_with_last_id_cubit.dart';
-import '../../../shared/util/toast/notify_simple_action_failure.dart';
+import '../../../shared/util/toast/notify_network_call_error.dart';
 import '../model/answer_function_list_filter.dart';
 
 typedef AnswerFunctionListState
-    = FilteredDataPageState<FetchFailure, AnswerFunctionPageItem, AnswerFunctionListFilter>;
+    = FilteredDataPageState<NetworkCallError, AnswerFunctionPageItem, AnswerFunctionListFilter>;
 
 extension AnswerFunctionListCubitX on BuildContext {
   AnswerFunctionListCubit get answerFunctionListCubit => read<AnswerFunctionListCubit>();
 }
 
 @injectable
-final class AnswerFunctionListCubit
-    extends FilteredDataPagerWithLastIdCubit<FetchFailure, AnswerFunctionPageItem, AnswerFunctionListFilter> {
+final class AnswerFunctionListCubit extends FilteredDataPagerWithLastIdCubit<NetworkCallError,
+    AnswerFunctionPageItem, AnswerFunctionListFilter> {
   AnswerFunctionListCubit(
     this._answerFunctionRemoteRepository,
     this._goRouter,
     this._mathSubFieldRemoteRepository,
-  ) : super(nullDataFailure: FetchFailure.unknown) {
+  ) : super(nullDataErr: NetworkCallError.unknown) {
     fetchNextPage();
 
     _fetchMathSubFields();
@@ -39,7 +39,7 @@ final class AnswerFunctionListCubit
   String idSelector(AnswerFunctionPageItem item) => item.id;
 
   @override
-  Future<Either<FetchFailure, DataPage<AnswerFunctionPageItem>>?> provideDataPage(
+  Future<Either<NetworkCallError, DataPage<AnswerFunctionPageItem>>?> provideDataPage(
     String? lastId,
     AnswerFunctionListFilter? filter,
   ) {
@@ -66,7 +66,7 @@ final class AnswerFunctionListCubit
     final res = await _answerFunctionRemoteRepository.delete(id: entity.id);
 
     res.fold(
-      notifyActionFailure,
+      notifyNetworkCallError,
       (_) => onRefresh(),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../app/i18n/failure_i18n_extensions.dart';
+import '../../../app/i18n/err_i18n_extensions.dart';
 import '../../../shared/ui/widgets/loading_text_button.dart';
 import '../state/sign_in_form_state.dart';
 
@@ -42,7 +42,7 @@ class SignInForm extends StatelessWidget {
                     hintText: 'Email',
                   ),
                   onChanged: context.signInFormCubit.onEmailChanged,
-                  validator: (_) => context.signInFormCubit.state.email.translateFailure(),
+                  validator: (_) => context.signInFormCubit.state.email.translateErr(),
                 ),
                 const SizedBox(height: 20),
                 TextFormField(
@@ -51,7 +51,7 @@ class SignInForm extends StatelessWidget {
                     hintText: 'Password',
                   ),
                   onChanged: context.signInFormCubit.onPasswordChanged,
-                  validator: (_) => context.signInFormCubit.state.password.translateFailure(),
+                  validator: (_) => context.signInFormCubit.state.password.translateErr(),
                 ),
                 const SizedBox(height: 100),
                 BlocBuilder<SignInFormCubit, SignInFormState>(

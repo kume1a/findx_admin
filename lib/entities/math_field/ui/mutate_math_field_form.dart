@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../app/i18n/failure_i18n_extensions.dart';
+import '../../../app/i18n/err_i18n_extensions.dart';
 import '../../../shared/ui/widgets/loading_text_button.dart';
 import '../state/mutate_math_field_form_state.dart';
 
@@ -21,7 +21,7 @@ class MutateMathFieldForm extends StatelessWidget {
                 keyboardType: TextInputType.name,
                 decoration: const InputDecoration(hintText: 'Name'),
                 onChanged: context.mutateMathFieldFormCubit.onNameChanged,
-                validator: (_) => context.mutateMathFieldFormCubit.state.name.translateFailure(),
+                validator: (_) => context.mutateMathFieldFormCubit.state.name.translateErr(),
               ),
               const SizedBox(height: 20),
               LoadingTextButton(

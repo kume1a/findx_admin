@@ -8,7 +8,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../app/app_environment.dart';
 import '../../../app/navigation/page_navigator.dart';
-import '../util/notify_admin_sign_in_failure.dart';
+import '../util/notify_admin_sign_in_err.dart';
 
 part 'sign_in_form_state.freezed.dart';
 
@@ -68,7 +68,7 @@ class SignInFormCubit extends Cubit<SignInFormState> {
     );
 
     res.fold(
-      notifyAdminSignInFailure,
+      notifyAdminSignInErr,
       (r) async {
         await _authTokenStore.writeAccessToken(r.accessToken);
         await _authTokenStore.writeRefreshToken(r.refreshToken);

@@ -1,6 +1,6 @@
 import 'package:common_models/common_models.dart';
 
-final class FilteredDataPageState<FAILURE, ITEM, FILTER> {
+final class FilteredDataPageState<ERROR, ITEM, FILTER> {
   FilteredDataPageState({
     required this.data,
     required this.filter,
@@ -13,11 +13,11 @@ final class FilteredDataPageState<FAILURE, ITEM, FILTER> {
     );
   }
 
-  final DataState<FAILURE, DataPage<ITEM>> data;
+  final DataState<ERROR, DataPage<ITEM>> data;
   final FILTER? filter;
 
-  FilteredDataPageState<FAILURE, ITEM, FILTER> copyWith({
-    DataState<FAILURE, DataPage<ITEM>>? data,
+  FilteredDataPageState<ERROR, ITEM, FILTER> copyWith({
+    DataState<ERROR, DataPage<ITEM>>? data,
     FILTER? filter,
   }) {
     return FilteredDataPageState(
@@ -32,7 +32,7 @@ final class FilteredDataPageState<FAILURE, ITEM, FILTER> {
       return true;
     }
 
-    return other is FilteredDataPageState<FAILURE, ITEM, FILTER> &&
+    return other is FilteredDataPageState<ERROR, ITEM, FILTER> &&
         other.data == data &&
         other.filter == filter;
   }

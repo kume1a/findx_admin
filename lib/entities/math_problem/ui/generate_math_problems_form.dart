@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../app/i18n/failure_i18n_extensions.dart';
+import '../../../app/i18n/err_i18n_extensions.dart';
 import '../../../shared/ui/widgets/dopdown_field.dart';
 import '../../../shared/util/equality.dart';
 import '../model/math_problem_template_parameter_form.dart';
@@ -55,7 +55,7 @@ class _DifficultyField extends StatelessWidget {
       keyboardType: TextInputType.name,
       decoration: const InputDecoration(hintText: 'Difficulty'),
       onChanged: context.generateMathProblemsFormCubit.onDifficultyChanged,
-      validator: (_) => context.generateMathProblemsFormCubit.state.difficulty.translateFailure(),
+      validator: (_) => context.generateMathProblemsFormCubit.state.difficulty.translateErr(),
     );
   }
 }
@@ -69,7 +69,7 @@ class _GeneratedBatchNameField extends StatelessWidget {
       keyboardType: TextInputType.name,
       decoration: const InputDecoration(hintText: 'Generated batch name'),
       onChanged: context.generateMathProblemsFormCubit.onGeneratedBatchNameChanged,
-      validator: (_) => context.generateMathProblemsFormCubit.state.generatedBatchName.translateFailure(),
+      validator: (_) => context.generateMathProblemsFormCubit.state.generatedBatchName.translateErr(),
     );
   }
 }
@@ -165,7 +165,7 @@ class _TemplateField extends StatelessWidget {
       maxLines: 6,
       decoration: const InputDecoration(hintText: 'Template'),
       onChanged: context.generateMathProblemsFormCubit.onTemplateChanged,
-      validator: (_) => context.generateMathProblemsFormCubit.state.template.translateFailure(),
+      validator: (_) => context.generateMathProblemsFormCubit.state.template.translateErr(),
     );
   }
 }
@@ -222,7 +222,7 @@ class _TemplateParamFields extends StatelessWidget {
                 context.generateMathProblemsFormCubit.onCustomStrParamValueChanged(formIndex, value),
             validator: (_) => context.generateMathProblemsFormCubit.state.paramForms[formIndex].when(
               number: (_, __, ___, ____) => null,
-              customStr: (_, values) => values.translateFailure(),
+              customStr: (_, values) => values.translateErr(),
             ),
           ),
         ),
@@ -238,7 +238,7 @@ class _TemplateParamFields extends StatelessWidget {
             onChanged: (value) =>
                 context.generateMathProblemsFormCubit.onNumberParamMinChanged(formIndex, value),
             validator: (_) => context.generateMathProblemsFormCubit.state.paramForms[formIndex].when(
-              number: (_, min, __, ___) => min.translateFailure(),
+              number: (_, min, __, ___) => min.translateErr(),
               customStr: (_, __) => null,
             ),
           ),
@@ -254,7 +254,7 @@ class _TemplateParamFields extends StatelessWidget {
             onChanged: (value) =>
                 context.generateMathProblemsFormCubit.onNumberParamMaxChanged(formIndex, value),
             validator: (_) => context.generateMathProblemsFormCubit.state.paramForms[formIndex].when(
-              number: (_, __, max, ___) => max.translateFailure(),
+              number: (_, __, max, ___) => max.translateErr(),
               customStr: (_, __) => null,
             ),
           ),
@@ -270,7 +270,7 @@ class _TemplateParamFields extends StatelessWidget {
             onChanged: (value) =>
                 context.generateMathProblemsFormCubit.onNumberParamStepChanged(formIndex, value),
             validator: (_) => context.generateMathProblemsFormCubit.state.paramForms[formIndex].when(
-              number: (_, __, ___, step) => step.translateFailure(),
+              number: (_, __, ___, step) => step.translateErr(),
               customStr: (_, __) => null,
             ),
           ),

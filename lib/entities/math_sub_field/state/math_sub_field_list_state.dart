@@ -8,9 +8,9 @@ import 'package:injectable/injectable.dart';
 import '../../../app/navigation/app_route_builder.dart';
 import '../../../shared/state/filtered_data_page_state.dart';
 import '../../../shared/state/filtered_data_pager_with_last_id_cubit.dart';
-import '../util/notify_delete_math_sub_field_failure.dart';
+import '../util/notify_delete_math_sub_field_err.dart';
 
-typedef MathSubFieldListState = FilteredDataPageState<FetchFailure, MathSubFieldPageItem, Unit>;
+typedef MathSubFieldListState = FilteredDataPageState<NetworkCallError, MathSubFieldPageItem, Unit>;
 
 extension MathSubFieldListCubitX on BuildContext {
   MathSubFieldListCubit get mathSubFieldListCubit => read<MathSubFieldListCubit>();
@@ -18,11 +18,11 @@ extension MathSubFieldListCubitX on BuildContext {
 
 @injectable
 final class MathSubFieldListCubit
-    extends FilteredDataPagerWithLastIdCubit<FetchFailure, MathSubFieldPageItem, Unit> {
+    extends FilteredDataPagerWithLastIdCubit<NetworkCallError, MathSubFieldPageItem, Unit> {
   MathSubFieldListCubit(
     this._mathSubFieldRemoteRepository,
     this._goRouter,
-  ) : super(nullDataFailure: FetchFailure.unknown) {
+  ) : super(nullDataErr: NetworkCallError.unknown) {
     fetchNextPage();
   }
 
@@ -33,7 +33,7 @@ final class MathSubFieldListCubit
   String idSelector(MathSubFieldPageItem item) => item.id;
 
   @override
-  Future<Either<FetchFailure, DataPage<MathSubFieldPageItem>>?> provideDataPage(
+  Future<Either<NetworkCallError, DataPage<MathSubFieldPageItem>>?> provideDataPage(
     String? lastId,
     Unit? filter,
   ) {
@@ -56,7 +56,7 @@ final class MathSubFieldListCubit
     final res = await _mathSubFieldRemoteRepository.delete(id: entity.id);
 
     res.fold(
-      notifyDeleteMathSubFieldFailure,
+      notifyDeleteMathSubFieldErr,
       (_) => onRefresh(),
     );
   }

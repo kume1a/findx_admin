@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
-import '../../../app/i18n/failure_i18n_extensions.dart';
+import '../../../app/i18n/err_i18n_extensions.dart';
 import '../../../shared/ui/widgets/dopdown_field.dart';
 import '../../../shared/ui/widgets/editable_image_dropzone.dart';
 import '../../../shared/ui/widgets/expandable_image.dart';
@@ -118,7 +118,7 @@ class _DifficultyField extends StatelessWidget {
       keyboardType: TextInputType.name,
       decoration: const InputDecoration(hintText: 'Difficulty'),
       onChanged: context.mutateMathProblemFormCubit.onDifficultyChanged,
-      validator: (_) => context.mutateMathProblemFormCubit.state.difficulty.translateFailure(),
+      validator: (_) => context.mutateMathProblemFormCubit.state.difficulty.translateErr(),
     );
   }
 }
@@ -298,7 +298,7 @@ class _AnswerField extends HookWidget {
                 hintText: 'Answer ${index + 1}${isCorrectAnswerField ? ' (Correct)' : ''}',
               ),
               onChanged: (value) => context.mutateMathProblemFormCubit.onAnswerChanged(index, value),
-              validator: (_) => context.mutateMathProblemFormCubit.state.answers[index].translateFailure(),
+              validator: (_) => context.mutateMathProblemFormCubit.state.answers[index].translateErr(),
             ),
           ),
           const SizedBox(width: 6),

@@ -9,7 +9,7 @@ import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 
 import '../../../shared/ui/toast.dart';
-import '../../../shared/util/toast/notify_simple_action_failure.dart';
+import '../../../shared/util/toast/notify_network_call_error.dart';
 import '../model/math_problem_template_parameter_form.dart';
 import '../model/math_problem_template_placeholder.dart';
 import '../util/map_math_problem_template_params.dart';
@@ -31,7 +31,7 @@ class GenerateMathProblemsFormState with _$GenerateMathProblemsFormState {
     required List<MathProblemTemplateParameterForm> paramForms,
     required bool reloadingParamForms,
     required bool isSubmitting,
-    required DataState<FetchFailure, List<GenerateMathProblemValuesRes>> generatedMathProblemValues,
+    required DataState<NetworkCallError, List<GenerateMathProblemValuesRes>> generatedMathProblemValues,
     int? generatedTotalCount,
     required SimpleDataState<DataPage<MathFieldPageItem>> mathFields,
     required SimpleDataState<DataPage<MathSubFieldPageItem>> mathSubFields,
@@ -235,7 +235,7 @@ class GenerateMathProblemsFormCubit extends Cubit<GenerateMathProblemsFormState>
     emit(state.copyWith(isSubmitting: false));
 
     res.fold(
-      notifyActionFailure,
+      notifyNetworkCallError,
       (_) => _router.pop(),
     );
   }

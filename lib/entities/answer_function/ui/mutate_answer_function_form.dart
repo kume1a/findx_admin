@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../app/i18n/failure_i18n_extensions.dart';
+import '../../../app/i18n/err_i18n_extensions.dart';
 import '../../../shared/ui/widgets/dopdown_field.dart';
 import '../../../shared/ui/widgets/loading_text_button.dart';
 import '../state/mutate_answer_function_form_state.dart';
@@ -26,7 +26,7 @@ class MutateAnswerFunctionForm extends StatelessWidget {
                 keyboardType: TextInputType.number,
                 decoration: const InputDecoration(hintText: 'Weight'),
                 onChanged: context.mutateAnswerFunctionFormCubit.onWeightChanged,
-                validator: (_) => context.mutateAnswerFunctionFormCubit.state.weight.translateFailure(),
+                validator: (_) => context.mutateAnswerFunctionFormCubit.state.weight.translateErr(),
               ),
               const SizedBox(height: 20),
               TextFormField(
@@ -34,7 +34,7 @@ class MutateAnswerFunctionForm extends StatelessWidget {
                 keyboardType: TextInputType.multiline,
                 decoration: const InputDecoration(hintText: 'Func'),
                 onChanged: context.mutateAnswerFunctionFormCubit.onFuncChanged,
-                validator: (_) => context.mutateAnswerFunctionFormCubit.state.func.translateFailure(),
+                validator: (_) => context.mutateAnswerFunctionFormCubit.state.func.translateErr(),
                 minLines: 20,
                 maxLines: 20,
               ),

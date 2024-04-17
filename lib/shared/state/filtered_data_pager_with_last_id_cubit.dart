@@ -5,22 +5,22 @@ import 'package:meta/meta.dart';
 import '../util/data_pager_with_last_id.dart';
 import 'filtered_data_page_state.dart';
 
-abstract base class FilteredDataPagerWithLastIdCubit<FAILURE, ITEM, FILTER>
-    extends Cubit<FilteredDataPageState<FAILURE, ITEM, FILTER>> {
+abstract base class FilteredDataPagerWithLastIdCubit<ERROR, ITEM, FILTER>
+    extends Cubit<FilteredDataPageState<ERROR, ITEM, FILTER>> {
   FilteredDataPagerWithLastIdCubit({
-    required FAILURE nullDataFailure,
+    required ERROR nullDataErr,
   }) : super(FilteredDataPageState.initial()) {
-    _dataPager = DataPagerWithLastId<FAILURE, ITEM, FILTER>(
+    _dataPager = DataPagerWithLastId<ERROR, ITEM, FILTER>(
       dataPageProvider: provideDataPage,
       idSelector: idSelector,
-      nullDataFailure: nullDataFailure,
+      nullDataErr: nullDataErr,
     );
   }
 
-  late final DataPagerWithLastId<FAILURE, ITEM, FILTER> _dataPager;
+  late final DataPagerWithLastId<ERROR, ITEM, FILTER> _dataPager;
 
   @protected
-  Future<Either<FAILURE, DataPage<ITEM>>?> provideDataPage(
+  Future<Either<ERROR, DataPage<ITEM>>?> provideDataPage(
     String? lastId,
     FILTER? filter,
   );
@@ -39,7 +39,7 @@ abstract base class FilteredDataPagerWithLastIdCubit<FAILURE, ITEM, FILTER>
   }
 
   @override
-  void emit(FilteredDataPageState<FAILURE, ITEM, FILTER> state) {
+  void emit(FilteredDataPageState<ERROR, ITEM, FILTER> state) {
     final DataPage<ITEM> data = state.data.maybeWhen(
       success: (data) => data,
       failure: (_, data) => data ?? DataPage.empty(),
@@ -55,7 +55,7 @@ abstract base class FilteredDataPagerWithLastIdCubit<FAILURE, ITEM, FILTER>
 
   @nonVirtual
   Future<void> _fetchNextPage() async {
-    await for (final DataState<FAILURE, DataPage<ITEM>> s in _dataPager.fetchNextPage(state.filter)) {
+    await for (final DataState<ERROR, DataPage<ITEM>> s in _dataPager.fetchNextPage(state.filter)) {
       if (!isClosed) {
         super.emit(state.copyWith(data: s));
       }

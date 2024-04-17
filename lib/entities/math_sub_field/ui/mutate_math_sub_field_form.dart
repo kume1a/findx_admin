@@ -2,7 +2,7 @@ import 'package:findx_dart_client/app_client.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../app/i18n/failure_i18n_extensions.dart';
+import '../../../app/i18n/err_i18n_extensions.dart';
 import '../../../shared/ui/widgets/dopdown_field.dart';
 import '../../../shared/ui/widgets/loading_text_button.dart';
 import '../state/mutate_math_sub_field_form_state.dart';
@@ -46,7 +46,7 @@ class _NameField extends StatelessWidget {
       keyboardType: TextInputType.name,
       decoration: const InputDecoration(hintText: 'Name'),
       onChanged: context.mutateMathSubFieldFormCubit.onNameChanged,
-      validator: (_) => context.mutateMathSubFieldFormCubit.state.name.translateFailure(),
+      validator: (_) => context.mutateMathSubFieldFormCubit.state.name.translateErr(),
     );
   }
 }

@@ -8,7 +8,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../app/navigation/page_navigator.dart';
 import '../../../shared/ui/toast.dart';
-import '../../../shared/util/toast/notify_simple_action_failure.dart';
+import '../../../shared/util/toast/notify_network_call_error.dart';
 
 part 'mutate_answer_function_form_state.freezed.dart';
 
@@ -108,7 +108,7 @@ class MutateAnswerFunctionFormCubit extends Cubit<MutateAnswerFunctionFormState>
       emit(state.copyWith(isSubmitting: false));
 
       res.fold(
-        notifyActionFailure,
+        notifyNetworkCallError,
         (r) {
           showToast('Updated answer function successfully');
           _pageNavigator.pop();
@@ -127,7 +127,7 @@ class MutateAnswerFunctionFormCubit extends Cubit<MutateAnswerFunctionFormState>
     emit(state.copyWith(isSubmitting: false));
 
     res.fold(
-      notifyActionFailure,
+      notifyNetworkCallError,
       (r) {
         showToast('Answer function created successfully');
         _pageNavigator.pop();

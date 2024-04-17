@@ -29,7 +29,7 @@ class EntityTable<T> extends StatelessWidget {
     this.actionsPosition = ActionsPosition.end,
   });
 
-  final DataState<FetchFailure, DataPage<T>> dataState;
+  final DataState<NetworkCallError, DataPage<T>> dataState;
 
   final Widget? filters;
   final List<DataColumn> columns;
@@ -58,9 +58,9 @@ class EntityTable<T> extends StatelessWidget {
         actionsPosition: actionsPosition,
       ),
       loading: () => const Center(child: CircularProgressIndicator()),
-      failure: (f, _) => Center(
+      failure: (err, _) => Center(
         child: Text(
-          f.maybeWhen(
+          err.maybeWhen(
             orElse: () => 'Unknown error',
             network: () => 'Network error',
           ),

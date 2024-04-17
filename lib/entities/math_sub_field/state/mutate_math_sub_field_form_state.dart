@@ -7,7 +7,7 @@ import 'package:injectable/injectable.dart';
 
 import '../../../app/navigation/page_navigator.dart';
 import '../../../shared/ui/toast.dart';
-import '../../../shared/util/toast/notify_simple_action_failure.dart';
+import '../../../shared/util/toast/notify_network_call_error.dart';
 
 part 'mutate_math_sub_field_form_state.freezed.dart';
 
@@ -121,7 +121,7 @@ class MutateMathSubFieldFormCubit extends Cubit<MutateMathSubFieldFormState> {
       emit(state.copyWith(isSubmitting: false));
 
       res.fold(
-        notifyActionFailure,
+        notifyNetworkCallError,
         (r) {
           showToast('Updated math field successfully');
           _pageNavigator.pop();
@@ -136,7 +136,7 @@ class MutateMathSubFieldFormCubit extends Cubit<MutateMathSubFieldFormState> {
       emit(state.copyWith(isSubmitting: false));
 
       res.fold(
-        notifyActionFailure,
+        notifyNetworkCallError,
         (r) {
           showToast('Math field created successfully');
           _pageNavigator.pop();
